@@ -5,6 +5,7 @@ nova (2012.1~e2-0ubuntu2) precise; urgency=low
 
   [ Dan Prince ]
   * debian/nova_sudoers: Fix typo
+  * Add policy.json to packages.
 
  -- Thierry Carrez (ttx) <thierry@openstack.org>  Thu, 22 Dec 2011 16:15:22 +0100
 
