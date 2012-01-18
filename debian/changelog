@@ -1,12 +1,14 @@
 nova (2012.1~e3~20120113.12049-0ubuntu2) UNRELEASED; urgency=low
 
   [Chuck Short]
-  *  New upstream version.
+  * New upstream version.
+  * debian/nova-vncproxy.install, debian/nova-vncproxy.upstart.in:
+    nova-vncproxy becomes nova-xvpvncproxy.
 
   [Dan Prince]
   * Add policy.json to packages.
 
- -- chuck <chuck@cartman>  Tue, 17 Jan 2012 09:03:28 -0500
+ -- Chuck Short <zulcss@ubuntu.com>  Tue, 17 Jan 2012 09:03:28 -0500
 
 nova (2012.1~e3~20120113.12049-0ubuntu1) precise; urgency=low
 
