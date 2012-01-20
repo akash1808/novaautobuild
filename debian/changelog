@@ -4,6 +4,7 @@ nova (2012.1~e3~20120119.12168-0ubuntu1) UNRELEASED; urgency=low
   * New upstream version.
   * debian/nova-vncproxy.install, debian/nova-vncproxy.upstart.in:
     nova-vncproxy becomes nova-xvpvncproxy.
+  * debian/nova.conf: Really use the nova rootwrapper. (LP: #918179)
 
   [Dan Prince]
   * Add policy.json to packages.
