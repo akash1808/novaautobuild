@@ -6,6 +6,8 @@ nova (2012.1~e3~20120120.12170-0ubuntu1) precise; urgency=low
     nova-vncproxy becomes nova-xvpvncproxy.
   * debian/nova.conf: Really use the nova rootwrapper. (LP: #918179)
   * debian/nova_sudoers: Fix typo in rootwrap usage.
+  * debian/patches/kombu_tests_timeout.patch: Skip 
+    "test_iterconsume_errors_will_reconnect" test.
 
   [Dan Prince]
   * Add policy.json to packages.
