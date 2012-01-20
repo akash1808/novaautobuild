@@ -1,4 +1,4 @@
-nova (2012.1~e3~20120120.12170-0ubuntu1) UNRELEASED; urgency=low
+nova (2012.1~e3~20120120.12170-0ubuntu1) precise; urgency=low
 
   [Chuck Short]
   * New upstream version.
@@ -16,7 +16,7 @@ nova (2012.1~e3~20120120.12170-0ubuntu1) UNRELEASED; urgency=low
    * debian/patches/fix-nova-rootwraper-env.patch: Fix temporary issue with 
      nova-rootwrap and nova-compute.
 
- -- Chuck Short <zulcss@ubuntu.com>  Tue, 17 Jan 2012 09:03:28 -0500
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 20 Jan 2012 11:54:15 -0500
 
 nova (2012.1~e3~20120113.12049-0ubuntu1) precise; urgency=low
 
