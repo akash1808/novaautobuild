@@ -1,0 +1,60 @@
+t a/bin/nova-rootwrap b/bin/nova-rootwrap
+index 80bb55c..0434aed 100755
+--- a/bin/nova-rootwrap
++++ b/bin/nova-rootwrap
+@@ -65,7 +65,8 @@ if __name__ == '__main__':
+         obj = subprocess.Popen(filtermatch.get_command(userargs),
+                                stdin=sys.stdin,
+                                stdout=sys.stdout,
+-                               stderr=sys.stderr)
++                               stderr=sys.stderr,
++                               env=filtermatch.get_environment(userargs))
+         sys.exit(obj.returncode)
+ 
+     print "Unauthorized command: %s" % ' '.join(userargs)
+diff --git a/nova/rootwrap/filters.py b/nova/rootwrap/filters.py
+index 2932c5e..f96b84a 100755
+--- a/nova/rootwrap/filters.py
++++ b/nova/rootwrap/filters.py
+@@ -41,6 +41,10 @@ class CommandFilter(object):
+             return ['sudo', '-u', self.run_as, self.exec_path] + userargs[1:]
+         return [self.exec_path] + userargs[1:]
+ 
++    def get_environment(self, userargs):
++        """Returns specific environment to set, None if none"""
++        return None
++
+ 
+ class RegExpFilter(CommandFilter):
+     """Command filter doing regexp matching for every argument"""
+@@ -77,4 +81,8 @@ class DnsmasqFilter(CommandFilter):
+         return False
+ 
+     def get_command(self, userargs):
+-        return userargs[0:2] + [self.exec_path] + userargs[3:]
++        return [self.exec_path] + userargs[3:]
++
++    def get_environment(self, userargs):
++        return {'FLAGFILE': userargs[0].split('=')[-1],
++                'NETWORK_ID': userargs[1].split('=')[-1]}
+diff --git a/nova/tests/test_nova_rootwrap.py b/nova/tests/test_nova_rootwrap.py
+index f73f985..6a1d08f 100644
+--- a/nova/tests/test_nova_rootwrap.py
++++ b/nova/tests/test_nova_rootwrap.py
+@@ -52,11 +52,12 @@ class RootwrapTestCase(test.TestCase):
+         self.assertTrue(filtermatch is None)
+ 
+     def test_dnsmasq_filter(self):
+-        usercmd = ['FLAGFILE=A', 'NETWORK_ID="foo bar"', 'dnsmasq', 'foo']
++        usercmd = ['FLAGFILE=A', 'NETWORK_ID=foobar', 'dnsmasq', 'foo']
+         f = DnsmasqFilter("/usr/bin/dnsmasq", "root")
+         self.assertTrue(f.match(usercmd))
+-        self.assertEqual(f.get_command(usercmd),
+-            ['FLAGFILE=A', 'NETWORK_ID="foo bar"', '/usr/bin/dnsmasq', 'foo'])
++        self.assertEqual(f.get_command(usercmd), ['/usr/bin/dnsmasq', 'foo'])
++        self.assertEqual(f.get_environment(usercmd),
++            {'FLAGFILE': 'A', 'NETWORK_ID': 'foobar'})
+ 
+     def test_skips(self):
+         # Check that all filters are skipped and that the last matches
+
