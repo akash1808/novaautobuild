@@ -2,6 +2,8 @@ nova (2012.1~e3~20120120.12170-0ubuntu1) UNRELEASED; urgency=low
 
   * debian/patches/fix-nova-rootwraper-env.patch: Dropped
     no longer needed.
+  * debian/nova-compute-{kvm,xen,uml,lxc}.conf: Add the connection
+    type "--connection=libvirt" since libvirt is no longer the default.
 
  -- Chuck Short <zulcss@ubuntu.com>  Tue, 24 Jan 2012 14:48:24 -0500
 
