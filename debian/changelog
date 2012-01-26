@@ -1,6 +1,7 @@
-nova (2012.1~e3~20120120.12170-0ubuntu1) UNRELEASED; urgency=low
+nova (2012.1~e3-0ubuntu1) precise; urgency=low
 
   [Chuck short]
+  * New upstream release.
   * debian/patches/fix-nova-rootwraper-env.patch: Dropped
     no longer needed.
   * debian/nova-compute-{kvm,xen,uml,lxc}.conf: Add the connection
@@ -16,7 +17,7 @@ nova (2012.1~e3~20120120.12170-0ubuntu1) UNRELEASED; urgency=low
      debian/nova-cert.upstart.in, debian/control, debian/source_nova.py:
      Add nova-cert.
 
- -- Chuck Short <zulcss@ubuntu.com>  Tue, 24 Jan 2012 14:48:24 -0500
+ -- Chuck Short <zulcss@ubuntu.com>  Thu, 26 Jan 2012 10:29:13 -0500
 
 nova (2012.1~e3~20120120.12170-0ubuntu1) precise; urgency=low
 
