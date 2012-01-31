@@ -10,6 +10,9 @@ if [ "$1" = "configure" ]; then
     if [ "$(id -gn nova)"  = "nogroup" ]; then
         usermod -g nova nova
     fi
+	if dpkg --compare-versions "$2" lt "2012.1~e3-0ubuntu2"; then
+		usermod -s "/bin/false" nova
+	fi
     chown -R nova:nova /var/log/nova/ /etc/nova/nova.conf /etc/nova/policy.json
     if [ -z "$2" ]; then
         # New install - blanket permissions
@@ -28,7 +31,7 @@ if [ "$1" = "configure" ]; then
     chmod 0700 /var/log/nova
     if ! grep -q sql_connection /etc/nova/nova.conf
     then
-      su -c 'nova-manage db sync' nova
+      su -s /bin/sh -c 'nova-manage db sync' nova
     fi
 fi
 
