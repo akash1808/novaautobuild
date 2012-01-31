@@ -1,5 +1,11 @@
 nova (2012.1~e3-0ubuntu2) UNRELEASED; urgency=low
 
+  [Chuck Short]
+  * debian/*.upstart.in, debian/nova-common.postinst,
+    debian/nova_sudoers: Change default shell to /bin/false.
+    (LP: #890362)
+
+  [Adam Gandleman]
   * debian/nova-common.{install, postinst}: Install policy.json on all
     Nova nodes (LP: #923817)
   * debian/rules: Remove installation of policy.json (moved to nova-common),
