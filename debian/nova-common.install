@@ -3,4 +3,3 @@ usr/bin/nova-rootwrap
 etc/nova/policy.json etc/nova
 debian/nova_sudoers etc/sudoers.d
 debian/nova.conf    etc/nova
-
