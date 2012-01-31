@@ -10,7 +10,7 @@ if [ "$1" = "configure" ]; then
     if [ "$(id -gn nova)"  = "nogroup" ]; then
         usermod -g nova nova
     fi
-    chown -R nova:nova /var/log/nova/ /etc/nova/nova.conf
+    chown -R nova:nova /var/log/nova/ /etc/nova/nova.conf /etc/nova/policy.json
     if [ -z "$2" ]; then
         # New install - blanket permissions
         chown -R nova:nova /var/lib/nova/
@@ -23,6 +23,7 @@ if [ "$1" = "configure" ]; then
            -group nogroup -a -user nova -exec chown nova:nova {} \;
     fi
     chmod 600 /etc/nova/nova.conf
+    chmod 600 /etc/nova/policy.json
     chmod 0440 /etc/sudoers.d/nova_sudoers
     chmod 0700 /var/log/nova
     if ! grep -q sql_connection /etc/nova/nova.conf
