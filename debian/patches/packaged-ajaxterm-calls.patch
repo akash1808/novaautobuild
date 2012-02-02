@@ -13,3 +13,5 @@ diff -Naurp nova-2012.1.orig/nova/virt/libvirt/utils.py nova-2012.1/nova/virt/li
 -           '--command', cmd, '-t', token, '-p', port]
 +    cmd = ['ajaxterm', '--command', cmd, '-t', token, '-p', port, '-T', '300']
      execute(*cmd)
+ 
+ 
