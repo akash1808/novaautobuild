@@ -5,7 +5,6 @@ Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 XSBC-Original-Maintainer: Openstack Maintainers <openstack@lists.launchpad.net>
 Uploaders: Soren Hansen <soren@ubuntu.com>, Thomas Goirand <zigo@debian.org>
 Build-Depends: debhelper (>= 7.0.50),
- python-m2crypto,
  python-all (>= 2.6),
  python-all-dev (>= 2.6.6-3~),
 Build-Depends-Indep:
@@ -42,6 +41,7 @@ Build-Depends-Indep:
  python-suds,
  python-xattr,
  python-feedparser,
+ python-crypto,
  pep8
 Build-Conflicts: python-cjson
 Standards-Version: 3.9.2
