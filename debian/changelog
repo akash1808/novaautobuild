@@ -1,5 +1,6 @@
-nova (2012.1~e4~20120203.12454-0ubuntu1) UNRELEASED; urgency=low
+nova (2012.1~e4~20120203.12454-0ubuntu1) precise; urgency=low
 
+  [ Adam Gandelman ]
   [Chuck Short]
   * New upstream version.
   * debian/control: Replace m2crpto with python-crypto.
@@ -14,7 +15,7 @@ nova (2012.1~e4~20120203.12454-0ubuntu1) UNRELEASED; urgency=low
   * debian/rules: Remove installation of policy.json (moved to nova-common),
     point to the correct upstream git repository.
 
- -- Adam Gandelman <adamg@canonical.com>  Mon, 30 Jan 2012 10:24:35 -0800
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 03 Feb 2012 09:03:12 -0500
 
 nova (2012.1~e3-0ubuntu1) precise; urgency=low
 
