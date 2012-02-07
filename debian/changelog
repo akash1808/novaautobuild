@@ -19,6 +19,7 @@ nova (2012.1~e3~20120120.12170-0ubuntu1) UNRELEASED; urgency=low
   [ Soren Hansen ]
   * Refresh flagfile location patch.
   * Enable builds on versions of Ubuntu that do not have dh_python2.
+  * Update ajaxterm patch to also fix unit tests.
 
  -- Chuck Short <zulcss@ubuntu.com>  Tue, 24 Jan 2012 14:48:24 -0500
 
