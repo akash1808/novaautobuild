@@ -6,11 +6,11 @@ nova (2012.1~e3~20120120.12170-0ubuntu1) UNRELEASED; urgency=low
   * debian/nova-compute-{kvm,xen,uml,lxc}.conf: Add the connection
     type "--connection=libvirt" since libvirt is no longer the default.
 
-  [Adam Gandelman]
+  [ Adam Gandelman ]
   * debian/nova.conf: Define connection_type=libvirt in common nova.conf
     instead of nova-compute-*.conf until Bug #921294 is addressed.
 
-  [Vish Ishaya]
+  [ Vish Ishaya ]
    * debian/mans/nova-cert.8, debian/nova-cert.init, debian/nova-cert.install,
      debian/nova-cert.logrotate, debian/nova-cert.manpages, 
      debian/nova-cert.upstart.in, debian/control, debian/source_nova.py:
