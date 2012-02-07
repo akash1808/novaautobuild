@@ -1,3 +1,4 @@
 nova-manage_flagfile_location.patch
 packaged-ajaxterm-calls.patch
 kombu_tests_timeout.patch
+test-debug.patch
