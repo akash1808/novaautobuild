@@ -10,7 +10,7 @@ Index: nova-2012.1~e4~20120207.12506/nova/rootwrap/filters.py
          if len(args) == 3:
              signal = args.pop(1)
              if signal not in self.args[0]:
-@@ -115,11 +116,14 @@
+@@ -115,11 +116,15 @@
                  return False
          pid = int(args[1])
          try:
@@ -22,6 +22,7 @@ Index: nova-2012.1~e4~20120207.12506/nova/rootwrap/filters.py
                  return False
          except:
 +            print 'failed'
++            raise
              # Incorrect PID
              return False
          return True
