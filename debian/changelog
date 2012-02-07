@@ -1,6 +1,6 @@
 nova (2012.1~e3~20120120.12170-0ubuntu1) UNRELEASED; urgency=low
 
-  [Chuck short]
+  [ Chuck Short ]
   * debian/patches/fix-nova-rootwraper-env.patch: Dropped
     no longer needed.
   * debian/nova-compute-{kvm,xen,uml,lxc}.conf: Add the connection
@@ -15,6 +15,9 @@ nova (2012.1~e3~20120120.12170-0ubuntu1) UNRELEASED; urgency=low
      debian/nova-cert.logrotate, debian/nova-cert.manpages, 
      debian/nova-cert.upstart.in, debian/control, debian/source_nova.py:
      Add nova-cert.
+
+  [ Soren Hansen ]
+  * Refresh flagfile location patch.
 
  -- Chuck Short <zulcss@ubuntu.com>  Tue, 24 Jan 2012 14:48:24 -0500
 
