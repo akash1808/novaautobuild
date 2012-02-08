@@ -26,7 +26,7 @@ Index: nova-2012.1~e4~20120207.12506/nova/tests/test_libvirt.py
                        '-t', token,
 -                      '-p', port)
 +                      '-p', port,
-+                      '-T', 300)
++                      '-T', '300')
  
          # Start test
          self.mox.ReplayAll()
