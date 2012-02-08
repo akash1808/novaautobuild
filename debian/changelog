@@ -1,4 +1,4 @@
-nova (2012.1~e3~20120120.12170-0ubuntu1) UNRELEASED; urgency=low
+nova (2012.1~e4~20120208.12523-0ubuntu1) UNRELEASED; urgency=low
 
   [ Chuck Short ]
   * debian/patches/fix-nova-rootwraper-env.patch: Dropped
@@ -19,8 +19,9 @@ nova (2012.1~e3~20120120.12170-0ubuntu1) UNRELEASED; urgency=low
   [ Soren Hansen ]
   * Refresh flagfile location patch.
   * Enable builds on versions of Ubuntu that do not have dh_python2.
-  * Update ajaxterm patch to also fix unit tests.
   * Remove ajaxterm patch (upstream performed a ajaxtermectomy)
+  * Replace ajax console proxy package with an empty, transitional
+    package.
 
  -- Chuck Short <zulcss@ubuntu.com>  Tue, 24 Jan 2012 14:48:24 -0500
 
