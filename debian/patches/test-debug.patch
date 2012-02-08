@@ -38,13 +38,17 @@ Index: nova-2012.1~e4~20120208.12523/nova/tests/test_nova_rootwrap.py
  import subprocess
  
  from nova.rootwrap import filters
-@@ -63,10 +64,17 @@
+@@ -63,10 +64,21 @@
          self.assertEqual(env.get('FLAGFILE'), 'A')
          self.assertEqual(env.get('NETWORK_ID'), 'foobar')
  
-+    def test_KillFilterSoren(self):
++    def test_KillFilterSoren2(self):
 +        p = subprocess.Popen(["/usr/bin/strace", "/bin/sleep", "5"])
-+        p.kill(0)
++        p.send_signal(0)
++
++    def test_KillFilterSoren(self):
++        p = subprocess.Popen(["/bin/sleep", "5"])
++        p.send_signal(0)
 +
      @test.skip_if(not os.path.exists("/proc/%d" % os.getpid()),
                    "Test requires /proc filesystem (procfs)")
@@ -57,7 +61,7 @@ Index: nova-2012.1~e4~20120208.12523/nova/tests/test_nova_rootwrap.py
          f = filters.KillFilter("/bin/kill", "root",
                                 ["-ALRM"],
                                 ["/bin/sleep"])
-@@ -88,6 +96,10 @@
+@@ -88,6 +100,10 @@
          self.assertFalse(f.match(usercmd))
          usercmd = ['kill', p.pid]
          # Providing no signal should work
