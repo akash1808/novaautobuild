@@ -6,18 +6,17 @@ Index: nova-2012.1~e4~20120207.12506/nova/rootwrap/filters.py
  
      def match(self, userargs):
          args = list(userargs)
-+        print 'args', args
++        print 'args:', args
          if len(args) == 3:
              signal = args.pop(1)
              if signal not in self.args[0]:
-@@ -115,11 +116,14 @@
+@@ -115,11 +116,13 @@
                  return False
          pid = int(args[1])
          try:
 +            print 'doing os.readlink("/proc/%d/exe"' % pid
              command = os.readlink("/proc/%d/exe" % pid)
              if command not in self.args[1]:
-+                print 'denied'
                  # Affected executable not in accepted list
                  return False
 -        except:
@@ -26,3 +25,56 @@ Index: nova-2012.1~e4~20120207.12506/nova/rootwrap/filters.py
              # Incorrect PID
              return False
          return True
+Index: nova-2012.1~e4~20120207.12506/nova/tests/test_nova_rootwrap.py
+===================================================================
+--- nova-2012.1~e4~20120207.12506.orig/nova/tests/test_nova_rootwrap.py
++++ nova-2012.1~e4~20120207.12506/nova/tests/test_nova_rootwrap.py
+@@ -66,29 +66,48 @@
+     @test.skip_if(not os.path.exists("/proc/%d" % os.getpid()),
+                   "Test requires /proc filesystem (procfs)")
+     def test_KillFilter(self):
++        import time
++        print 'time.time() right before invoking sleep 5', time.time()
+         p = subprocess.Popen(["/bin/sleep", "5"])
++        os.system('ls -lR /proc/%s' % p.pid())
+         f = filters.KillFilter("/bin/kill", "root",
+                                ["-ALRM"],
+                                ["/bin/sleep"])
++        print 'a', time.time()
++        os.system('ls -lR /proc/%s' % p.pid())
+         usercmd = ['kill', '-9', p.pid]
+         # Incorrect signal should fail
+         self.assertFalse(f.match(usercmd))
++        print 'b', time.time()
++        os.system('ls -lR /proc/%s' % p.pid())
+         usercmd = ['kill', p.pid]
+         # Providing no signal should fail
+         self.assertFalse(f.match(usercmd))
++        print 'c', time.time()
++        os.system('ls -lR /proc/%s' % p.pid())
+ 
+         f = filters.KillFilter("/bin/kill", "root",
+                                ["-9", ""],
+                                ["/bin/sleep"])
++        print 'd', time.time()
++        os.system('ls -lR /proc/%s' % p.pid())
+         usercmd = ['kill', '-9', os.getpid()]
+         # Our own PID does not match /bin/sleep, so it should fail
+         self.assertFalse(f.match(usercmd))
++        print 'e', time.time()
++        os.system('ls -lR /proc/%s' % p.pid())
+         usercmd = ['kill', '-9', 999999]
+         # Nonexistant PID should fail
++        print 'f', time.time()
++        os.system('ls -lR /proc/%s' % p.pid())
+         self.assertFalse(f.match(usercmd))
+         usercmd = ['kill', p.pid]
+         # Providing no signal should work
++        print 'time.time() right before invoking the usually failing test', time.time()
++        os.system('ls -lR /proc/%s' % p.pid())
+         self.assertTrue(f.match(usercmd))
++        print 'time.time() right after invoking the usually failing test', time.time()
++        os.system('ls -lR /proc/%s' % p.pid())
+         usercmd = ['kill', '-9', p.pid]
+         # Providing -9 signal should work
+         self.assertTrue(f.match(usercmd))
