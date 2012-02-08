@@ -8,6 +8,7 @@ Build-Depends: debhelper (>= 7.0.50),
  python-m2crypto,
  python-all (>= 2.6),
  python-all-dev (>= 2.6.6-3~) | python-support,
+ strace
 Build-Depends-Indep:
  python-setuptools,
  python-sphinx (>> 1.0),

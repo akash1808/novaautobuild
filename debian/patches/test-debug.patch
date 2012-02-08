@@ -30,15 +30,17 @@ Index: nova-2012.1~e4~20120208.12523/nova/tests/test_nova_rootwrap.py
 ===================================================================
 --- nova-2012.1~e4~20120208.12523.orig/nova/tests/test_nova_rootwrap.py
 +++ nova-2012.1~e4~20120208.12523/nova/tests/test_nova_rootwrap.py
-@@ -66,6 +66,8 @@
+@@ -66,7 +66,9 @@
      @test.skip_if(not os.path.exists("/proc/%d" % os.getpid()),
                    "Test requires /proc filesystem (procfs)")
      def test_KillFilter(self):
+-        p = subprocess.Popen(["/bin/sleep", "5"])
 +        import time
 +        print 'time.time() right before invoking sleep 5', time.time()
-         p = subprocess.Popen(["/bin/sleep", "5"])
++        p = subprocess.Popen(["/usr/bin/strace", "/bin/sleep", "5"])
          f = filters.KillFilter("/bin/kill", "root",
                                 ["-ALRM"],
+                                ["/bin/sleep"])
 @@ -88,6 +90,7 @@
          self.assertFalse(f.match(usercmd))
          usercmd = ['kill', p.pid]
