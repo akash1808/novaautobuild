@@ -1,34 +1,35 @@
-Index: nova-2012.1~e4~20120207.12506/nova/rootwrap/filters.py
+Index: nova-2012.1~e4~20120208.12523/nova/rootwrap/filters.py
 ===================================================================
---- nova-2012.1~e4~20120207.12506.orig/nova/rootwrap/filters.py
-+++ nova-2012.1~e4~20120207.12506/nova/rootwrap/filters.py
-@@ -101,6 +101,7 @@
- 
-     def match(self, userargs):
+--- nova-2012.1~e4~20120208.12523.orig/nova/rootwrap/filters.py
++++ nova-2012.1~e4~20120208.12523/nova/rootwrap/filters.py
+@@ -103,6 +103,7 @@
+         if userargs[0] != "kill":
+             return False
          args = list(userargs)
 +        print 'args:', args
          if len(args) == 3:
              signal = args.pop(1)
              if signal not in self.args[0]:
-@@ -115,11 +116,13 @@
+@@ -116,12 +117,14 @@
+                 # No signal, but list doesn't include empty string
                  return False
-         pid = int(args[1])
          try:
 +            print 'doing os.readlink("/proc/%d/exe"' % pid
-             command = os.readlink("/proc/%d/exe" % pid)
+             command = os.readlink("/proc/%d/exe" % int(args[1]))
              if command not in self.args[1]:
                  # Affected executable not in accepted list
                  return False
--        except:
-+        except Exception, e:
-+            print 'failed', e
+-        except (ValueError, OSError):
++        except (ValueError, OSError), e:
              # Incorrect PID
++            print 'failed:', e
              return False
          return True
-Index: nova-2012.1~e4~20120207.12506/nova/tests/test_nova_rootwrap.py
+ 
+Index: nova-2012.1~e4~20120208.12523/nova/tests/test_nova_rootwrap.py
 ===================================================================
---- nova-2012.1~e4~20120207.12506.orig/nova/tests/test_nova_rootwrap.py
-+++ nova-2012.1~e4~20120207.12506/nova/tests/test_nova_rootwrap.py
+--- nova-2012.1~e4~20120208.12523.orig/nova/tests/test_nova_rootwrap.py
++++ nova-2012.1~e4~20120208.12523/nova/tests/test_nova_rootwrap.py
 @@ -66,6 +66,8 @@
      @test.skip_if(not os.path.exists("/proc/%d" % os.getpid()),
                    "Test requires /proc filesystem (procfs)")
