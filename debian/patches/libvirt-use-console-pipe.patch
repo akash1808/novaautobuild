@@ -407,7 +407,7 @@ diff -Naurp nova.orig/nova/virt/libvirt/connection.py nova/nova/virt/libvirt/con
  
          self.image_cache_manager = imagecache.ImageCacheManager()
  
-+        self.console_loggers = dic
++        self.console_loggers = dict()
 +
      @property
      def host_state(self):
