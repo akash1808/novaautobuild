@@ -1,6 +1,6 @@
 diff -Naurp nova.orig/Authors nova/Authors
 --- nova.orig/Authors	2012-02-09 08:46:53.925820325 -0500
-+++ nova/Authors	2012-02-09 09:01:30.881820729 -0500
++++ nova/Authors	2012-02-09 10:34:19.049823447 -0500
 @@ -136,6 +136,7 @@ Renuka Apte <renuka.apte@citrix.com>
  Ricardo Carrillo Cruz <emaildericky@gmail.com>
  Rick Clark <rick@openstack.org>
@@ -11,7 +11,7 @@ diff -Naurp nova.orig/Authors nova/Authors
  Ryan Lane <rlane@wikimedia.org>
 diff -Naurp nova.orig/nova/tests/test_libvirt.py nova/nova/tests/test_libvirt.py
 --- nova.orig/nova/tests/test_libvirt.py	2012-02-09 08:46:54.029820325 -0500
-+++ nova/nova/tests/test_libvirt.py	2012-02-09 09:00:40.445820727 -0500
++++ nova/nova/tests/test_libvirt.py	2012-02-09 10:34:19.049823447 -0500
 @@ -761,7 +761,7 @@ class LibvirtConnTestCase(test.TestCase)
              (lambda t: _ipv4_like(t.findall(parameter)[1].get('value'),
                                    '192.168.*.1'), True),
@@ -80,7 +80,7 @@ diff -Naurp nova.orig/nova/tests/test_libvirt.py nova/nova/tests/test_libvirt.py
          self.mox.StubOutWithMock(utils, 'execute')
 diff -Naurp nova.orig/nova/tests/test_utils.py nova/nova/tests/test_utils.py
 --- nova.orig/nova/tests/test_utils.py	2012-02-09 08:46:54.033820324 -0500
-+++ nova/nova/tests/test_utils.py	2012-02-09 09:04:19.373820832 -0500
++++ nova/nova/tests/test_utils.py	2012-02-09 10:34:19.053823450 -0500
 @@ -17,11 +17,14 @@
  import __builtin__
  import mox
@@ -155,7 +155,7 @@ diff -Naurp nova.orig/nova/tests/test_utils.py nova/nova/tests/test_utils.py
 +
 diff -Naurp nova.orig/nova/utils.py nova/nova/utils.py
 --- nova.orig/nova/utils.py	2012-02-09 08:46:54.033820324 -0500
-+++ nova/nova/utils.py	2012-02-09 09:10:15.409821039 -0500
++++ nova/nova/utils.py	2012-02-09 10:34:19.053823450 -0500
 @@ -27,11 +27,13 @@ import inspect
  import json
  import lockfile
@@ -314,7 +314,7 @@ diff -Naurp nova.orig/nova/utils.py nova/nova/utils.py
 +
 diff -Naurp nova.orig/nova/virt/libvirt/connection.py nova/nova/virt/libvirt/connection.py
 --- nova.orig/nova/virt/libvirt/connection.py	2012-02-09 08:46:54.033820324 -0500
-+++ nova/nova/virt/libvirt/connection.py	2012-02-09 09:42:52.817821950 -0500
++++ nova/nova/virt/libvirt/connection.py	2012-02-09 10:34:43.501823463 -0500
 @@ -39,15 +39,19 @@ Supports KVM, LXC, QEMU, UML, and XEN.
  
  """
@@ -489,7 +489,7 @@ diff -Naurp nova.orig/nova/virt/libvirt/connection.py nova/nova/virt/libvirt/con
 +        console_fifo = basepath('console.fifo', '')
 +        console_ring = basepath('console.ring', '')
 +
-+        for fifo_suffix in ['.in', '.out'];
++        for fifo_suffix in ['.in', '.out']:
 +            console_fifo_suffix = console_fifo + fifo_suffix
 +            try:
 +                console_fifo_stat = os.stat(console_fifo_suffix)
