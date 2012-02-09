@@ -2,12 +2,13 @@ nova (2012.1~e4~20120203.12454-0ubuntu2) UNRELEASED; urgency=low
 
   * debian/patches/nova-manage_flagfile_location.patch:
     Refreshed patch. 
+  * debian/patches/libvirt-use-console-pipe.patch:
+    Re-add from oneiric.  
 
- -- Chuck Short <zulcss@ubuntu.com>  Mon, 06 Feb 2012 09:47:23 -0500
+ -- Chuck Short <zulcss@ubuntu.com>  Thu, 09 Feb 2012 10:00:59 -0500
 
 nova (2012.1~e4~20120203.12454-0ubuntu1) precise; urgency=low
 
-  [ Adam Gandelman ]
   [Chuck Short]
   * New upstream version.
   * debian/control: Replace m2crpto with python-crypto.
