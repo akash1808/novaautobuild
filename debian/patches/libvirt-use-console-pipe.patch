@@ -429,7 +429,7 @@ diff -Naurp nova.orig/nova/virt/libvirt/connection.py nova/nova/virt/libvirt/con
          else:
              return libvirt.openAuth(uri, auth, 0)
  
-+    def _start_console_loger(self, name, fifo_path, ringbuffer_path):
++    def _start_console_logger(self, name, fifo_path, ringbuffer_path):
 +        self._stop_console_logger(name)
 +        self.console_loggers[name] = ConsoleLogger(fifo_path, ringbuffer_path)
 +
@@ -494,7 +494,7 @@ diff -Naurp nova.orig/nova/virt/libvirt/connection.py nova/nova/virt/libvirt/con
 +            try:
 +                console_fifo_stat = os.stat(console_fifo_suffix)
 +            except OSError, e:
-+                if e.errno == errno.ENOENG:
++                if e.errno == errno.ENOENT:
 +                    os.mkfifo(console_fifo_suffix, 0660)
 +                else:
 +                    raise
