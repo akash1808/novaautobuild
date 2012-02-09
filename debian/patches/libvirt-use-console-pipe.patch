@@ -501,7 +501,7 @@ diff -Naurp nova.orig/nova/virt/libvirt/connection.py nova/nova/virt/libvirt/con
 +            else:
 +                libvirt_utils.write_to_file(basepath('console.fifo', ''), '', 007)
 +
-+        self._start_console_logger(inst['name'],
++        self._start_console_logger(instance['name'],
 +                                   console_fifo + 'out',
 +                                   console_ring)
  
