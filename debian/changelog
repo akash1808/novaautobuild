@@ -22,8 +22,9 @@ nova (2012.1~e4~20120208.12523-0ubuntu1) UNRELEASED; urgency=low
   * Remove ajaxterm patch (upstream performed a ajaxtermectomy)
   * Replace ajax console proxy package with an empty, transitional
     package.
+  * Add a nova-compute-qemu package.
 
- -- Chuck Short <zulcss@ubuntu.com>  Tue, 24 Jan 2012 14:48:24 -0500
+ -- Soren Hansen <soren@ubuntu.com>  Fri, 10 Feb 2012 17:41:50 +0100
 
 nova (2012.1~e3~20120120.12170-0ubuntu1) precise; urgency=low
 
