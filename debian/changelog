@@ -1,5 +1,6 @@
-nova (2012.1~e4~20120208.12555-0ubuntu1) UNRELEASED; urgency=low
+nova (2012.1~e4~20120210.12574-0ubuntu1) precise; urgency=low
 
+  [Chuck Short]
   * New upstream release.
   * debian/patches/nova-manage_flagfile_location.patch:
     Refreshed patch. 
@@ -9,9 +10,12 @@ nova (2012.1~e4~20120208.12555-0ubuntu1) UNRELEASED; urgency=low
   * debian/control:
     - Dropped recommends on ajaxterm for nova-compute
     - Dropped nova-ajaxterm package.
-   
+  
+  [Adam Gandleman]
+  * debian/patches/temp_fix_linux_net.patch: Temporary patch until LP:
+   929127 is resolved.
 
- -- Chuck Short <zulcss@ubuntu.com>  Thu, 09 Feb 2012 10:15:15 -0500
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 10 Feb 2012 11:25:38 -0500
 
 nova (2012.1~e4~20120203.12454-0ubuntu1) precise; urgency=low
 
