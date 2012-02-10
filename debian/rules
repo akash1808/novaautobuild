@@ -28,7 +28,6 @@ debian/nova-compute.postinst: debian/nova-compute.postinst.in
 override_dh_auto_build: debian/nova-compute.postinst
 	dh_auto_build
 	echo "HELLO"
-	/usr/bin/strace /bin/sleep 5
 ifeq (,$(findstring nodocs, $(DEB_BUILD_OPTIONS)))
 	python setup.py build_sphinx
 	cp $(CURDIR)/debian/nova-common.manpages.in $(CURDIR)/debian/nova-common.manpages
