@@ -1,3 +1,12 @@
+nova (2012.1~e4~20120211.12605-0ubuntu1) UNRELEASED; urgency=low
+
+  [ Dave Walker (Daviey) ]
+  * New upstream snapshot
+  * debian/patches/temp_fix_linux_net.patch:
+    - Dropped, applied upstream. LP: #929127
+
+ -- Dave Walker (Daviey) <DaveWalker@ubuntu.com>  Sat, 11 Feb 2012 01:13:37 +0000
+
 nova (2012.1~e4~20120210.12574-0ubuntu1) precise; urgency=low
 
   [Chuck Short]
