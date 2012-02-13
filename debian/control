@@ -6,7 +6,7 @@ XSBC-Original-Maintainer: Openstack Maintainers <openstack@lists.launchpad.net>
 Uploaders: Soren Hansen <soren@ubuntu.com>, Thomas Goirand <zigo@debian.org>
 Build-Depends: debhelper (>= 7.0.50),
  python-all (>= 2.6),
- python-all-dev (>= 2.6.6-3~),
+ python-all-dev (>= 2.6.6-3~) | python-support,
 Build-Depends-Indep:
  python-setuptools,
  python-sphinx (>> 1.0),
@@ -26,7 +26,7 @@ Build-Depends-Indep:
  python-cheetah,
  python-nose,
  python-paste,
- python-pastedeploy,
+ python-pastedeploy (>= 1.5.0),
  python-tempita,
  python-migrate,
  python-netaddr,
@@ -222,6 +222,29 @@ Description: OpenStack Compute - compute node (Xen)
  .
  Install this package on your compute nodes if you're using Xen.
 
+Package: nova-compute-qemu
+Architecture: all
+Depends: nova-compute (= ${binary:Version}), python-libvirt, libvirt-bin, qemu, ${misc:Depends}
+Provides: nova-compute-hypervisor
+Replaces: nova-compute-hypervisor
+Conflicts: nova-compute-hypervisor
+Description: OpenStack Compute - compute node (QEmu)
+ OpenStack is a reliable cloud infrastructure. Its mission is to produce
+ the ubiquitous cloud computing platform that will meet the needs of public
+ and private cloud providers regardless of size, by being simple to implement
+ and massively scalable.
+ .
+ OpenStack Compute, codenamed Nova, is a cloud computing fabric controller. In
+ addition to its "native" API (the OpenStack API), it also supports the Amazon
+ EC2 API.
+ .
+ Nova is intended to be modular and easy to extend and adapt. It supports many
+ different hypervisors (KVM and Xen to name a few), different database backends
+ (SQLite, MySQL, and PostgreSQL, for instance), different types of user
+ databases (LDAP or SQL), etc.
+ .
+ Install this package on your compute nodes if you're using QEmu.
+
 Package: nova-compute-kvm
 Architecture: all
 Depends: nova-compute (= ${binary:Version}), python-libvirt, libvirt-bin, kvm, ${misc:Depends}
@@ -305,6 +328,25 @@ Description: OpenStack Compute - storage
  databases (LDAP or SQL), etc.
  .
  This is the package you will install on your storage nodes.
+
+Package: nova-ajax-console-proxy
+Architecture: all
+Description: OpenStack Compute - AJAX console proxy - transitional package
+ OpenStack is a reliable cloud infrastructure. Its mission is to produce
+ the ubiquitous cloud computing platform that will meet the needs of public
+ and private cloud providers regardless of size, by being simple to implement
+ and massively scalable.
+ .
+ OpenStack Compute, codenamed Nova, is a cloud computing fabric controller. In
+ addition to its "native" API (the OpenStack API), it also supports the Amazon
+ EC2 API.
+ .
+ Nova is intended to be modular and easy to extend and adapt. It supports many
+ different hypervisors (KVM and Xen to name a few), different database backends
+ (SQLite, MySQL, and PostgreSQL, for instance), different types of user
+ databases (LDAP or SQL), etc.
+ .
+ This package used to provide the AJAX proxy, which is now gone.
 
 Package: nova-vncproxy
 Architecture: all

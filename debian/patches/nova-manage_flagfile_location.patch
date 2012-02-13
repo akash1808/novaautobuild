@@ -1,7 +1,8 @@
-diff -Naurp nova.orig/bin/nova-manage nova/bin/nova-manage
---- nova.orig/bin/nova-manage	2012-02-06 09:42:20.625153598 -0500
-+++ nova/bin/nova-manage	2012-02-06 09:46:10.141153721 -0500
-@@ -2307,7 +2307,7 @@ def methods_of(obj):
+Index: nova-2012.1~e4~20120207.12506/bin/nova-manage
+===================================================================
+--- nova-2012.1~e4~20120207.12506.orig/bin/nova-manage
++++ nova-2012.1~e4~20120207.12506/bin/nova-manage
+@@ -2307,7 +2307,7 @@
  
  def main():
      """Parse options and call the appropriate class/method."""

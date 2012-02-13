@@ -7,6 +7,21 @@ if [ "$1" = "configure" ]; then
     if ! getent passwd nova > /dev/null 2>&1; then
         adduser --system --home /var/lib/nova --ingroup nova --no-create-home --shell /bin/false nova
     fi
+	if [ "$(id -gn nova)"  = "nogroup" ]; then
+		usermod -g nova nova
+	fi
+	chown -R nova:nova /var/log/nova /etc/nova/nova.conf
+	if [ -z "$2" ]; then
+		# New install - blanket permissions
+		chown -R nova:nova /var/lib/nova/
+	elif dpkg --compare-versions "$2" lt "2011.3-0ubuntu4"; then
+		# make sure that LXC rootfs mount points are excleuded
+		# during upgrades from previous versions
+		find /var/lib/nova/ -name 'rootfs' -prune -o \
+			-group root -a -user nova -exec chown nova:nova {} \;
+		find /var/lib/nova/ -name 'rootfs' -prune -o \
+			-group nogroup -a -user nova -exec chown nova:nova {} \;
+	fi	
     if [ "$(id -gn nova)"  = "nogroup" ]; then
         usermod -g nova nova
     fi
