@@ -7,7 +7,10 @@ nova (2012.1~e4~20120211.12605-0ubuntu1) UNRELEASED; urgency=low
   * debian/patches/libvirt-use-console-pipe.patch:
     - Rebased against latest trunk
 
- -- Dave Walker (Daviey) <DaveWalker@ubuntu.com>  Sat, 11 Feb 2012 02:03:25 +0000
+  [ Chuck Short ]
+  * debian/nova.conf: Re-enable default iscsi_helper.
+
+ -- Chuck Short <zulcss@ubuntu.com>  Mon, 13 Feb 2012 14:25:44 -0500
 
 nova (2012.1~e4~20120210.12574-0ubuntu1) precise; urgency=low
 
