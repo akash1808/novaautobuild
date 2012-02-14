@@ -10,8 +10,10 @@ nova (2012.1~e4~20120211.12605-0ubuntu1) UNRELEASED; urgency=low
   [ Chuck Short ]
   * debian/nova.conf: Re-enable default iscsi_helper.
   * debian/nova.conf: More fixups.
+  * debian/control: Dont depend and conflicts on nova-compute-
+    hypervisor. (LP: #923681)
 
- -- Chuck Short <zulcss@ubuntu.com>  Mon, 13 Feb 2012 14:38:24 -0500
+ -- Chuck Short <zulcss@ubuntu.com>  Tue, 14 Feb 2012 11:25:41 -0500
 
 nova (2012.1~e4~20120210.12574-0ubuntu1) precise; urgency=low
 
