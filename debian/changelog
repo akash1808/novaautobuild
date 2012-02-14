@@ -13,8 +13,9 @@ nova (2012.1~e4~20120211.12605-0ubuntu1) UNRELEASED; urgency=low
   * debian/control: Dont depend and conflicts on nova-compute-
     hypervisor. (LP: #923681)
   * debian/patches/libvirt-us-console-pipe.patch: Refreshed.
+  * Temporarily disable console patch.
 
- -- Chuck Short <zulcss@ubuntu.com>  Tue, 14 Feb 2012 12:12:44 -0500
+ -- Chuck Short <zulcss@ubuntu.com>  Tue, 14 Feb 2012 15:46:37 -0500
 
 nova (2012.1~e4~20120210.12574-0ubuntu1) precise; urgency=low
 
