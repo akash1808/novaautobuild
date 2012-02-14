@@ -1,6 +1,7 @@
---- a/Authors
-+++ b/Authors
-@@ -136,6 +136,7 @@
+diff -Naurp nova.orig/Authors nova/Authors
+--- nova.orig/Authors	2012-02-14 12:09:51.913338628 -0500
++++ nova/Authors	2012-02-14 12:10:09.901337405 -0500
+@@ -138,6 +138,7 @@ Renuka Apte <renuka.apte@citrix.com>
  Ricardo Carrillo Cruz <emaildericky@gmail.com>
  Rick Clark <rick@openstack.org>
  Rick Harris <rconradharris@gmail.com>
@@ -8,9 +9,10 @@
  Rob Kost <kost@isi.edu>
  Russell Bryant <rbryant@redhat.com>
  Ryan Lane <rlane@wikimedia.org>
---- a/nova/tests/test_libvirt.py
-+++ b/nova/tests/test_libvirt.py
-@@ -761,7 +761,7 @@
+diff -Naurp nova.orig/nova/tests/test_libvirt.py nova/nova/tests/test_libvirt.py
+--- nova.orig/nova/tests/test_libvirt.py	2012-02-14 12:09:51.997338631 -0500
++++ nova/nova/tests/test_libvirt.py	2012-02-14 12:10:09.905337571 -0500
+@@ -761,7 +761,7 @@ class LibvirtConnTestCase(test.TestCase)
              (lambda t: _ipv4_like(t.findall(parameter)[1].get('value'),
                                    '192.168.*.1'), True),
              (lambda t: t.find('./devices/serial/source').get(
@@ -19,7 +21,7 @@
              (lambda t: t.find('./memory').text, '2097152')]
          if rescue:
              common_checks += [
-@@ -1774,6 +1774,56 @@
+@@ -1774,6 +1774,56 @@ class NWFilterTestCase(test.TestCase):
          db.instance_destroy(admin_ctxt, instance_ref['id'])
  
  
@@ -76,8 +78,9 @@
  class LibvirtUtilsTestCase(test.TestCase):
      def test_get_iscsi_initiator(self):
          self.mox.StubOutWithMock(utils, 'execute')
---- a/nova/tests/test_utils.py
-+++ b/nova/tests/test_utils.py
+diff -Naurp nova.orig/nova/tests/test_utils.py nova/nova/tests/test_utils.py
+--- nova.orig/nova/tests/test_utils.py	2012-02-14 12:09:51.997338631 -0500
++++ nova/nova/tests/test_utils.py	2012-02-14 12:10:09.905337571 -0500
 @@ -17,11 +17,14 @@
  import __builtin__
  import mox
@@ -93,7 +96,7 @@
  import nova
  from nova import exception
  from nova import flags
-@@ -700,3 +703,56 @@
+@@ -700,3 +703,56 @@ class DeprecationTest(test.TestCase):
          h1 = utils.hash_file(flo)
          h2 = hashlib.sha1(data).hexdigest()
          self.assertEquals(h1, h2)
@@ -150,9 +153,10 @@
 +        f.close()
 +
 +
---- a/nova/utils.py
-+++ b/nova/utils.py
-@@ -27,11 +27,13 @@
+diff -Naurp nova.orig/nova/utils.py nova/nova/utils.py
+--- nova.orig/nova/utils.py	2012-02-14 12:09:52.001338633 -0500
++++ nova/nova/utils.py	2012-02-14 12:10:09.905337571 -0500
+@@ -27,11 +27,13 @@ import inspect
  import json
  import lockfile
  import os
@@ -166,7 +170,7 @@
  import struct
  import sys
  import time
-@@ -52,6 +54,7 @@
+@@ -52,6 +54,7 @@ from nova import log as logging
  from nova.openstack.common import cfg
  
  
@@ -174,7 +178,7 @@
  LOG = logging.getLogger("nova.utils")
  ISO_TIME_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
  PERFECT_TIME_FORMAT = "%Y-%m-%dT%H:%M:%S.%f"
-@@ -1420,3 +1423,133 @@
+@@ -1420,3 +1423,133 @@ def read_file_as_root(file_path):
          return out
      except exception.ProcessExecutionError:
          raise exception.FileNotFound(file_path=file_path)
@@ -308,9 +312,10 @@
 +    def close(self):
 +        self.f.close()
 +
---- a/nova/virt/libvirt/connection.py
-+++ b/nova/virt/libvirt/connection.py
-@@ -39,15 +39,19 @@
+diff -Naurp nova.orig/nova/virt/libvirt/connection.py nova/nova/virt/libvirt/connection.py
+--- nova.orig/nova/virt/libvirt/connection.py	2012-02-14 12:09:52.001338633 -0500
++++ nova/nova/virt/libvirt/connection.py	2012-02-14 12:11:04.853340374 -0500
+@@ -39,15 +39,19 @@ Supports KVM, LXC, QEMU, UML, and XEN.
  
  """
  
@@ -330,7 +335,7 @@
  from eventlet import greenthread
  from xml.dom import minidom
  from xml.etree import ElementTree
-@@ -141,6 +145,9 @@
+@@ -138,6 +142,9 @@ libvirt_opts = [
      cfg.BoolOpt('libvirt_use_virtio_for_bridges',
                  default=False,
                  help='Use virtio for bridge interfaces'),
@@ -340,7 +345,7 @@
      cfg.StrOpt('libvirt_disk_prefix',
                 default=None,
                 help='Override the default disk prefix for the devices attached'
-@@ -179,6 +186,57 @@
+@@ -176,6 +183,57 @@ def _get_eph_disk(ephemeral):
      return 'disk.eph' + str(ephemeral['num'])
  
  
@@ -398,7 +403,7 @@
  class LibvirtConnection(driver.ComputeDriver):
  
      def __init__(self, read_only):
-@@ -212,6 +270,8 @@
+@@ -209,6 +267,8 @@ class LibvirtConnection(driver.ComputeDr
  
          self.image_cache_manager = imagecache.ImageCacheManager()
  
@@ -407,7 +412,7 @@
      @property
      def host_state(self):
          if not self._host_state:
-@@ -220,7 +280,11 @@
+@@ -217,7 +277,11 @@ class LibvirtConnection(driver.ComputeDr
  
      def init_host(self, host):
          # NOTE(nsokolov): moved instance restarting to ComputeManager
@@ -420,7 +425,7 @@
  
      @property
      def libvirt_xml(self):
-@@ -281,6 +345,15 @@
+@@ -278,6 +342,15 @@ class LibvirtConnection(driver.ComputeDr
          else:
              return libvirt.openAuth(uri, auth, 0)
  
@@ -436,15 +441,15 @@
      def instance_exists(self, instance_id):
          """Efficient override of base instance_exists method."""
          try:
-@@ -424,6 +497,7 @@
+@@ -419,6 +492,7 @@ class LibvirtConnection(driver.ComputeDr
      def _cleanup(self, instance):
          target = os.path.join(FLAGS.instances_path, instance['name'])
          instance_name = instance['name']
-+        self._stop_console_logger(instance_name)
-         LOG.info(_('instance %(instance_name)s: deleting instance files'
-                 ' %(target)s') % locals())
++        self._stop_console_loger(instance_name)
+         LOG.info(_('Deleting instance files %(target)s') % locals(),
+                  instance=instance)
          if FLAGS.libvirt_type == 'lxc':
-@@ -780,10 +854,10 @@
+@@ -776,10 +850,10 @@ class LibvirtConnection(driver.ComputeDr
  
      @exception.wrap_exception()
      def get_console_output(self, instance):
@@ -458,7 +463,7 @@
  
          if FLAGS.libvirt_type == 'xen':
              # Xen is special
-@@ -791,14 +865,14 @@
+@@ -787,12 +861,12 @@ class LibvirtConnection(driver.ComputeDr
                                           'ttyconsole',
                                           instance['name'])
              data = self._flush_xen_console(virsh_output)
@@ -466,17 +471,14 @@
 +            fpath = self._append_to_file(data, console_fifo)
          elif FLAGS.libvirt_type == 'lxc':
              # LXC is also special
-             LOG.info(_("Unable to read LXC console"))
+             LOG.info(_("Unable to read LXC console"), instance=instance)
          else:
 -            fpath = console_log
 +            fpath = console_fifo
  
--        return libvirt_utils.load_file(fpath)
-+        return self.console_loggers[instance['name']].peek()
+         return libvirt_utils.load_file(fpath)
  
-     @staticmethod
-     def get_host_ip_addr():
-@@ -934,7 +1008,24 @@
+@@ -930,7 +1004,24 @@ class LibvirtConnection(driver.ComputeDr
              libvirt_utils.ensure_tree(container_dir)
  
          # NOTE(vish): No need add the suffix to console.log
