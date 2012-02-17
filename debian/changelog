@@ -16,7 +16,10 @@ nova (2012.1~e4~20120217.12709-0ubuntu1) precise; urgency=low
   * Temporarily disable console patch. (LP: #932787)
   * New usptream version.
 
- -- Chuck Short <zulcss@ubuntu.com>  Fri, 17 Feb 2012 11:02:12 -0500
+  [ Monty Taylor ]
+  * Move files from nova/locale to /usr/share/locale
+
+ -- Monty Taylor <mordred@inaugust.com>  Fri, 17 Feb 2012 15:25:50 -0800
 
 nova (2012.1~e4~20120210.12574-0ubuntu1) precise; urgency=low
 
