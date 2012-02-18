@@ -3,7 +3,10 @@ nova (2012.1~e4~20120217.12709-0ubuntu2) UNRELEASED; urgency=low
   [ Monty Taylor ]
   * Move files from nova/locale to /usr/share/locale
 
- -- Chuck Short <zulcss@ubuntu.com>  Fri, 17 Feb 2012 22:11:28 -0500
+  [Chuck Short]
+  * debian/rules: Fix FTBFS.
+
+ -- Chuck Short <zulcss@ubuntu.com>  Sat, 18 Feb 2012 08:48:39 -0500
 
 nova (2012.1~e4~20120217.12709-0ubuntu1) precise; urgency=low
 
