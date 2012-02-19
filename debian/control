@@ -42,6 +42,7 @@ Build-Depends-Indep:
  python-xattr,
  python-feedparser,
  python-crypto,
+ python-babel,
  pep8
 Build-Conflicts: python-cjson
 Standards-Version: 3.9.2
