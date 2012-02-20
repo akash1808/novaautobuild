@@ -5,11 +5,29 @@ nova (2012.1~e4~20120217.12709-0ubuntu2) UNRELEASED; urgency=low
 
   [Chuck Short]
   * debian/rules: Fix FTBFS.
-
-  [ Chuck Short ]
   * Add depends on python-babel.
+  * Merge Ubuntu/Debian packaging:
+    - debian/copyright: Upate copyright file.
+    - debian/nova-api.init, debian/nova-compute.init,
+      debian/nova-network.init, debian/nova-objectstore,
+      debian/nova-scheduler, debian/nova-volume.init:
+      Synchronize init scripts.
+    - nova-common.install, debian/rules: Install policy.json
+    - debian/rules, debian/nova-xcp-network.install,
+      debian/nova-xcp-plugins.install, nova-xcp-plugins.postrm,
+      debian/nova-xcp-plugins.doc, debian/nova-xcp-plugins.postinst,
+      debian/README.xcp_and_openstack, debian/control,
+      debian/ubuntu_xen-openvswitch-nova.rules,
+      debian/patches/path-to-the-xenhost.conf-fixup.patch: 
+      Add Xen XCP support.
+    - debian/control, 
+      debian/nova-compute-{kvm,lxc,qemu,xen,uml}.postinst: Make 
+      nova-compute a virtual package.
+    - Dropped ubuntu_ubuntu_control_vars: We dont use it 
+      anymore anyways.
+    - 
 
- -- Chuck Short <zulcss@ubuntu.com>  Sun, 19 Feb 2012 13:48:42 -0500
+ -- Chuck Short <zulcss@ubuntu.com>  Sun, 19 Feb 2012 15:50:51 -0500
 
 nova (2012.1~e4~20120217.12709-0ubuntu1) precise; urgency=low
 

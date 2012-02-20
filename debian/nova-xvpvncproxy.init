@@ -1,21 +1,21 @@
 #!/bin/sh
 ### BEGIN INIT INFO
-# Provides:          nova-scheduler
+# Provides:          nova-xvpvncproxy
 # Required-Start:    $network $local_fs $remote_fs $syslog
 # Required-Stop:     $remote_fs
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: Nova Scheduler
-# Description:       Schedules instances, volumes, etc. for Nova
+# Short-Description: Nova XVP VNC proxy
+# Description:       Nova XVP VNC proxy
 ### END INIT INFO
 
 # Author: Julien Danjou <acid@debian.org>
 
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
-DESC="OpenStack Compute Scheduler"
-NAME=nova-scheduler
-DAEMON=/usr/bin/nova-scheduler
+DESC="OpenStack XVP VNC proxy"
+NAME=nova-xvpvncproxy
+DAEMON=/usr/bin/nova-xvpvncproxy
 DAEMON_ARGS="--flagfile=/etc/nova/nova.conf"
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
@@ -35,9 +35,9 @@ chown ${NOVA_USER} ${LOCK_DIR}
 
 do_start()
 {
-	start-stop-daemon --start --quiet --background --chuid ${NOVA_USER}:nova --make-pidfile --pidfile $PIDFILE --startas $DAEMON --test > /dev/null \
+	start-stop-daemon --start --background --quiet --chuid ${NOVA_USER}:nova --make-pidfile --pidfile $PIDFILE --startas $DAEMON --test > /dev/null \
 		|| return 1
-	start-stop-daemon --start --quiet --background --chuid ${NOVA_USER}:nova --make-pidfile --pidfile $PIDFILE --startas $DAEMON -- \
+	start-stop-daemon --start --background --quiet --chuid ${NOVA_USER}:nova --make-pidfile --pidfile $PIDFILE --startas $DAEMON -- \
 		$DAEMON_ARGS \
 		|| return 2
 }

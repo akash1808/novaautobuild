@@ -1,9 +1,11 @@
-Format-Specification: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=135
-Name: nova
+Format: http://dep.debian.net/deps/dep5-
+Upstream-Name: nova
 Source: https://code.launchpad.net/nova
 
 Files: *
-Copyright: 2010 United States Government as represented by the Administrator of the National Aeronautics and Space Administration.
+Copyright: 2010 United States Government as represented
+                by the Administrator of the National Aeronautics
+                and Space Administration.
 Copyright: 2010 OpenStack LLC
 Copyright: Others (See individual files for more details)
 License: Apache-2
@@ -23,8 +25,8 @@ License: Apache-2
  can be found in `/usr/share/common-licenses/Apache-2.0'.
 
 Files: contrib/boto_v6/*
-Copyright: (c) 2006-2010, Mitch Garnaat http://garnaat.org/
-       (c) 2010, Eucalyptus Systems, Inc.
+Copyright: 2006-2010, Mitch Garnaat http://garnaat.org/
+           2010, Eucalyptus Systems, Inc.
 License: BSD-Style
 
  Permission is hereby granted, free of charge, to any person obtaining a
@@ -34,10 +36,10 @@ License: BSD-Style
  distribute, sublicense, and/or sell copies of the Software, and to
  permit persons to whom the Software is furnished to do so, subject to
  the following conditions:
-
+ .
  The above copyright notice and this permission notice shall be included
  in all copies or substantial portions of the Software.
-
+ .
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
  OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -45,3 +47,4 @@ License: BSD-Style
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  DEALINGS IN THE SOFTWARE.
+
