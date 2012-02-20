@@ -5,11 +5,10 @@ nova (2012.1~e4~20120217.12709-0ubuntu2) UNRELEASED; urgency=low
 
   [Chuck Short]
   * debian/rules: Fix FTBFS.
+  * debian/control: Add depends on python-babel.
+  * debian/control: Add depends on python-iso8601.
 
-  [ Chuck Short ]
-  * Add depends on python-babel.
-
- -- Chuck Short <zulcss@ubuntu.com>  Sun, 19 Feb 2012 13:48:42 -0500
+ -- Chuck Short <zulcss@ubuntu.com>  Mon, 20 Feb 2012 08:43:25 -0500
 
 nova (2012.1~e4~20120217.12709-0ubuntu1) precise; urgency=low
 

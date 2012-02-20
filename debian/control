@@ -43,6 +43,7 @@ Build-Depends-Indep:
  python-feedparser,
  python-crypto,
  python-babel,
+ python-iso8601,
  pep8
 Build-Conflicts: python-cjson
 Standards-Version: 3.9.2
