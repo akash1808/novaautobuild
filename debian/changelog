@@ -3,12 +3,15 @@ nova (2012.1~e4~20120217.12709-0ubuntu2) UNRELEASED; urgency=low
   [ Monty Taylor ]
   * Move files from nova/locale to /usr/share/locale
 
-  [Chuck Short]
+  [ Chuck Short ]
   * debian/rules: Fix FTBFS.
   * debian/control: Add depends on python-babel.
   * debian/control: Add depends on python-iso8601.
 
- -- Chuck Short <zulcss@ubuntu.com>  Mon, 20 Feb 2012 08:43:25 -0500
+  [ Joseph Heck ]
+  * debian/nova-console.install: Add nova-consoleauth.
+
+ -- Chuck Short <zulcss@ubuntu.com>  Tue, 21 Feb 2012 09:26:07 -0500
 
 nova (2012.1~e4~20120217.12709-0ubuntu1) precise; urgency=low
 
