@@ -9,7 +9,7 @@ nova (2012.1~e4~20120217.12709-0ubuntu2) UNRELEASED; urgency=low
   * debian/control: Add depends on python-iso8601.
   * debian/nova-api-os-volume.install: Fix FTBS.
   * debian/patches/libvirt-use-console-pipe.patch: Refreshed and 
-    Re-enabled.
+    Re-enabled. (LP: #879666)
 
   [ Joseph Heck ]
   * debian/nova-console.install: Add nova-consoleauth.
