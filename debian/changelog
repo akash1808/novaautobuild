@@ -10,8 +10,9 @@ nova (2012.1~e4~20120217.12709-0ubuntu2) UNRELEASED; urgency=low
 
   [ Joseph Heck ]
   * debian/nova-console.install: Add nova-consoleauth.
+  * Add nova-api-ec2, nova-api-os-compute, and nova-api-os-volume.
 
- -- Chuck Short <zulcss@ubuntu.com>  Tue, 21 Feb 2012 09:26:07 -0500
+ -- Chuck Short <zulcss@ubuntu.com>  Tue, 21 Feb 2012 09:30:05 -0500
 
 nova (2012.1~e4~20120217.12709-0ubuntu1) precise; urgency=low
 
