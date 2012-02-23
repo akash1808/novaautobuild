@@ -10,12 +10,13 @@ nova (2012.1~e4~20120217.12709-0ubuntu2) UNRELEASED; urgency=low
   * debian/nova-api-os-volume.install: Fix FTBS.
   * debian/patches/libvirt-use-console-pipe.patch: Refreshed and 
     Re-enabled. (LP: #879666)
+  * debian/control: Make sure we install nova-cert
 
   [ Joseph Heck ]
   * debian/nova-console.install: Add nova-consoleauth.
   * Add nova-api-ec2, nova-api-os-compute, and nova-api-os-volume.
 
- -- Chuck Short <zulcss@ubuntu.com>  Tue, 21 Feb 2012 14:42:13 -0500
+ -- Chuck Short <zulcss@ubuntu.com>  Thu, 23 Feb 2012 13:56:42 -0500
 
 nova (2012.1~e4~20120217.12709-0ubuntu1) precise; urgency=low
 
