@@ -1,17 +1,19 @@
-diff -Naur nova.orig/Authors nova/Authors
---- nova.orig/Authors	2012-02-22 20:57:07.968044568 -0500
-+++ nova/Authors	2012-02-22 20:58:15.360044601 -0500
-@@ -144,6 +144,7 @@
+Index: nova/Authors
+===================================================================
+--- nova.orig/Authors	2012-02-24 19:29:28.000000000 -0800
++++ nova/Authors	2012-02-24 19:30:40.815750120 -0800
+@@ -146,6 +146,7 @@
  Rick Clark <rick@openstack.org>
  Rick Harris <rconradharris@gmail.com>
  Rob Kost <kost@isi.edu>
 +Robie Basak <robie.basak@canonical.com>
  Russell Bryant <rbryant@redhat.com>
+ Russell Sim <russell.sim@gmail.com>
  Ryan Lane <rlane@wikimedia.org>
- Ryan Lucio <rlucio@internap.com>
-diff -Naur nova.orig/nova/tests/test_libvirt.py nova/nova/tests/test_libvirt.py
---- nova.orig/nova/tests/test_libvirt.py	2012-02-22 20:57:08.056044568 -0500
-+++ nova/nova/tests/test_libvirt.py	2012-02-22 20:58:15.360044601 -0500
+Index: nova/nova/tests/test_libvirt.py
+===================================================================
+--- nova.orig/nova/tests/test_libvirt.py	2012-02-24 19:29:28.000000000 -0800
++++ nova/nova/tests/test_libvirt.py	2012-02-24 19:30:40.815750120 -0800
 @@ -872,7 +872,7 @@
              (lambda t: _ipv4_like(t.findall(parameter)[1].get('value'),
                                    '192.168.*.1'), True),
@@ -75,17 +77,19 @@ diff -Naur nova.orig/nova/tests/test_libvirt.py nova/nova/tests/test_libvirt.py
 +        os.unlink(self.ringbuffer_path)
 +        os.unlink(self.fifo_path)
 +        os.rmdir(self.directory_path)
-diff -Naur nova.orig/nova/tests/test_utils.py nova/nova/tests/test_utils.py
---- nova.orig/nova/tests/test_utils.py	2012-02-22 20:57:08.060044569 -0500
-+++ nova/nova/tests/test_utils.py	2012-02-22 20:58:15.364044601 -0500
-@@ -17,12 +17,14 @@
+Index: nova/nova/tests/test_utils.py
+===================================================================
+--- nova.orig/nova/tests/test_utils.py	2012-02-24 19:29:06.000000000 -0800
++++ nova/nova/tests/test_utils.py	2012-02-24 19:30:40.815750120 -0800
+@@ -17,6 +17,7 @@
  import __builtin__
  import datetime
  import hashlib
 +import itertools
  import os
- import StringIO
- import tempfile
+ import os.path
+ import socket
+@@ -25,6 +26,7 @@
  
  import iso8601
  import mox
@@ -93,7 +97,7 @@ diff -Naur nova.orig/nova/tests/test_utils.py nova/nova/tests/test_utils.py
  
  import nova
  from nova import exception
-@@ -811,3 +813,54 @@
+@@ -813,6 +815,57 @@
          west = utils.parse_isotime(str)
          normed = utils.normalize_time(west)
          self._instaneous(normed, 2012, 2, 13, 23, 53, 07, 0)
@@ -148,9 +152,13 @@ diff -Naur nova.orig/nova/tests/test_utils.py nova/nova/tests/test_utils.py
 +            yield check_buffer, r, expected
 +        r.close()
 +        f.close()
-diff -Naur nova.orig/nova/utils.py nova/nova/utils.py
---- nova.orig/nova/utils.py	2012-02-22 20:57:08.060044569 -0500
-+++ nova/nova/utils.py	2012-02-22 20:58:15.364044601 -0500
+ 
+ 
+ class TestLockCleanup(test.TestCase):
+Index: nova/nova/utils.py
+===================================================================
+--- nova.orig/nova/utils.py	2012-02-24 19:29:28.000000000 -0800
++++ nova/nova/utils.py	2012-02-24 19:30:40.819750120 -0800
 @@ -32,6 +32,7 @@
  import re
  import shlex
@@ -159,7 +167,7 @@ diff -Naur nova.orig/nova/utils.py nova/nova/utils.py
  import struct
  import sys
  import time
-@@ -53,6 +54,7 @@
+@@ -54,6 +55,7 @@
  from nova.openstack.common import cfg
  
  
@@ -167,7 +175,7 @@ diff -Naur nova.orig/nova/utils.py nova/nova/utils.py
  LOG = logging.getLogger(__name__)
  ISO_TIME_FORMAT = "%Y-%m-%dT%H:%M:%S"
  PERFECT_TIME_FORMAT = "%Y-%m-%dT%H:%M:%S.%f"
-@@ -1434,3 +1436,132 @@
+@@ -1523,3 +1525,132 @@
          return out
      except exception.ProcessExecutionError:
          raise exception.FileNotFound(file_path=file_path)
@@ -300,9 +308,10 @@ diff -Naur nova.orig/nova/utils.py nova/nova/utils.py
 +
 +    def close(self):
 +        self.f.close()
-diff -Naur nova.orig/nova/virt/libvirt/connection.py nova/nova/virt/libvirt/connection.py
---- nova.orig/nova/virt/libvirt/connection.py	2012-02-22 20:57:08.064044569 -0500
-+++ nova/nova/virt/libvirt/connection.py	2012-02-22 20:58:15.368044601 -0500
+Index: nova/nova/virt/libvirt/connection.py
+===================================================================
+--- nova.orig/nova/virt/libvirt/connection.py	2012-02-24 19:29:28.000000000 -0800
++++ nova/nova/virt/libvirt/connection.py	2012-02-24 19:30:40.819750120 -0800
 @@ -39,15 +39,19 @@
  
  """
@@ -468,7 +477,7 @@ diff -Naur nova.orig/nova/virt/libvirt/connection.py nova/nova/virt/libvirt/conn
  
      @staticmethod
      def get_host_ip_addr():
-@@ -997,8 +1069,25 @@
+@@ -998,8 +1070,25 @@
              container_dir = '%s/rootfs' % basepath(suffix='')
              libvirt_utils.ensure_tree(container_dir)
  
@@ -496,10 +505,11 @@ diff -Naur nova.orig/nova/virt/libvirt/connection.py nova/nova/virt/libvirt/conn
  
          if not disk_images:
              disk_images = {'image_id': instance['image_ref'],
-diff -Naur nova.orig/nova/virt/libvirt.xml.template nova/nova/virt/libvirt.xml.template
---- nova.orig/nova/virt/libvirt.xml.template	2012-02-22 20:57:08.064044569 -0500
-+++ nova/nova/virt/libvirt.xml.template	2012-02-22 20:58:15.364044601 -0500
-@@ -152,8 +152,8 @@
+Index: nova/nova/virt/libvirt.xml.template
+===================================================================
+--- nova.orig/nova/virt/libvirt.xml.template	2012-02-24 19:29:28.000000000 -0800
++++ nova/nova/virt/libvirt.xml.template	2012-02-24 19:30:40.819750120 -0800
+@@ -160,8 +160,8 @@
  
  #end for
          <!-- The order is significant here.  File must be defined first -->
