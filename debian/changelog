@@ -1,3 +1,9 @@
+nova (2012.1~e4~20120224.12913-0ubuntu2) UNRELEASED; urgency=low
+
+  * debian/patches/libvirt-use-console-pipe.patch: Refreshed. 
+
+ -- Chuck Short <zulcss@ubuntu.com>  Mon, 27 Feb 2012 09:08:05 -0500
+
 nova (2012.1~e4~20120224.12913-0ubuntu1) precise; urgency=low
 
   [ Monty Taylor ]
