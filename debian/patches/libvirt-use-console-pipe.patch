@@ -1,7 +1,7 @@
 diff -Naurp nova.orig/Authors nova/Authors
---- nova.orig/Authors	2012-02-27 09:01:19.301005811 -0500
-+++ nova/Authors	2012-02-27 09:03:45.361009299 -0500
-@@ -146,6 +146,7 @@ Ricardo Carrillo Cruz <emaildericky@gmai
+--- nova.orig/Authors	2012-02-27 21:17:48.981866506 -0500
++++ nova/Authors	2012-02-27 21:18:54.317865947 -0500
+@@ -147,6 +147,7 @@ Ricardo Carrillo Cruz <emaildericky@gmai
  Rick Clark <rick@openstack.org>
  Rick Harris <rconradharris@gmail.com>
  Rob Kost <kost@isi.edu>
@@ -10,8 +10,8 @@ diff -Naurp nova.orig/Authors nova/Authors
  Russell Sim <russell.sim@gmail.com>
  Ryan Lane <rlane@wikimedia.org>
 diff -Naurp nova.orig/nova/tests/test_libvirt.py nova/nova/tests/test_libvirt.py
---- nova.orig/nova/tests/test_libvirt.py	2012-02-27 09:01:19.393005813 -0500
-+++ nova/nova/tests/test_libvirt.py	2012-02-27 09:03:45.365009298 -0500
+--- nova.orig/nova/tests/test_libvirt.py	2012-02-27 21:17:49.069866506 -0500
++++ nova/nova/tests/test_libvirt.py	2012-02-27 21:18:54.317865947 -0500
 @@ -872,7 +872,7 @@ class LibvirtConnTestCase(test.TestCase)
              (lambda t: _ipv4_like(t.findall(parameter)[1].get('value'),
                                    '192.168.*.1'), True),
@@ -75,85 +75,9 @@ diff -Naurp nova.orig/nova/tests/test_libvirt.py nova/nova/tests/test_libvirt.py
 +        os.unlink(self.ringbuffer_path)
 +        os.unlink(self.fifo_path)
 +        os.rmdir(self.directory_path)
-diff -Naurp nova.orig/nova/tests/test_utils.py.rej nova/nova/tests/test_utils.py.rej
---- nova.orig/nova/tests/test_utils.py.rej	1969-12-31 19:00:00.000000000 -0500
-+++ nova/nova/tests/test_utils.py.rej	2012-02-27 09:03:45.365009298 -0500
-@@ -0,0 +1,72 @@
-+--- nova/tests/test_utils.py	2012-02-22 20:57:08.060044569 -0500
-++++ nova/tests/test_utils.py	2012-02-22 20:58:15.364044601 -0500
-+@@ -17,12 +17,14 @@
-+ import __builtin__
-+ import datetime
-+ import hashlib
-++import itertools
-+ import os
-+ import StringIO
-+ import tempfile
-+ 
-+ import iso8601
-+ import mox
-++import nose
-+ 
-+ import nova
-+ from nova import exception
-+@@ -811,3 +813,54 @@
-+         west = utils.parse_isotime(str)
-+         normed = utils.normalize_time(west)
-+         self._instaneous(normed, 2012, 2, 13, 23, 53, 07, 0)
-++ 
-++class RingBufferTestCase(test.TestCase):
-++    """Unit test for utils.RingBuffer()."""
-++    def setUp(self):
-++        super(RingBufferTestCase, self).setUp()
-++        self.f = tempfile.NamedTemporaryFile()
-++        self.r = utils.RingBuffer(self.f.name, max_size=4)
-++
-++    def tearDown(self):
-++        super(RingBufferTestCase, self).tearDown()
-++        self.r.close()
-++        self.f.close()
-++
-++    def testEmpty(self):
-++        self.assertEquals(self.r.peek(), '')
-++
-++    def testReOpen(self):
-++        self.r.write('1')
-++        self.r.close()
-++        self.r = utils.RingBuffer(self.f.name, max_size=4)
-++        self.assertEquals(self.r.peek(), '1')
-++
-++
-++def testPermutations():
-++    """Test various permutations of writing to a RingBuffer.
-++
-++    Try all permutations of writing [0,5) bytes three times to a RingBuffer
-++    of size 4. This makes use of nose's test generator capability so cannot
-++    be a subclass of test.TestCase.
-++
-++    """
-++    def check_buffer(r, expected):
-++        nose.tools.eq_(r.peek(), expected)
-++
-++    SIZE = 4
-++    for sequence in itertools.product(range(5), range(5), range(5)):
-++        f = tempfile.NamedTemporaryFile()
-++        r = utils.RingBuffer(f.name, max_size=SIZE)
-++        source = itertools.count()
-++        expected = ''
-++
-++        def next_n(n):
-++            return ''.join(str(next(source)) for x in range(n))
-++        for entry in sequence:
-++            to_insert = next_n(entry)
-++            expected += to_insert
-++            expected = expected[max(0, len(expected) - SIZE):]
-++            r.write(to_insert)
-++            yield check_buffer, r, expected
-++        r.close()
-++        f.close()
 diff -Naurp nova.orig/nova/utils.py nova/nova/utils.py
---- nova.orig/nova/utils.py	2012-02-27 09:01:19.397005813 -0500
-+++ nova/nova/utils.py	2012-02-27 09:03:45.369009296 -0500
+--- nova.orig/nova/utils.py	2012-02-27 21:17:49.073866506 -0500
++++ nova/nova/utils.py	2012-02-27 21:21:49.385866422 -0500
 @@ -32,6 +32,7 @@ import random
  import re
  import shlex
@@ -170,11 +94,11 @@ diff -Naurp nova.orig/nova/utils.py nova/nova/utils.py
  LOG = logging.getLogger(__name__)
  ISO_TIME_FORMAT = "%Y-%m-%dT%H:%M:%S"
  PERFECT_TIME_FORMAT = "%Y-%m-%dT%H:%M:%S.%f"
-@@ -1523,3 +1525,132 @@ def read_file_as_root(file_path):
-         return out
-     except exception.ProcessExecutionError:
-         raise exception.FileNotFound(file_path=file_path)
-+        
+@@ -1543,3 +1545,128 @@ def temporary_chown(path, owner_uid=None
+     finally:
+         if orig_uid != owner_uid:
+             execute('chown', orig_uid, path, run_as_root=True)
++
 +class RingBuffer(object):
 +    """Generic userspace on-disk ringbuffer implementation."""
 +    _header_max_int = (2 ** (struct.calcsize('I') * BITS_PER_BYTE)) - 1
@@ -247,10 +171,6 @@ diff -Naurp nova.orig/nova/utils.py nova/nova/utils.py
 +    def _read_slice(self, start, end):
 +        if start == end:
 +            return ''
-+
-+        self._seek(start)
-+        return self.f.read(end - start)
-+
 +    def _write_slice(self, pos, data):
 +        self._seek(pos)
 +        self.f.write(data)
@@ -304,8 +224,8 @@ diff -Naurp nova.orig/nova/utils.py nova/nova/utils.py
 +    def close(self):
 +        self.f.close()
 diff -Naurp nova.orig/nova/virt/libvirt/connection.py nova/nova/virt/libvirt/connection.py
---- nova.orig/nova/virt/libvirt/connection.py	2012-02-27 09:01:19.401005813 -0500
-+++ nova/nova/virt/libvirt/connection.py	2012-02-27 09:05:08.413011273 -0500
+--- nova.orig/nova/virt/libvirt/connection.py	2012-02-27 21:17:49.073866506 -0500
++++ nova/nova/virt/libvirt/connection.py	2012-02-27 21:18:54.325866323 -0500
 @@ -39,16 +39,20 @@ Supports KVM, LXC, QEMU, UML, and XEN.
  
  """
@@ -501,8 +421,8 @@ diff -Naurp nova.orig/nova/virt/libvirt/connection.py nova/nova/virt/libvirt/con
          if not disk_images:
              disk_images = {'image_id': instance['image_ref'],
 diff -Naurp nova.orig/nova/virt/libvirt.xml.template nova/nova/virt/libvirt.xml.template
---- nova.orig/nova/virt/libvirt.xml.template	2012-02-27 09:01:19.401005813 -0500
-+++ nova/nova/virt/libvirt.xml.template	2012-02-27 09:03:45.373009293 -0500
+--- nova.orig/nova/virt/libvirt.xml.template	2012-02-27 21:17:49.073866506 -0500
++++ nova/nova/virt/libvirt.xml.template	2012-02-27 21:18:54.325866323 -0500
 @@ -160,8 +160,8 @@
  
  #end for
