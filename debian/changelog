@@ -1,10 +1,36 @@
-nova (2012.1~e4~20120224.12913-0ubuntu2) UNRELEASED; urgency=low
+nova (2012.1~e4~20120229.12978-0ubuntu1) UNRELEASED; urgency=low
 
+  [ Adam Gandleman ]
   * debian/patches/libvirt-use-console-pipe.patch: Refreshed. 
   * debain/nova-volume.upstart.in: Ensure lock directory is created
     (LP: #940780)
+  * debain/control: Fix nova-compute-$flavor Depends
 
- -- Adam Gandelman <adamg@canonical.com>  Fri, 24 Feb 2012 22:14:24 -0800
+  [ Chuck Short ]
+  * debian/rules: Fix FTBFS.
+  * Merge Ubuntu/Debian packaging:
+    - Thanks to Julien Danjou, Ghe Rivero, and Thomas Goirand
+    - debian/copyright: Update copyright file.
+    - debian/nova-api.init, debian/nova-compute.init,
+      debian/nova-network.init, debian/nova-objectstore,
+      debian/nova-scheduler, debian/nova-volume.init:
+      Synchronize init scripts.
+    - nova-common.install, debian/rules: Install policy.json
+    - debian/rules, debian/nova-xcp-network.install,
+      debian/nova-xcp-plugins.install, nova-xcp-plugins.postrm,
+      debian/nova-xcp-plugins.doc, debian/nova-xcp-plugins.postinst,
+      debian/README.xcp_and_openstack, debian/control,
+      debian/ubuntu_xen-openvswitch-nova.rules,
+      debian/patches/path-to-the-xenhost.conf-fixup.patch:
+      Add Xen XCP support.
+    - debian/control,
+      debian/nova-compute-{kvm,lxc,qemu,xen,uml}.postinst: Make
+      nova-compute a virtual package.
+    - Dropped ubuntu_ubuntu_control_vars: We dont use it
+  * New upstream release.
+  * Dropped python-babel, it will be handled by langpacks.
+
+ -- Chuck Short <zulcss@ubuntu.com>  Wed, 29 Feb 2012 08:51:31 -0500
 
 nova (2012.1~e4~20120224.12913-0ubuntu1) precise; urgency=low
 
