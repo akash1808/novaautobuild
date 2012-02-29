@@ -1,19 +1,19 @@
-Index: nova-src/Authors
+Index: nova/Authors
 ===================================================================
---- nova-src.orig/Authors	2012-02-28 10:30:58.000000000 -0800
-+++ nova-src/Authors	2012-02-28 10:32:36.086640111 -0800
-@@ -147,6 +147,7 @@
- Rick Clark <rick@openstack.org>
+--- nova.orig/Authors	2012-02-29 13:34:24.914358872 -0800
++++ nova/Authors	2012-02-29 13:37:15.602351362 -0800
+@@ -150,6 +150,7 @@
  Rick Harris <rconradharris@gmail.com>
  Rob Kost <kost@isi.edu>
+ Robert Esker <esker@netapp.com>
 +Robie Basak <robie.basak@canonical.com>
  Russell Bryant <rbryant@redhat.com>
  Russell Sim <russell.sim@gmail.com>
  Ryan Lane <rlane@wikimedia.org>
-Index: nova-src/nova/tests/test_libvirt.py
+Index: nova/nova/tests/test_libvirt.py
 ===================================================================
---- nova-src.orig/nova/tests/test_libvirt.py	2012-02-28 10:30:58.000000000 -0800
-+++ nova-src/nova/tests/test_libvirt.py	2012-02-28 10:32:36.086640111 -0800
+--- nova.orig/nova/tests/test_libvirt.py	2012-02-29 13:34:25.094358864 -0800
++++ nova/nova/tests/test_libvirt.py	2012-02-29 13:36:49.298352518 -0800
 @@ -872,7 +872,7 @@
              (lambda t: _ipv4_like(t.findall(parameter)[1].get('value'),
                                    '192.168.*.1'), True),
@@ -77,10 +77,10 @@ Index: nova-src/nova/tests/test_libvirt.py
 +        os.unlink(self.ringbuffer_path)
 +        os.unlink(self.fifo_path)
 +        os.rmdir(self.directory_path)
-Index: nova-src/nova/tests/test_utils.py
+Index: nova/nova/tests/test_utils.py
 ===================================================================
---- nova-src.orig/nova/tests/test_utils.py	2012-02-28 10:00:07.000000000 -0800
-+++ nova-src/nova/tests/test_utils.py	2012-02-28 10:32:36.086640111 -0800
+--- nova.orig/nova/tests/test_utils.py	2012-02-29 13:34:25.102358863 -0800
++++ nova/nova/tests/test_utils.py	2012-02-29 13:36:49.298352518 -0800
 @@ -17,6 +17,7 @@
  import __builtin__
  import datetime
@@ -97,7 +97,7 @@ Index: nova-src/nova/tests/test_utils.py
  
  import nova
  from nova import exception
-@@ -813,6 +815,57 @@
+@@ -818,6 +820,57 @@
          west = utils.parse_isotime(str)
          normed = utils.normalize_time(west)
          self._instaneous(normed, 2012, 2, 13, 23, 53, 07, 0)
@@ -155,10 +155,10 @@ Index: nova-src/nova/tests/test_utils.py
  
  
  class TestLockCleanup(test.TestCase):
-Index: nova-src/nova/utils.py
+Index: nova/nova/utils.py
 ===================================================================
---- nova-src.orig/nova/utils.py	2012-02-28 10:30:58.000000000 -0800
-+++ nova-src/nova/utils.py	2012-02-28 10:32:36.090640111 -0800
+--- nova.orig/nova/utils.py	2012-02-29 13:34:25.106358862 -0800
++++ nova/nova/utils.py	2012-02-29 13:36:49.302352518 -0800
 @@ -33,6 +33,7 @@
  import shlex
  import shutil
@@ -175,7 +175,7 @@ Index: nova-src/nova/utils.py
  LOG = logging.getLogger(__name__)
  ISO_TIME_FORMAT = "%Y-%m-%dT%H:%M:%S"
  PERFECT_TIME_FORMAT = "%Y-%m-%dT%H:%M:%S.%f"
-@@ -1525,6 +1527,135 @@
+@@ -1530,6 +1532,135 @@
          return out
      except exception.ProcessExecutionError:
          raise exception.FileNotFound(file_path=file_path)
@@ -311,10 +311,10 @@ Index: nova-src/nova/utils.py
  
  
  @contextlib.contextmanager
-Index: nova-src/nova/virt/libvirt/connection.py
+Index: nova/nova/virt/libvirt/connection.py
 ===================================================================
---- nova-src.orig/nova/virt/libvirt/connection.py	2012-02-28 10:30:58.000000000 -0800
-+++ nova-src/nova/virt/libvirt/connection.py	2012-02-28 10:32:36.090640111 -0800
+--- nova.orig/nova/virt/libvirt/connection.py	2012-02-29 13:34:25.110358862 -0800
++++ nova/nova/virt/libvirt/connection.py	2012-02-29 13:36:49.302352518 -0800
 @@ -39,15 +39,19 @@
  
  """
@@ -508,10 +508,10 @@ Index: nova-src/nova/virt/libvirt/connection.py
  
          if not disk_images:
              disk_images = {'image_id': instance['image_ref'],
-Index: nova-src/nova/virt/libvirt.xml.template
+Index: nova/nova/virt/libvirt.xml.template
 ===================================================================
---- nova-src.orig/nova/virt/libvirt.xml.template	2012-02-28 10:30:58.000000000 -0800
-+++ nova-src/nova/virt/libvirt.xml.template	2012-02-28 10:32:36.094640111 -0800
+--- nova.orig/nova/virt/libvirt.xml.template	2012-02-29 13:34:25.110358862 -0800
++++ nova/nova/virt/libvirt.xml.template	2012-02-29 13:36:49.302352518 -0800
 @@ -160,8 +160,8 @@
  
  #end for
