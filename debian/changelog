@@ -1,13 +1,15 @@
-nova (2012.1~e4~20120217.12709-0ubuntu2) UNRELEASED; urgency=low
+nova (2012.1~e4~20120229.12978-0ubuntu1) UNRELEASED; urgency=low
 
-  [ Monty Taylor ]
-  * Move files from nova/locale to /usr/share/locale
+  [ Adam Gandleman ]
+  * debian/patches/libvirt-use-console-pipe.patch: Refreshed. 
+  * debain/nova-volume.upstart.in: Ensure lock directory is created
+    (LP: #940780)
 
-  [Chuck Short]
+  [ Chuck Short ]
   * debian/rules: Fix FTBFS.
-  * Add depends on python-babel.
   * Merge Ubuntu/Debian packaging:
-    - debian/copyright: Upate copyright file.
+    - Thanks to Julien Danjou, Ghe Rivero, and Thomas Goirand
+    - debian/copyright: Update copyright file.
     - debian/nova-api.init, debian/nova-compute.init,
       debian/nova-network.init, debian/nova-objectstore,
       debian/nova-scheduler, debian/nova-volume.init:
@@ -18,16 +20,36 @@ nova (2012.1~e4~20120217.12709-0ubuntu2) UNRELEASED; urgency=low
       debian/nova-xcp-plugins.doc, debian/nova-xcp-plugins.postinst,
       debian/README.xcp_and_openstack, debian/control,
       debian/ubuntu_xen-openvswitch-nova.rules,
-      debian/patches/path-to-the-xenhost.conf-fixup.patch: 
+      debian/patches/path-to-the-xenhost.conf-fixup.patch:
       Add Xen XCP support.
-    - debian/control, 
-      debian/nova-compute-{kvm,lxc,qemu,xen,uml}.postinst: Make 
+    - debian/control,
+      debian/nova-compute-{kvm,lxc,qemu,xen,uml}.postinst: Make
       nova-compute a virtual package.
-    - Dropped ubuntu_ubuntu_control_vars: We dont use it 
-      anymore anyways.
-    - 
+    - Dropped ubuntu_ubuntu_control_vars: We dont use it
+  * New upstream release.
+  * Dropped python-babel, it will be handled by langpacks.
 
- -- Chuck Short <zulcss@ubuntu.com>  Sun, 19 Feb 2012 15:50:51 -0500
+ -- Chuck Short <zulcss@ubuntu.com>  Wed, 29 Feb 2012 08:51:31 -0500
+
+nova (2012.1~e4~20120224.12913-0ubuntu1) precise; urgency=low
+
+  [ Monty Taylor ]
+  * Move files from nova/locale to /usr/share/locale
+
+  [ Chuck Short ]
+  * debian/rules: Fix FTBFS.
+  * debian/control: Add depends on python-babel.
+  * debian/control: Add depends on python-iso8601.
+  * debian/nova-api-os-volume.install: Fix FTBS.
+  * debian/patches/libvirt-use-console-pipe.patch: Refreshed and 
+    Re-enabled. (LP: #879666)
+  * debian/control: Make sure we install nova-cert
+
+  [ Joseph Heck ]
+  * debian/nova-console.install: Add nova-consoleauth.
+  * Add nova-api-ec2, nova-api-os-compute, and nova-api-os-volume.
+
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 24 Feb 2012 10:08:10 -0500
 
 nova (2012.1~e4~20120217.12709-0ubuntu1) precise; urgency=low
 
