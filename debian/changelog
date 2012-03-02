@@ -6,6 +6,8 @@ nova (2012.1~e4~20120229.12978-0ubuntu1) UNRELEASED; urgency=low
     (LP: #940780)
   * debain/control: Fix nova-compute-$flavor Depends
   * debian/control: Add python-iso8601 to python-nova Depends
+  * debian/patches/service_account_placeholder.patch: Add examples
+    to highlight new keystone service auth interface.
 
   [ Chuck Short ]
   * debian/rules: Fix FTBFS.

@@ -1,3 +1,4 @@
 nova-manage_flagfile_location.patch
 kombu_tests_timeout.patch
 libvirt-use-console-pipe.patch
+service_account_placeholder.patch
