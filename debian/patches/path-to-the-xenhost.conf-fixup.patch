@@ -1,14 +1,12 @@
-Description: Fixes the path to the xenhost.conf file
-Author: Thomas Goirand <zigo@debian.org>
-Forwarded: not-needed
---- a/plugins/xenserver/xenapi/etc/xapi.d/plugins/xenhost
-+++ b/plugins/xenserver/xenapi/etc/xapi.d/plugins/xenhost
-@@ -40,7 +40,7 @@
+diff -Naurp nova-2012.1.orig/plugins/xenserver/xenapi/etc/xapi.d/plugins/xenhost nova-2012.1/plugins/xenserver/xenapi/etc/xapi.d/plugins/xenhost
+--- nova-2012.1.orig/plugins/xenserver/xenapi/etc/xapi.d/plugins/xenhost	2012-03-01 12:45:52.000000000 -0500
++++ nova-2012.1/plugins/xenserver/xenapi/etc/xapi.d/plugins/xenhost	2012-03-02 11:02:03.078762386 -0500
+@@ -41,7 +41,7 @@ import pluginlib_nova as pluginlib
  pluginlib.configure_logging("xenhost")
  
  host_data_pattern = re.compile(r"\s*(\S+) \([^\)]+\) *: ?(.*)")
 -config_file_path = "/usr/etc/xenhost.conf"
 +config_file_path = "/etc/xcp/xenhost.conf"
+ DEFAULT_TRIES = 23
+ DEFAULT_SLEEP = 10
  
- 
- def jsonify(fnc):

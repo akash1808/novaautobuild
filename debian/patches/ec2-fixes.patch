@@ -1,0 +1,195 @@
+diff -Naurp nova-2012.1.orig/nova/api/ec2/cloud.py nova-2012.1/nova/api/ec2/cloud.py
+--- nova-2012.1.orig/nova/api/ec2/cloud.py	2012-03-01 12:45:52.000000000 -0500
++++ nova-2012.1/nova/api/ec2/cloud.py	2012-03-02 10:57:47.414758539 -0500
+@@ -1424,6 +1424,9 @@ class CloudController(object):
+     def register_image(self, context, image_location=None, **kwargs):
+         if image_location is None and 'name' in kwargs:
+             image_location = kwargs['name']
++        if image_location is None:
++            raise exception.EC2APIError(_('imageLocation is required'))
++
+         metadata = {'properties': {'image_location': image_location}}
+ 
+         if 'root_device_name' in kwargs:
+@@ -1498,7 +1501,11 @@ class CloudController(object):
+         del(image['id'])
+ 
+         image['is_public'] = (operation_type == 'add')
+-        return self.image_service.update(context, internal_id, image)
++        try:
++            return self.image_service.update(context, internal_id, image)
++        except exception.ImageNotAuthorized:
++            msg = _('Not allowed to modify attributes for image %s')
++            raise exception.EC2APIError(msg % image_id)
+ 
+     def update_image(self, context, image_id, **kwargs):
+         internal_id = ec2utils.ec2_id_to_id(image_id)
+diff -Naurp nova-2012.1.orig/nova/exception.py nova-2012.1/nova/exception.py
+--- nova-2012.1.orig/nova/exception.py	2012-03-01 12:45:52.000000000 -0500
++++ nova-2012.1/nova/exception.py	2012-03-02 10:57:47.414758539 -0500
+@@ -199,7 +199,7 @@ class MelangeConnectionFailed(NovaExcept
+ 
+ class NotAuthorized(NovaException):
+     message = _("Not authorized.")
+-    code = 401
++    code = 403
+ 
+ 
+ class AdminRequired(NotAuthorized):
+@@ -210,6 +210,10 @@ class PolicyNotAuthorized(NotAuthorized)
+     message = _("Policy doesn't allow %(action)s to be performed.")
+ 
+ 
++class ImageNotAuthorized(NovaException):
++    message = _("Not authorized for image %(image_id)s.")
++
++
+ class Invalid(NovaException):
+     message = _("Unacceptable parameters.")
+     code = 400
+diff -Naurp nova-2012.1.orig/nova/image/glance.py nova-2012.1/nova/image/glance.py
+--- nova-2012.1.orig/nova/image/glance.py	2012-03-01 12:45:52.000000000 -0500
++++ nova-2012.1/nova/image/glance.py	2012-03-02 10:57:47.414758539 -0500
+@@ -301,6 +301,9 @@ class GlanceImageService(object):
+             image_meta = client.update_image(image_id, image_meta, data)
+         except glance_exception.NotFound:
+             raise exception.ImageNotFound(image_id=image_id)
++        # NOTE(vish): this gets raised for public images
++        except glance_exception.MissingCredentialError:
++            raise exception.ImageNotAuthorized(image_id=image_id)
+ 
+         base_image_meta = self._translate_from_glance(image_meta)
+         return base_image_meta
+diff -Naurp nova-2012.1.orig/nova/image/s3.py nova-2012.1/nova/image/s3.py
+--- nova-2012.1.orig/nova/image/s3.py	2012-03-01 12:45:52.000000000 -0500
++++ nova-2012.1/nova/image/s3.py	2012-03-02 10:57:47.414758539 -0500
+@@ -105,6 +105,27 @@ class S3ImageService(object):
+ 
+         return image_copy
+ 
++    def _translate_id_to_uuid(self, context, image):
++        image_copy = image.copy()
++
++        try:
++            image_id = image_copy['id']
++        except KeyError:
++            pass
++        else:
++            image_copy['id'] = self.get_image_uuid(context, image_id)
++
++        for prop in ['kernel_id', 'ramdisk_id']:
++            try:
++                image_id = image_copy['properties'][prop]
++            except (KeyError, ValueError):
++                pass
++            else:
++                image_uuid = self.get_image_uuid(context, image_id)
++                image_copy['properties'][prop] = image_uuid
++
++        return image_copy
++
+     def create(self, context, metadata, data=None):
+         """Create an image.
+ 
+@@ -120,6 +141,7 @@ class S3ImageService(object):
+ 
+     def update(self, context, image_id, metadata, data=None):
+         image_uuid = self.get_image_uuid(context, image_id)
++        metadata = self._translate_id_to_uuid(context, metadata)
+         image = self.service.update(context, image_uuid, metadata, data)
+         return self._translate_uuid_to_id(context, image)
+ 
+@@ -171,6 +193,11 @@ class S3ImageService(object):
+         image_type = 'machine'
+ 
+         try:
++            image_name = manifest.find('image/name').text
++        except Exception:
++            image_name = None
++
++        try:
+             kernel_id = manifest.find('machine_configuration/kernel_id').text
+             if kernel_id == 'true':
+                 image_format = 'aki'
+@@ -235,6 +262,7 @@ class S3ImageService(object):
+ 
+         metadata.update({'disk_format': image_format,
+                          'container_format': image_format,
++                         'name': image_name,
+                          'status': 'queued',
+                          'is_public': False,
+                          'properties': properties})
+diff -Naurp nova-2012.1.orig/nova/tests/api/ec2/test_cloud.py nova-2012.1/nova/tests/api/ec2/test_cloud.py
+--- nova-2012.1.orig/nova/tests/api/ec2/test_cloud.py	2012-03-01 12:45:52.000000000 -0500
++++ nova-2012.1/nova/tests/api/ec2/test_cloud.py	2012-03-02 10:57:47.418758240 -0500
+@@ -33,6 +33,7 @@ from nova import db
+ from nova import exception
+ from nova import flags
+ from nova.image import fake
++from nova.image import s3
+ from nova import log as logging
+ from nova import rpc
+ from nova import test
+@@ -1154,7 +1155,7 @@ class CloudTestCase(test.TestCase):
+         modify_image_attribute = self.cloud.modify_image_attribute
+ 
+         fake_metadata = {
+-            'id': 1,
++            'id': 'cedef40a-ed67-4d10-800e-17455edce175',
+             'container_format': 'ami',
+             'properties': {
+                 'kernel_id': 'cedef40a-ed67-4d10-800e-17455edce175',
+@@ -1163,11 +1164,17 @@ class CloudTestCase(test.TestCase):
+             'is_public': False}
+ 
+         def fake_show(meh, context, id):
+-            return fake_metadata
++            return copy.deepcopy(fake_metadata)
+ 
+         def fake_update(meh, context, image_id, metadata, data=None):
+-            fake_metadata.update(metadata)
+-            return fake_metadata
++            self.assertEqual(metadata['properties']['kernel_id'],
++                             fake_metadata['properties']['kernel_id'])
++            self.assertEqual(metadata['properties']['ramdisk_id'],
++                             fake_metadata['properties']['ramdisk_id'])
++            self.assertTrue(metadata['is_public'])
++            image = copy.deepcopy(fake_metadata)
++            image.update(metadata)
++            return image
+ 
+         self.stubs.Set(fake._FakeImageService, 'show', fake_show)
+         self.stubs.Set(fake._FakeImageService, 'show_by_name', fake_show)
+@@ -1175,7 +1182,31 @@ class CloudTestCase(test.TestCase):
+         result = modify_image_attribute(self.context, 'ami-00000001',
+                                           'launchPermission', 'add',
+                                            user_group=['all'])
+-        self.assertEqual(True, result['is_public'])
++        self.assertTrue(result['is_public'])
++
++    def test_register_image(self):
++        register_image = self.cloud.register_image
++
++        def fake_create(*args, **kwargs):
++            # NOTE(vish): We are mocking s3 so make sure we have converted
++            #             to ids instead of uuids.
++            return {'id': 1,
++            'container_format': 'ami',
++            'properties': {
++                'kernel_id': 1,
++                'ramdisk_id': 1,
++                'type': 'machine'},
++            'is_public': False}
++
++        self.stubs.Set(s3.S3ImageService, 'create', fake_create)
++        image_location = 'fake_bucket/fake.img.manifest.xml'
++        result = register_image(self.context, image_location)
++        self.assertEqual(result['imageId'], 'ami-00000001')
++
++    def test_register_image_empty(self):
++        register_image = self.cloud.register_image
++        self.assertRaises(exception.EC2APIError, register_image, self.context,
++                          image_location=None)
+ 
+     def test_deregister_image(self):
+         deregister_image = self.cloud.deregister_image

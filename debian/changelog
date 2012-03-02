@@ -1,4 +1,4 @@
-nova (2012.1~e4~20120229.12978-0ubuntu1) UNRELEASED; urgency=low
+nova (2012.1~e4-0ubuntu1) precise; urgency=low
 
   [ Adam Gandleman ]
   * debian/patches/libvirt-use-console-pipe.patch: Refreshed. 
@@ -30,8 +30,11 @@ nova (2012.1~e4~20120229.12978-0ubuntu1) UNRELEASED; urgency=low
     - Dropped ubuntu_ubuntu_control_vars: We dont use it
   * New upstream release.
   * Dropped python-babel, it will be handled by langpacks.
+  * debian/patches/ec2-fixes.patch: Backport turnk fix for ec2
+    permissions.
+  * debian/patches/path-to-the-xenhost.conf-fixup.patch: Refreshed.
 
- -- Chuck Short <zulcss@ubuntu.com>  Wed, 29 Feb 2012 08:51:31 -0500
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 02 Mar 2012 11:04:04 -0500
 
 nova (2012.1~e4~20120224.12913-0ubuntu1) precise; urgency=low
 
