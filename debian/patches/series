@@ -3,3 +3,4 @@ kombu_tests_timeout.patch
 libvirt-use-console-pipe.patch
 path-to-the-xenhost.conf-fixup.patch
 ec2-fixes.patch
+service_account_placeholder.patch
