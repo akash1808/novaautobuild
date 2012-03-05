@@ -1,8 +1,23 @@
-Index: nova/Authors
-===================================================================
---- nova.orig/Authors	2012-02-29 13:34:24.914358872 -0800
-+++ nova/Authors	2012-02-29 13:37:15.602351362 -0800
-@@ -150,6 +150,7 @@
+From 951737bf24236dd81e635744687852f7b5fa3825 Mon Sep 17 00:00:00 2001
+From: Chuck Short <chuck.short@canonical.com>
+Date: Mon, 5 Mar 2012 11:23:23 -0500
+Subject: [PATCH] Updated ringbuffer patch
+
+Signed-off-by: Chuck Short <chuck.short@canonical.com>
+---
+ Authors                         |    1 +
+ nova/tests/test_libvirt.py      |   52 +++++++++++++++-
+ nova/tests/test_utils.py        |   53 ++++++++++++++++
+ nova/utils.py                   |  131 +++++++++++++++++++++++++++++++++++++++
+ nova/virt/libvirt.xml.template  |    4 +-
+ nova/virt/libvirt/connection.py |  112 ++++++++++++++++++++++++++++++---
+ 6 files changed, 340 insertions(+), 13 deletions(-)
+
+diff --git a/Authors b/Authors
+index dc83d82..bcaf2b6 100644
+--- a/Authors
++++ b/Authors
+@@ -151,6 +151,7 @@ Rick Clark <rick@openstack.org>
  Rick Harris <rconradharris@gmail.com>
  Rob Kost <kost@isi.edu>
  Robert Esker <esker@netapp.com>
@@ -10,11 +25,11 @@ Index: nova/Authors
  Russell Bryant <rbryant@redhat.com>
  Russell Sim <russell.sim@gmail.com>
  Ryan Lane <rlane@wikimedia.org>
-Index: nova/nova/tests/test_libvirt.py
-===================================================================
---- nova.orig/nova/tests/test_libvirt.py	2012-02-29 13:34:25.094358864 -0800
-+++ nova/nova/tests/test_libvirt.py	2012-02-29 13:36:49.298352518 -0800
-@@ -872,7 +872,7 @@
+diff --git a/nova/tests/test_libvirt.py b/nova/tests/test_libvirt.py
+index a48b02f..052fa66 100644
+--- a/nova/tests/test_libvirt.py
++++ b/nova/tests/test_libvirt.py
+@@ -870,7 +870,7 @@ class LibvirtConnTestCase(test.TestCase):
              (lambda t: _ipv4_like(t.findall(parameter)[1].get('value'),
                                    '192.168.*.1'), True),
              (lambda t: t.find('./devices/serial/source').get(
@@ -23,7 +38,7 @@ Index: nova/nova/tests/test_libvirt.py
              (lambda t: t.find('./memory').text, '2097152')]
          if rescue:
              common_checks += [
-@@ -2308,3 +2308,53 @@
+@@ -2304,3 +2304,53 @@ class LibvirtConnectionTestCase(test.TestCase):
  
          ref = self.libvirtconnection.finish_revert_migration(ins_ref, None)
          self.assertTrue(isinstance(ref, eventlet.event.Event))
@@ -77,10 +92,10 @@ Index: nova/nova/tests/test_libvirt.py
 +        os.unlink(self.ringbuffer_path)
 +        os.unlink(self.fifo_path)
 +        os.rmdir(self.directory_path)
-Index: nova/nova/tests/test_utils.py
-===================================================================
---- nova.orig/nova/tests/test_utils.py	2012-02-29 13:34:25.102358863 -0800
-+++ nova/nova/tests/test_utils.py	2012-02-29 13:36:49.298352518 -0800
+diff --git a/nova/tests/test_utils.py b/nova/tests/test_utils.py
+index e3457dd..e357ac7 100644
+--- a/nova/tests/test_utils.py
++++ b/nova/tests/test_utils.py
 @@ -17,6 +17,7 @@
  import __builtin__
  import datetime
@@ -89,7 +104,7 @@ Index: nova/nova/tests/test_utils.py
  import os
  import os.path
  import socket
-@@ -25,6 +26,7 @@
+@@ -25,6 +26,7 @@ import tempfile
  
  import iso8601
  import mox
@@ -97,7 +112,7 @@ Index: nova/nova/tests/test_utils.py
  
  import nova
  from nova import exception
-@@ -818,6 +820,57 @@
+@@ -818,6 +820,57 @@ class Iso8601TimeTest(test.TestCase):
          west = utils.parse_isotime(str)
          normed = utils.normalize_time(west)
          self._instaneous(normed, 2012, 2, 13, 23, 53, 07, 0)
@@ -155,11 +170,11 @@ Index: nova/nova/tests/test_utils.py
  
  
  class TestLockCleanup(test.TestCase):
-Index: nova/nova/utils.py
-===================================================================
---- nova.orig/nova/utils.py	2012-02-29 13:34:25.106358862 -0800
-+++ nova/nova/utils.py	2012-02-29 13:36:49.302352518 -0800
-@@ -33,6 +33,7 @@
+diff --git a/nova/utils.py b/nova/utils.py
+index 0ea6ee9..d19bf7e 100644
+--- a/nova/utils.py
++++ b/nova/utils.py
+@@ -33,6 +33,7 @@ import re
  import shlex
  import shutil
  import socket
@@ -167,7 +182,7 @@ Index: nova/nova/utils.py
  import struct
  import sys
  import tempfile
-@@ -56,6 +57,7 @@
+@@ -56,6 +57,7 @@ from nova import log as logging
  from nova.openstack.common import cfg
  
  
@@ -175,7 +190,7 @@ Index: nova/nova/utils.py
  LOG = logging.getLogger(__name__)
  ISO_TIME_FORMAT = "%Y-%m-%dT%H:%M:%S"
  PERFECT_TIME_FORMAT = "%Y-%m-%dT%H:%M:%S.%f"
-@@ -1530,6 +1532,135 @@
+@@ -1530,6 +1532,135 @@ def read_file_as_root(file_path):
          return out
      except exception.ProcessExecutionError:
          raise exception.FileNotFound(file_path=file_path)
@@ -311,11 +326,26 @@ Index: nova/nova/utils.py
  
  
  @contextlib.contextmanager
-Index: nova/nova/virt/libvirt/connection.py
-===================================================================
---- nova.orig/nova/virt/libvirt/connection.py	2012-02-29 13:34:25.110358862 -0800
-+++ nova/nova/virt/libvirt/connection.py	2012-02-29 13:36:49.302352518 -0800
-@@ -39,15 +39,19 @@
+diff --git a/nova/virt/libvirt.xml.template b/nova/virt/libvirt.xml.template
+index 9a216e1..df28081 100644
+--- a/nova/virt/libvirt.xml.template
++++ b/nova/virt/libvirt.xml.template
+@@ -160,8 +160,8 @@
+ 
+ #end for
+         <!-- The order is significant here.  File must be defined first -->
+-        <serial type="file">
+-            <source path='${basepath}/console.log'/>
++        <serial type="pipe">
++            <source path='${basepath}/console.fifo'/>
+             <target port='1'/>
+         </serial>
+ 
+diff --git a/nova/virt/libvirt/connection.py b/nova/virt/libvirt/connection.py
+index c9f4251..2074ece 100644
+--- a/nova/virt/libvirt/connection.py
++++ b/nova/virt/libvirt/connection.py
+@@ -39,15 +39,19 @@ Supports KVM, LXC, QEMU, UML, and XEN.
  
  """
  
@@ -335,17 +365,20 @@ Index: nova/nova/virt/libvirt/connection.py
  from eventlet import greenthread
  from xml.dom import minidom
  from xml.etree import ElementTree
-@@ -151,6 +155,9 @@
-                help='Override the default disk prefix for the devices attached'
-                     ' to a server, which is dependent on libvirt_type. '
-                     '(valid options are: sd, xvd, uvd, vd)'),
+@@ -156,6 +160,12 @@ libvirt_opts = [
+                help='Number of seconds to wait for instance to shut down after'
+                     ' soft reboot request is made. We fall back to hard reboot'
+                     ' if instance does not shutdown within this window.'),
++    cfg.BoolOpt('libvirt_console_buffer',
++                default=False,
++                help='Enable libvirt console ringbuffer')
 +    cfg.IntOpt('libvirt_console_log_size',
 +               default=65536,
-+               help='libvirt console log ringbugger size')
++               help='libvirt console log ringbuffer size')
      ]
  
  FLAGS = flags.FLAGS
-@@ -184,6 +191,57 @@
+@@ -189,6 +199,57 @@ def _get_eph_disk(ephemeral):
      return 'disk.eph' + str(ephemeral['num'])
  
  
@@ -403,7 +436,7 @@ Index: nova/nova/virt/libvirt/connection.py
  class LibvirtConnection(driver.ComputeDriver):
  
      def __init__(self, read_only):
-@@ -217,6 +275,8 @@
+@@ -222,6 +283,8 @@ class LibvirtConnection(driver.ComputeDriver):
  
          self.image_cache_manager = imagecache.ImageCacheManager()
  
@@ -412,7 +445,7 @@ Index: nova/nova/virt/libvirt/connection.py
      @property
      def host_state(self):
          if not self._host_state:
-@@ -225,7 +285,11 @@
+@@ -230,7 +293,11 @@ class LibvirtConnection(driver.ComputeDriver):
  
      def init_host(self, host):
          # NOTE(nsokolov): moved instance restarting to ComputeManager
@@ -425,7 +458,7 @@ Index: nova/nova/virt/libvirt/connection.py
  
      @property
      def libvirt_xml(self):
-@@ -302,6 +366,15 @@
+@@ -307,6 +374,15 @@ class LibvirtConnection(driver.ComputeDriver):
          return [self._conn.lookupByID(x).name()
                  for x in self._conn.listDomainsID()
                  if x != 0]  # We skip domains with ID 0 (hypervisors).
@@ -441,7 +474,7 @@ Index: nova/nova/virt/libvirt/connection.py
  
      @staticmethod
      def _map_to_instance_info(domain):
-@@ -427,6 +500,7 @@
+@@ -432,6 +508,7 @@ class LibvirtConnection(driver.ComputeDriver):
      def _cleanup(self, instance):
          target = os.path.join(FLAGS.instances_path, instance['name'])
          instance_name = instance['name']
@@ -449,7 +482,7 @@ Index: nova/nova/virt/libvirt/connection.py
          LOG.info(_('Deleting instance files %(target)s') % locals(),
                   instance=instance)
          if FLAGS.libvirt_type == 'lxc':
-@@ -867,10 +941,10 @@
+@@ -909,10 +986,10 @@ class LibvirtConnection(driver.ComputeDriver):
  
      @exception.wrap_exception()
      def get_console_output(self, instance):
@@ -463,7 +496,7 @@ Index: nova/nova/virt/libvirt/connection.py
  
          if FLAGS.libvirt_type == 'xen':
              # Xen is special
-@@ -878,14 +952,12 @@
+@@ -920,14 +997,12 @@ class LibvirtConnection(driver.ComputeDriver):
                                           'ttyconsole',
                                           instance['name'])
              data = self._flush_xen_console(virsh_output)
@@ -480,7 +513,7 @@ Index: nova/nova/virt/libvirt/connection.py
  
      @staticmethod
      def get_host_ip_addr():
-@@ -1011,8 +1083,25 @@
+@@ -1053,8 +1128,25 @@ class LibvirtConnection(driver.ComputeDriver):
              container_dir = '%s/rootfs' % basepath(suffix='')
              libvirt_utils.ensure_tree(container_dir)
  
@@ -508,18 +541,6 @@ Index: nova/nova/virt/libvirt/connection.py
  
          if not disk_images:
              disk_images = {'image_id': instance['image_ref'],
-Index: nova/nova/virt/libvirt.xml.template
-===================================================================
---- nova.orig/nova/virt/libvirt.xml.template	2012-02-29 13:34:25.110358862 -0800
-+++ nova/nova/virt/libvirt.xml.template	2012-02-29 13:36:49.302352518 -0800
-@@ -160,8 +160,8 @@
- 
- #end for
-         <!-- The order is significant here.  File must be defined first -->
--        <serial type="file">
--            <source path='${basepath}/console.log'/>
-+        <serial type="pipe">
-+            <source path='${basepath}/console.fifo'/>
-             <target port='1'/>
-         </serial>
- 
+-- 
+1.7.9
+
