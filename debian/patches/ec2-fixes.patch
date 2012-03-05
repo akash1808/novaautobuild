@@ -1,17 +1,18 @@
-diff -Naurp nova-2012.1.orig/nova/api/ec2/cloud.py nova-2012.1/nova/api/ec2/cloud.py
---- nova-2012.1.orig/nova/api/ec2/cloud.py	2012-03-01 12:45:52.000000000 -0500
-+++ nova-2012.1/nova/api/ec2/cloud.py	2012-03-02 10:57:47.414758539 -0500
-@@ -1424,6 +1424,9 @@ class CloudController(object):
+Index: nova/nova/api/ec2/cloud.py
+===================================================================
+--- nova.orig/nova/api/ec2/cloud.py	2012-03-05 14:27:39.000000000 -0800
++++ nova/nova/api/ec2/cloud.py	2012-03-05 14:28:45.223610255 -0800
+@@ -1434,6 +1434,9 @@
      def register_image(self, context, image_location=None, **kwargs):
-         if image_location is None and 'name' in kwargs:
+         if image_location is None and kwargs.get('name'):
              image_location = kwargs['name']
 +        if image_location is None:
 +            raise exception.EC2APIError(_('imageLocation is required'))
 +
          metadata = {'properties': {'image_location': image_location}}
  
-         if 'root_device_name' in kwargs:
-@@ -1498,7 +1501,11 @@ class CloudController(object):
+         if kwargs.get('name'):
+@@ -1513,7 +1516,11 @@
          del(image['id'])
  
          image['is_public'] = (operation_type == 'add')
@@ -24,10 +25,11 @@ diff -Naurp nova-2012.1.orig/nova/api/ec2/cloud.py nova-2012.1/nova/api/ec2/clou
  
      def update_image(self, context, image_id, **kwargs):
          internal_id = ec2utils.ec2_id_to_id(image_id)
-diff -Naurp nova-2012.1.orig/nova/exception.py nova-2012.1/nova/exception.py
---- nova-2012.1.orig/nova/exception.py	2012-03-01 12:45:52.000000000 -0500
-+++ nova-2012.1/nova/exception.py	2012-03-02 10:57:47.414758539 -0500
-@@ -199,7 +199,7 @@ class MelangeConnectionFailed(NovaExcept
+Index: nova/nova/exception.py
+===================================================================
+--- nova.orig/nova/exception.py	2012-03-05 14:27:39.000000000 -0800
++++ nova/nova/exception.py	2012-03-05 14:28:45.223610255 -0800
+@@ -201,7 +201,7 @@
  
  class NotAuthorized(NovaException):
      message = _("Not authorized.")
@@ -36,7 +38,7 @@ diff -Naurp nova-2012.1.orig/nova/exception.py nova-2012.1/nova/exception.py
  
  
  class AdminRequired(NotAuthorized):
-@@ -210,6 +210,10 @@ class PolicyNotAuthorized(NotAuthorized)
+@@ -212,6 +212,10 @@
      message = _("Policy doesn't allow %(action)s to be performed.")
  
  
@@ -47,10 +49,11 @@ diff -Naurp nova-2012.1.orig/nova/exception.py nova-2012.1/nova/exception.py
  class Invalid(NovaException):
      message = _("Unacceptable parameters.")
      code = 400
-diff -Naurp nova-2012.1.orig/nova/image/glance.py nova-2012.1/nova/image/glance.py
---- nova-2012.1.orig/nova/image/glance.py	2012-03-01 12:45:52.000000000 -0500
-+++ nova-2012.1/nova/image/glance.py	2012-03-02 10:57:47.414758539 -0500
-@@ -301,6 +301,9 @@ class GlanceImageService(object):
+Index: nova/nova/image/glance.py
+===================================================================
+--- nova.orig/nova/image/glance.py	2012-03-05 14:27:39.000000000 -0800
++++ nova/nova/image/glance.py	2012-03-05 14:28:45.223610255 -0800
+@@ -301,6 +301,9 @@
              image_meta = client.update_image(image_id, image_meta, data)
          except glance_exception.NotFound:
              raise exception.ImageNotFound(image_id=image_id)
@@ -60,10 +63,11 @@ diff -Naurp nova-2012.1.orig/nova/image/glance.py nova-2012.1/nova/image/glance.
  
          base_image_meta = self._translate_from_glance(image_meta)
          return base_image_meta
-diff -Naurp nova-2012.1.orig/nova/image/s3.py nova-2012.1/nova/image/s3.py
---- nova-2012.1.orig/nova/image/s3.py	2012-03-01 12:45:52.000000000 -0500
-+++ nova-2012.1/nova/image/s3.py	2012-03-02 10:57:47.414758539 -0500
-@@ -105,6 +105,27 @@ class S3ImageService(object):
+Index: nova/nova/image/s3.py
+===================================================================
+--- nova.orig/nova/image/s3.py	2012-03-05 14:27:39.000000000 -0800
++++ nova/nova/image/s3.py	2012-03-05 14:28:45.223610255 -0800
+@@ -105,6 +105,27 @@
  
          return image_copy
  
@@ -91,7 +95,7 @@ diff -Naurp nova-2012.1.orig/nova/image/s3.py nova-2012.1/nova/image/s3.py
      def create(self, context, metadata, data=None):
          """Create an image.
  
-@@ -120,6 +141,7 @@ class S3ImageService(object):
+@@ -120,6 +141,7 @@
  
      def update(self, context, image_id, metadata, data=None):
          image_uuid = self.get_image_uuid(context, image_id)
@@ -99,7 +103,7 @@ diff -Naurp nova-2012.1.orig/nova/image/s3.py nova-2012.1/nova/image/s3.py
          image = self.service.update(context, image_uuid, metadata, data)
          return self._translate_uuid_to_id(context, image)
  
-@@ -171,6 +193,11 @@ class S3ImageService(object):
+@@ -171,6 +193,11 @@
          image_type = 'machine'
  
          try:
@@ -111,7 +115,7 @@ diff -Naurp nova-2012.1.orig/nova/image/s3.py nova-2012.1/nova/image/s3.py
              kernel_id = manifest.find('machine_configuration/kernel_id').text
              if kernel_id == 'true':
                  image_format = 'aki'
-@@ -235,6 +262,7 @@ class S3ImageService(object):
+@@ -235,6 +262,7 @@
  
          metadata.update({'disk_format': image_format,
                           'container_format': image_format,
@@ -119,18 +123,11 @@ diff -Naurp nova-2012.1.orig/nova/image/s3.py nova-2012.1/nova/image/s3.py
                           'status': 'queued',
                           'is_public': False,
                           'properties': properties})
-diff -Naurp nova-2012.1.orig/nova/tests/api/ec2/test_cloud.py nova-2012.1/nova/tests/api/ec2/test_cloud.py
---- nova-2012.1.orig/nova/tests/api/ec2/test_cloud.py	2012-03-01 12:45:52.000000000 -0500
-+++ nova-2012.1/nova/tests/api/ec2/test_cloud.py	2012-03-02 10:57:47.418758240 -0500
-@@ -33,6 +33,7 @@ from nova import db
- from nova import exception
- from nova import flags
- from nova.image import fake
-+from nova.image import s3
- from nova import log as logging
- from nova import rpc
- from nova import test
-@@ -1154,7 +1155,7 @@ class CloudTestCase(test.TestCase):
+Index: nova/nova/tests/api/ec2/test_cloud.py
+===================================================================
+--- nova.orig/nova/tests/api/ec2/test_cloud.py	2012-03-05 14:27:39.287612677 -0800
++++ nova/nova/tests/api/ec2/test_cloud.py	2012-03-05 14:28:45.223610255 -0800
+@@ -1156,7 +1156,7 @@
          modify_image_attribute = self.cloud.modify_image_attribute
  
          fake_metadata = {
@@ -139,7 +136,7 @@ diff -Naurp nova-2012.1.orig/nova/tests/api/ec2/test_cloud.py nova-2012.1/nova/t
              'container_format': 'ami',
              'properties': {
                  'kernel_id': 'cedef40a-ed67-4d10-800e-17455edce175',
-@@ -1163,11 +1164,17 @@ class CloudTestCase(test.TestCase):
+@@ -1165,11 +1165,17 @@
              'is_public': False}
  
          def fake_show(meh, context, id):
@@ -160,7 +157,7 @@ diff -Naurp nova-2012.1.orig/nova/tests/api/ec2/test_cloud.py nova-2012.1/nova/t
  
          self.stubs.Set(fake._FakeImageService, 'show', fake_show)
          self.stubs.Set(fake._FakeImageService, 'show_by_name', fake_show)
-@@ -1175,7 +1182,31 @@ class CloudTestCase(test.TestCase):
+@@ -1177,7 +1183,31 @@
          result = modify_image_attribute(self.context, 'ami-00000001',
                                            'launchPermission', 'add',
                                             user_group=['all'])
@@ -191,5 +188,5 @@ diff -Naurp nova-2012.1.orig/nova/tests/api/ec2/test_cloud.py nova-2012.1/nova/t
 +        self.assertRaises(exception.EC2APIError, register_image, self.context,
 +                          image_location=None)
  
-     def test_deregister_image(self):
-         deregister_image = self.cloud.deregister_image
+     def test_register_image_name(self):
+         register_image = self.cloud.register_image
