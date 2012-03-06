@@ -8,7 +8,7 @@ nova (2012.1~e4-0ubuntu2) UNRELEASED; urgency=low
   * debian/patches/service_account_placeholder.patch: Add examples
     to highlight new keystone service auth interface.
   * debian/patches/{ec2-fixes.patch, libvirt-console-pipe.patch}: Fix and
-    refresh
+    refresh. Add dep3 headers from original git commits.
 
  -- Chuck Short <zulcss@ubuntu.com>  Mon, 05 Mar 2012 11:06:13 -0500
 

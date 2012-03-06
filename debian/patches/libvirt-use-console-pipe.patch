@@ -1,3 +1,15 @@
+From: Robie Basak <robie.basak@canonical.com>
+Date: Wed, 28 Sep 2011 14:45:30 +0100
+Subject: [PATCH] Move console.log to a ringbuffer
+
+Prevent a DoS by storing console output in a ringbuffer on the host,
+instead of allowing it to grow indefinitely. Fixes bug 832507.
+
+
+Origin: https://review.openstack.org/#change,706
+Bug: https://code.launchpad.net/bugs/832507
+Last-Update: 2012-03-05
+
 Index: nova/Authors
 ===================================================================
 --- nova.orig/Authors	2012-03-05 14:27:39.000000000 -0800

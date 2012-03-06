@@ -1,3 +1,19 @@
+From: Vishvananda Ishaya <vishvananda@gmail.com>
+Date: Thu, 1 Mar 2012 16:52:07 -0800
+Subject: [PATCH] Fixes for ec2 images
+
+ * Fixes s3 image service to convert back to uuids on update
+ * Adds exception for attempt to update an unowned image
+ * Adds error messages to ec2 for failure cases
+ * Adds tests to verify changes
+ * Fixes bug 942865
+
+Change-Id: I35331c635756f10c02b30dd43ab3fe0ad98bc28c
+
+Origin: https://review.openstack.org/#change,4788
+Bug: https://code.launchpad.net/bugs/942865
+Last-Updated: 2012-03-05
+
 Index: nova/nova/api/ec2/cloud.py
 ===================================================================
 --- nova.orig/nova/api/ec2/cloud.py	2012-03-05 14:27:39.000000000 -0800
