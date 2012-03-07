@@ -11,7 +11,6 @@ nova (2012.1~e4-0ubuntu2) UNRELEASED; urgency=low
     refresh. Add dep3 headers from original git commits.
   * debian/patches/ec2-fixes.patch: Dropped.  Merge upstream at 121537c3
   * debain/{rules, nova-docs.doc}: Docs now built in doc/build/.
-  * debian/pathces/builddoc_temp_fix.patch: Temporarily fix doc build
 
  -- Chuck Short <zulcss@ubuntu.com>  Mon, 05 Mar 2012 11:06:13 -0500
 
