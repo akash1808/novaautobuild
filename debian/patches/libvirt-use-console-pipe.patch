@@ -451,7 +451,7 @@ diff -Naurp nova.orig/nova/virt/libvirt/connection.py nova/nova/virt/libvirt/con
          target = os.path.join(FLAGS.instances_path, instance['name'])
          LOG.info(_('Deleting instance files %(target)s') % locals(),
                   instance=instance)
-+        self._stop_console_logger(instance_name)
++        self._stop_console_logger(instance['name'])
          if FLAGS.libvirt_type == 'lxc':
              disk.destroy_container(self.container)
          if os.path.exists(target):
