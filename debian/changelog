@@ -1,18 +1,18 @@
-nova (2012.1~e4-0ubuntu2) UNRELEASED; urgency=low
+nova (2012.1~rc1~20120309.13261-0ubuntu1) precise; urgency=low
 
   [ Chuck Short ]
   * New upstream release.
   * Refreshed libvirt-console-patch again.
 
   [ Adam Gandleman ]
-  * debian/patches/service_account_placeholder.patch: Add examples
-    to highlight new keystone service auth interface.
   * debian/patches/{ec2-fixes.patch, libvirt-console-pipe.patch}: Fix and
     refresh. Add dep3 headers from original git commits.
   * debian/patches/ec2-fixes.patch: Dropped.  Merge upstream at 121537c3
   * debain/{rules, nova-docs.doc}: Docs now built in doc/build/.
+  * debian/patches/libvirt-use-console-pipe.patch: Update use of
+    instance['name'] instead of instance_name
 
- -- Chuck Short <zulcss@ubuntu.com>  Mon, 05 Mar 2012 11:06:13 -0500
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 09 Mar 2012 13:07:19 -0500
 
 nova (2012.1~e4-0ubuntu1) precise; urgency=low
 
