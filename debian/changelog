@@ -3,6 +3,8 @@ nova (2012.1~rc1~20120309.13261-0ubuntu2) UNRELEASED; urgency=low
   [Adam Gandelman]
   * debian/patches/libvirt-use-console-pipe.patch: Updated to accommodate
     upstream refactoring at commit 83a276837. 
+  * debian/pathches/temp_fix_doc_build.patch: Fix doc builds locally until
+    they are fixed upstream
 
  -- Adam Gandelman <adamg@canonical.com>  Mon, 12 Mar 2012 12:09:45 -0700
 
