@@ -1,4 +1,4 @@
 nova-manage_flagfile_location.patch
 kombu_tests_timeout.patch
-libvirt-use-console-pipe.patch
+#libvirt-use-console-pipe.patch
 path-to-the-xenhost.conf-fixup.patch
