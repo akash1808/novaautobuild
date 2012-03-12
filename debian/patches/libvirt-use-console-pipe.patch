@@ -478,7 +478,7 @@ Index: nova/nova/virt/libvirt/connection.py
 +            console_fifo = os.path.join(FLAGS.instances_path, instance['name'],
 +                                        'console.fifo.out')
 +            libvirt_utils.chown(console_fifo, os.getuid())
-+            return self.console_loggers[instance['name']].peak()
++            return self.console_loggers[instance['name']].peek()
 +
          # If the guest has a console logging to a file prefer to use that
          node = tree.find("./devices/console[@type='file']/source")
