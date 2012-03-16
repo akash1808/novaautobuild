@@ -1,6 +1,7 @@
-nova (2012.1~rc1~20120309.13261-0ubuntu2) UNRELEASED; urgency=low
+nova (2012.1~rc1~20120316.13416-0ubuntu1) precise; urgency=low
 
   [Adam Gandelman]
+  * New upstream release.
   * debian/patches/libvirt-conosle-patch: Refresh
   * debian/control: Fix descriptions of nova-{doc, cert} (LP: #942541)
 
