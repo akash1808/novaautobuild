@@ -8,12 +8,13 @@ Build-Depends: debhelper (>= 7.0.50),
  python-all (>= 2.6),
  python-all-dev (>= 2.6.6-3~) | python-support,
 Build-Depends-Indep:
+ openssh-client,
+ openssl,
  python-setuptools,
  python-sphinx (>> 1.0),
  python-distutils-extra,
  python-gflags,
  python-mox,
- openssl,
  python-carrot,
  python-kombu,
  python-boto,
@@ -55,6 +56,8 @@ Package: python-nova
 Architecture: all
 Section: python
 Depends: ${python:Depends},
+ openssh-client,
+ openssl,
  python-boto,
  python-m2crypto,
  python-pycurl,
@@ -63,7 +66,6 @@ Depends: ${python:Depends},
  python-kombu,
  python-lockfile,
  python-gflags,
- openssl,
  python-libxml2,
  python-ldap,
  python-sqlalchemy-ext | python-sqlalchemy (<< 0.6.3-2),
@@ -331,7 +333,7 @@ Description: OpenStack Compute network plugin for the Xen Cloud Platform
 Package: nova-cert
 Architecture: all
 Depends: ${ostack-lsb-base}, nova-common (= ${binary:Version}), ${python:Depends}, ${misc:Depends}
-Description: OpenStack Compute - virtual machine scheduler
+Description: OpenStack Compute - certificate management 
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
  and private cloud providers regardless of size, by being simple to implement
@@ -522,7 +524,7 @@ Architecture: all
 Section: doc
 Depends: ${misc:Depends}
 Recommends: libjs-jquery
-Description: OpenStack Compute - documetation
+Description: OpenStack Compute - documentation 
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
  and private cloud providers regardless of size, by being simple to implement

@@ -1,3 +1,15 @@
+nova (2012.1~rc1~20120316.13416-0ubuntu1) precise; urgency=low
+
+  [Adam Gandelman]
+  * New upstream release.
+  * debian/patches/libvirt-conosle-patch: Refresh
+  * debian/control: Fix descriptions of nova-{doc, cert} (LP: #942541)
+
+  [Paul Belanger]
+  * debian/control: python-nova depends on openssh-client (LP: #956177)
+
+ -- Adam Gandelman <adamg@canonical.com>  Mon, 12 Mar 2012 12:09:45 -0700
+
 nova (2012.1~rc1~20120309.13261-0ubuntu1) precise; urgency=low
 
   [ Chuck Short ]
