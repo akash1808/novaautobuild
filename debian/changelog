@@ -1,7 +1,7 @@
 nova (2012.1~rc1~20120316.13416-0ubuntu2) precise; urgency=low
 
-  * debian/patches/libvirt-console.patch: Disable for testing, until
-    next upload
+  * debian/patches/libvirt-console.patch: Refresh
+  * debian/control: Split nova-consoleauth from nova-console into its own pkg 
 
  -- Adam Gandelman <adamg@canonical.com>  Fri, 16 Mar 2012 19:07:09 -0700
 
