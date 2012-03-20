@@ -1,5 +1,6 @@
 nova (2012.1~rc1-0ubuntu1) precise; urgency=low
 
+  [ Adam Gandelman ]
   [Chuck Short]
   * New upstream release. 
   * debian/patches/libvirt-use-console-pipe.patch: Refreshed
@@ -10,7 +11,7 @@ nova (2012.1~rc1-0ubuntu1) precise; urgency=low
     (LP: #959289)
   * debian/nova-console.upstart.in: Specify shell
 
- -- Adam Gandelman <adamg@canonical.com>  Fri, 16 Mar 2012 19:07:09 -0700
+ -- Chuck Short <zulcss@ubuntu.com>  Tue, 20 Mar 2012 11:06:11 -0400
 
 nova (2012.1~rc1~20120316.13416-0ubuntu1) precise; urgency=low
 
