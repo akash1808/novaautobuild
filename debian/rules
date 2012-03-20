@@ -3,7 +3,6 @@
 # Verbose mode
 #export DH_VERBOSE=1
 
-DEB_BUILD_OPTIONS='nocheck nodocs'
 # Lucid does not have dh_python2, but we would like to be able to use this
 # rules file to build on lucid as well. Thus the branching logic.
 WITH_PYTHON2 = $(shell test -f /usr/bin/dh_python2 && echo "--with python2")
