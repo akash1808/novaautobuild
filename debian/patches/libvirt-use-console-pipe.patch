@@ -11,17 +11,14 @@ The following upstream commit refactored the get_console_output a bunch:
 https://github.com/openstack/nova/commit/9b8275659b5de8c8291d64d48a11edd83a276837
 
 Original patch has been modified to accommodate these changes.
-(adam_g)
-
-
+(zul)
 Origin: https://review.openstack.org/#change,706
 Bug: https://code.launchpad.net/bugs/832507
-Last-Update: 2012-03-12
-Index: py/nova/tests/test_libvirt.py
-===================================================================
---- py.orig/nova/tests/test_libvirt.py	2012-03-15 22:31:42.210521155 -0700
-+++ py/nova/tests/test_libvirt.py	2012-03-15 22:31:48.113952037 -0700
-@@ -909,6 +909,8 @@
+Last-Update: 2012-03-20
+diff -Naurp nova-2012.1.orig/nova/tests/test_libvirt.py nova-2012.1/nova/tests/test_libvirt.py
+--- nova-2012.1.orig/nova/tests/test_libvirt.py	2012-03-20 07:05:43.000000000 -0400
++++ nova-2012.1/nova/tests/test_libvirt.py	2012-03-20 09:02:22.832459805 -0400
+@@ -909,6 +909,8 @@ class LibvirtConnTestCase(test.TestCase)
              (lambda t: t.findall(parameter)[1].get('name'), 'DHCPSERVER'),
              (lambda t: _ipv4_like(t.findall(parameter)[1].get('value'),
                                    '192.168.*.1'), True),
@@ -30,7 +27,7 @@ Index: py/nova/tests/test_libvirt.py
              (lambda t: t.find('./memory').text, '2097152')]
          if rescue:
              common_checks += [
-@@ -2306,3 +2308,53 @@
+@@ -2306,3 +2308,53 @@ class LibvirtConnectionTestCase(test.Tes
  
          ref = self.libvirtconnection.finish_revert_migration(ins_ref, None)
          self.assertTrue(isinstance(ref, eventlet.event.Event))
@@ -84,10 +81,9 @@ Index: py/nova/tests/test_libvirt.py
 +        os.unlink(self.ringbuffer_path)
 +        os.unlink(self.fifo_path)
 +        os.rmdir(self.directory_path)
-Index: py/nova/tests/test_utils.py
-===================================================================
---- py.orig/nova/tests/test_utils.py	2012-03-15 22:31:42.222519999 -0700
-+++ py/nova/tests/test_utils.py	2012-03-15 22:31:48.113952037 -0700
+diff -Naurp nova-2012.1.orig/nova/tests/test_utils.py nova-2012.1/nova/tests/test_utils.py
+--- nova-2012.1.orig/nova/tests/test_utils.py	2012-03-20 07:05:44.000000000 -0400
++++ nova-2012.1/nova/tests/test_utils.py	2012-03-20 09:31:10.660498676 -0400
 @@ -17,6 +17,7 @@
  import __builtin__
  import datetime
@@ -96,22 +92,22 @@ Index: py/nova/tests/test_utils.py
  import os
  import os.path
  import socket
-@@ -26,6 +27,7 @@
- 
+@@ -29,6 +30,7 @@ from eventlet import greenpool
  import iso8601
+ import lockfile
  import mox
 +import nose
  
  import nova
  from nova import exception
-@@ -831,6 +833,57 @@
+@@ -834,6 +836,57 @@ class Iso8601TimeTest(test.TestCase):
          normed = utils.normalize_time(west)
          self._instaneous(normed, 2012, 2, 13, 23, 53, 07, 0)
  
 +class RingBufferTestCase(test.TestCase):
 +    """Unit test for utils.RingBuffer()."""
 +    def setUp(self):
-+        super(ingBufferTestCase, self).setUp()
++        super(RingBufferTestCase, self).setUp()
 +        self.f = tempfile.NamedTemporaryFile()
 +        self.r = utils.RingBuffer(self.f.name, max_size=4)
 +
@@ -160,13 +156,12 @@ Index: py/nova/tests/test_utils.py
 +        f.close()
 +
  
- class TestLockCleanup(test.TestCase):
-     """unit tests for utils.cleanup_file_locks()"""
-Index: py/nova/utils.py
-===================================================================
---- py.orig/nova/utils.py	2012-03-15 22:31:42.206521540 -0700
-+++ py/nova/utils.py	2012-03-15 22:31:48.113952037 -0700
-@@ -33,6 +33,7 @@
+ class TestGreenLocks(test.TestCase):
+     def test_concurrent_green_lock_succeeds(self):
+diff -Naurp nova-2012.1.orig/nova/utils.py nova-2012.1/nova/utils.py
+--- nova-2012.1.orig/nova/utils.py	2012-03-20 07:05:44.000000000 -0400
++++ nova-2012.1/nova/utils.py	2012-03-20 09:02:22.836459507 -0400
+@@ -33,6 +33,7 @@ import re
  import shlex
  import shutil
  import socket
@@ -174,7 +169,7 @@ Index: py/nova/utils.py
  import struct
  import sys
  import tempfile
-@@ -56,6 +57,7 @@
+@@ -58,6 +59,7 @@ from nova import log as logging
  from nova.openstack.common import cfg
  
  
@@ -182,7 +177,7 @@ Index: py/nova/utils.py
  LOG = logging.getLogger(__name__)
  ISO_TIME_FORMAT = "%Y-%m-%dT%H:%M:%S"
  PERFECT_TIME_FORMAT = "%Y-%m-%dT%H:%M:%S.%f"
-@@ -1588,6 +1590,135 @@
+@@ -1630,6 +1632,135 @@ def read_file_as_root(file_path):
      except exception.ProcessExecutionError:
          raise exception.FileNotFound(file_path=file_path)
  
@@ -318,17 +313,10 @@ Index: py/nova/utils.py
  
  @contextlib.contextmanager
  def temporary_chown(path, owner_uid=None):
-Index: py/nova/virt/libvirt/connection.py
-===================================================================
---- py.orig/nova/virt/libvirt/connection.py	2012-03-15 22:31:42.198522312 -0700
-+++ py/nova/virt/libvirt/connection.py	2012-03-15 22:37:57.082381699 -0700
-@@ -39,16 +39,20 @@
- 
- """
- 
-+import errno
- import hashlib
- import functools
+diff -Naurp nova-2012.1.orig/nova/virt/libvirt/connection.py nova-2012.1/nova/virt/libvirt/connection.py
+--- nova-2012.1.orig/nova/virt/libvirt/connection.py	2012-03-20 07:05:44.000000000 -0400
++++ nova-2012.1/nova/virt/libvirt/connection.py	2012-03-20 09:04:27.932461712 -0400
+@@ -45,11 +45,14 @@ import functools
  import glob
  import multiprocessing
  import os
@@ -341,9 +329,9 @@ Index: py/nova/virt/libvirt/connection.py
  
 +import eventlet
  from eventlet import greenthread
- from xml.dom import minidom
- from xml.etree import ElementTree
-@@ -149,6 +153,9 @@
+ from eventlet import tpool
+ 
+@@ -152,6 +155,9 @@ libvirt_opts = [
                 help='Override the default disk prefix for the devices attached'
                      ' to a server, which is dependent on libvirt_type. '
                      '(valid options are: sd, xvd, uvd, vd)'),
@@ -353,7 +341,7 @@ Index: py/nova/virt/libvirt/connection.py
      cfg.IntOpt('libvirt_wait_soft_reboot_seconds',
                 default=120,
                 help='Number of seconds to wait for instance to shut down after'
-@@ -187,6 +194,57 @@
+@@ -194,6 +200,57 @@ def _get_eph_disk(ephemeral):
      return 'disk.eph' + str(ephemeral['num'])
  
  
@@ -411,7 +399,7 @@ Index: py/nova/virt/libvirt/connection.py
  class LibvirtConnection(driver.ComputeDriver):
  
      def __init__(self, read_only):
-@@ -220,6 +278,8 @@
+@@ -227,6 +284,8 @@ class LibvirtConnection(driver.ComputeDr
  
          self.image_cache_manager = imagecache.ImageCacheManager()
  
@@ -420,7 +408,7 @@ Index: py/nova/virt/libvirt/connection.py
      @property
      def host_state(self):
          if not self._host_state:
-@@ -228,7 +288,11 @@
+@@ -235,7 +294,11 @@ class LibvirtConnection(driver.ComputeDr
  
      def init_host(self, host):
          # NOTE(nsokolov): moved instance restarting to ComputeManager
@@ -433,7 +421,7 @@ Index: py/nova/virt/libvirt/connection.py
  
      @property
      def libvirt_xml(self):
-@@ -306,6 +370,15 @@
+@@ -320,6 +383,15 @@ class LibvirtConnection(driver.ComputeDr
                  for x in self._conn.listDomainsID()
                  if x != 0]  # We skip domains with ID 0 (hypervisors).
  
@@ -449,7 +437,7 @@ Index: py/nova/virt/libvirt/connection.py
      @staticmethod
      def _map_to_instance_info(domain):
          """Gets info from a virsh domain object into an InstanceInfo"""
-@@ -431,6 +504,7 @@
+@@ -453,6 +525,7 @@ class LibvirtConnection(driver.ComputeDr
          target = os.path.join(FLAGS.instances_path, instance['name'])
          LOG.info(_('Deleting instance files %(target)s') % locals(),
                   instance=instance)
@@ -457,7 +445,7 @@ Index: py/nova/virt/libvirt/connection.py
          if FLAGS.libvirt_type == 'lxc':
              disk.destroy_container(self.container)
          if os.path.exists(target):
-@@ -921,6 +995,19 @@
+@@ -941,6 +1014,19 @@ class LibvirtConnection(driver.ComputeDr
              console_types.setdefault(console_type, [])
              console_types[console_type].append(console_node)
  
@@ -475,9 +463,9 @@ Index: py/nova/virt/libvirt/connection.py
 +            return self.console_loggers[instance['name']].peek()
 +
          # If the guest has a console logging to a file prefer to use that
-         for file_console in console_types.get('file'):
-             source_node = file_console.find('./source')
-@@ -944,13 +1031,12 @@
+         if console_types.get('file'):
+             for file_console in console_types.get('file'):
+@@ -966,13 +1052,12 @@ class LibvirtConnection(driver.ComputeDr
          else:
              raise exception.Error(_("Guest does not have a console available"))
  
@@ -496,7 +484,7 @@ Index: py/nova/virt/libvirt/connection.py
  
      @staticmethod
      def get_host_ip_addr():
-@@ -1080,8 +1166,25 @@
+@@ -1102,8 +1187,25 @@ class LibvirtConnection(driver.ComputeDr
              container_dir = '%s/rootfs' % basepath(suffix='')
              libvirt_utils.ensure_tree(container_dir)
  
@@ -524,10 +512,9 @@ Index: py/nova/virt/libvirt/connection.py
  
          if not disk_images:
              disk_images = {'image_id': instance['image_ref'],
-Index: py/nova/virt/libvirt.xml.template
-===================================================================
---- py.orig/nova/virt/libvirt.xml.template	2012-03-15 22:31:42.186523469 -0700
-+++ py/nova/virt/libvirt.xml.template	2012-03-15 22:31:48.113952037 -0700
+diff -Naurp nova-2012.1.orig/nova/virt/libvirt.xml.template nova-2012.1/nova/virt/libvirt.xml.template
+--- nova-2012.1.orig/nova/virt/libvirt.xml.template	2012-03-20 07:05:44.000000000 -0400
++++ nova-2012.1/nova/virt/libvirt.xml.template	2012-03-20 09:02:22.840459227 -0400
 @@ -168,8 +168,8 @@
  	     client app is connected. Thus we can't get away
  	     with a single type=pty console. Instead we have
