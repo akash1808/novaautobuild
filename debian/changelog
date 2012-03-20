@@ -1,8 +1,9 @@
 nova (2012.1~rc1~20120316.13416-0ubuntu2) precise; urgency=low
 
   * debian/patches/libvirt-console.patch: Refresh
-  * debian/control: Split nova-consoleauth from nova-console into its own pkg 
-
+  * debian/control: Split nova-consoleauth from nova-console into its own pkg
+    (LP: #959289)
+  * debian/nova-console.upstart.in: Specify shell
  -- Adam Gandelman <adamg@canonical.com>  Fri, 16 Mar 2012 19:07:09 -0700
 
 nova (2012.1~rc1~20120316.13416-0ubuntu1) precise; urgency=low
