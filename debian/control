@@ -500,6 +500,7 @@ Description: OpenStack Compute - object store
 Package: nova-console
 Architecture: all
 Depends: ${ostack-lsb-base}, nova-common (= ${binary:Version}), ${python:Depends}, ${misc:Depends}
+Recommends: nova-consoleauth (>=  2012.1~rc1-0ubuntu2)
 Description: OpenStack Compute - Console
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
@@ -522,6 +523,8 @@ Description: OpenStack Compute - Console
 Package: nova-consoleauth
 Architecture: all
 Depends: ${ostack-lsb-base}, nova-common (= ${binary:Version}), ${python:Depends}, ${misc:Depends}
+Breaks: nova-console (<< 2012.1~rc1-0ubuntu2)
+Replaces: nova-console (<< 2012.1~rc1-0ubuntu2)
 Description: OpenStack Compute - Console Authenticator
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
@@ -537,9 +540,9 @@ Description: OpenStack Compute - Console Authenticator
  (SQLite, MySQL, and PostgreSQL, for instance), different types of user
  databases (LDAP or SQL), etc.
  .
- This package provides the console server.  This enables the use of consoles
- to be used along with XVP and XenServer.  It is a publically reachable
- component which proxies access to VNCs running on compute nodes.
+ This package provides the authentication service for nova-console.  It grants
+ user requests for console access based on tokens in the identity service and
+ allows access to virtual consoles via a browser.
 
 Package: nova-doc
 Architecture: all
