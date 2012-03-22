@@ -1,3 +1,11 @@
+nova (2012.1~rc1-0ubuntu2) precise; urgency=low
+
+  * debian/control: Add Breaks/Replaces to nova-consoleauth, update
+    description, nova-console Recommends nova-consoleauth 
+  * debian/nova-console.install: Remove nova-consoleauth
+
+ -- Adam Gandelman <adamg@canonical.com>  Thu, 22 Mar 2012 11:31:35 -0700
+
 nova (2012.1~rc1-0ubuntu1) precise; urgency=low
 
   [ Adam Gandelman ]
