@@ -2,3 +2,4 @@ nova-manage_flagfile_location.patch
 kombu_tests_timeout.patch
 nova-console-monitor.patch
 path-to-the-xenhost.conf-fixup.patch
+fix-ubuntu-tests.patch

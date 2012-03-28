@@ -10,8 +10,10 @@ nova (2012.1~rc1-0ubuntu3) precise; urgency=low
   * debian/patches/nova-console-monitor.patch: Add console-monitor
     option.
   * debian/nova.conf: Enable use_console_monitor
+  * debian/patches/fix-ubuntu-tests.patch: Fix nova testsuite.
+  * debian/rules: fail package build if testsuite fails.
 
- -- Chuck Short <zulcss@ubuntu.com>  Wed, 28 Mar 2012 09:54:43 -0400
+ -- Chuck Short <zulcss@ubuntu.com>  Wed, 28 Mar 2012 10:25:47 -0400
 
 nova (2012.1~rc1-0ubuntu2) precise; urgency=low
 
