@@ -1,9 +1,17 @@
 nova (2012.1~rc1-0ubuntu3) precise; urgency=low
 
+  [ Adam Gandelman ]
+  [Adam Gandelman]
   * debian/control: Remove unncessary nova-cert dependency from nova-api.
     (LP: #965356)
 
- -- Adam Gandelman <adamg@canonical.com>  Mon, 26 Mar 2012 18:25:06 -0700
+  [ Chuck Short ]
+  * debian/patches/libvirt-use-console-pipe.patch: Dropped.
+  * debian/patches/nova-console-monitor.patch: Add console-monitor
+    option.
+  * debian/nova.conf: Enable use_console_monitor
+
+ -- Chuck Short <zulcss@ubuntu.com>  Wed, 28 Mar 2012 09:54:43 -0400
 
 nova (2012.1~rc1-0ubuntu2) precise; urgency=low
 
