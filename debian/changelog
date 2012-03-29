@@ -1,6 +1,5 @@
 nova (2012.1~rc1-0ubuntu3) precise; urgency=low
 
-  [ Adam Gandelman ]
   [Adam Gandelman]
   * debian/control: Remove unncessary nova-cert dependency from nova-api.
     (LP: #965356)
