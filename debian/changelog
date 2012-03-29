@@ -12,6 +12,14 @@ nova (2012.1~rc1-0ubuntu3) precise; urgency=low
   * debian/patches/fix-ubuntu-tests.patch: Fix nova testsuite.
   * debian/rules: fail package build if testsuite fails.
 
+  [Tyler Hicks]
+  * SECURITY UPDATE: Denial of service via resource exhaustion in nova-api
+    (LP: #968411)
+    - debian/patches/validate_server_name_length.patch: Limit server names
+      to a maximum of 255 characters to prevent nova-api log files from
+      exhausting storage space. Based on upstream patch.
+    - CVE-2012-1585
+
  -- Chuck Short <zulcss@ubuntu.com>  Wed, 28 Mar 2012 10:25:47 -0400
 
 nova (2012.1~rc1-0ubuntu2) precise; urgency=low

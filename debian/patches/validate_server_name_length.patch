@@ -1,0 +1,84 @@
+Description: Long server names grow nova-api log files significantly
+ Dan Prince reported a vulnerability in OpenStack Compute (Nova) API
+ servers. By PUTing or POSTing extremely long server names to the
+ OpenStack API, any authenticated user may grow nova-api log files
+ significantly, potentially resulting in disk space exhaustion and
+ denial of service to the affected nova-api nodes. Only setups running
+ the OpenStack API are affected.
+Origin: upstream, http://github.com/openstack/nova/commit/c7f526fae6062e9ab51f65474af71d496aa66554
+Bug: https://bugs.launchpad.net/nova/+bug/962515
+Index: nova-2012.1~rc1/nova/api/openstack/compute/servers.py
+===================================================================
+--- nova-2012.1~rc1.orig/nova/api/openstack/compute/servers.py	2012-03-20 06:05:43.000000000 -0500
++++ nova-2012.1~rc1/nova/api/openstack/compute/servers.py	2012-03-29 12:13:30.755893246 -0500
+@@ -505,6 +505,10 @@
+             msg = _("Server name is an empty string")
+             raise exc.HTTPBadRequest(explanation=msg)
+ 
++        if not len(value) < 256:
++            msg = _("Server name must be less than 256 characters.")
++            raise exc.HTTPBadRequest(explanation=msg)
++
+     def _get_injected_files(self, personality):
+         """
+         Create a list of injected files from the personality attribute
+Index: nova-2012.1~rc1/nova/tests/api/openstack/compute/test_servers.py
+===================================================================
+--- nova-2012.1~rc1.orig/nova/tests/api/openstack/compute/test_servers.py	2012-03-20 06:05:43.000000000 -0500
++++ nova-2012.1~rc1/nova/tests/api/openstack/compute/test_servers.py	2012-03-29 12:13:30.759893246 -0500
+@@ -891,6 +891,17 @@
+         self.assertEqual(res_dict['server']['id'], FAKE_UUID)
+         self.assertEqual(res_dict['server']['name'], 'server_test')
+ 
++    def test_update_server_name_too_long(self):
++        self.stubs.Set(nova.db, 'instance_get',
++                fakes.fake_instance_get(name='server_test'))
++        req = fakes.HTTPRequest.blank('/v2/fake/servers/%s' % FAKE_UUID)
++        req.method = 'PUT'
++        req.content_type = 'application/json'
++        body = {'server': {'name': 'x' * 256}}
++        req.body = json.dumps(body)
++        self.assertRaises(webob.exc.HTTPBadRequest, self.controller.update,
++                            req, FAKE_UUID, body)
++
+     def test_update_server_access_ipv4(self):
+         self.stubs.Set(nova.db, 'instance_get',
+                 fakes.fake_instance_get(access_ipv4='0.0.0.0'))
+@@ -1635,6 +1646,37 @@
+                 ],
+             },
+         }
++
++        req = fakes.HTTPRequest.blank('/v2/fake/servers')
++        req.method = 'POST'
++        req.body = json.dumps(body)
++        req.headers["content-type"] = "application/json"
++        self.assertRaises(webob.exc.HTTPBadRequest, self.controller.create,
++                            req, body)
++
++    def test_create_instance_name_too_long(self):
++        # proper local hrefs must start with 'http://localhost/v2/'
++        image_uuid = '76fa36fc-c930-4bf3-8c8a-ea2a2420deb6'
++        image_href = 'http://localhost/v2/images/%s' % image_uuid
++        flavor_ref = 'http://localhost/123/flavors/3'
++        body = {
++            'server': {
++                'name': 'X' * 256,
++                'imageRef': image_href,
++                'flavorRef': flavor_ref,
++                'metadata': {
++                    'hello': 'world',
++                    'open': 'stack',
++                },
++                'personality': [
++                    {
++                        "path": "/etc/banner.txt",
++                        "contents": "MQ==",
++                    },
++
++                ],
++            },
++        }
+ 
+         req = fakes.HTTPRequest.blank('/v2/fake/servers')
+         req.method = 'POST'
