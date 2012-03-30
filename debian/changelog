@@ -3,6 +3,8 @@ nova (2012.1~rc1-0ubuntu3) precise; urgency=low
   [ Adam Gandelman ]
   * debian/control: Remove unncessary nova-cert dependency from nova-api.
     (LP: #965356)
+  * debian/nova-common.postinst: Clean up spacing, remove redundant chown,
+    set blanket 0700 nova.nova permissions on /etc/nova/
 
   [ Chuck Short ]
   * debian/patches/libvirt-use-console-pipe.patch: Dropped.
@@ -13,8 +15,6 @@ nova (2012.1~rc1-0ubuntu3) precise; urgency=low
   * debian/rules: fail package build if testsuite fails.
   * debian/nova-common.{nova-manage, nova-dhcpbridge}.logroate: Add
     lograte. (LP: #942646)
-  * debian/nova-common.postinst: Make sure /etc/nova/nova-compute.conf
-    have the right permissions. (LP: #861459)
 
   [ Tyler Hicks ]
   * SECURITY UPDATE: Denial of service via resource exhaustion in nova-api
