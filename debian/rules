@@ -1,5 +1,5 @@
 #!/usr/bin/make -f
-DEB_BUILD_OPTIONS='nocheck nodocs'
+
 # Verbose mode
 #export DH_VERBOSE=1
 
@@ -32,6 +32,8 @@ ifeq (,$(findstring nodocs, $(DEB_BUILD_OPTIONS)))
 	python setup.py build_sphinx
 else
 	mkdir -p $(CURDIR)/doc/build/html
+	mkdir -p $(CURDIR)/doc/build/html
+	touch $(CURDIR)/doc/build/man/nova-manage.1
 endif
 
 get-orig-source:
