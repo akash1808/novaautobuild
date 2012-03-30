@@ -5,6 +5,8 @@ nova (2012.1~rc1-0ubuntu3) precise; urgency=low
     (LP: #965356)
   * debian/nova-common.postinst: Clean up spacing, remove redundant chown,
     set blanket 0700 nova.nova permissions on /etc/nova/
+  * debian/nova-compute-{kvm, lxc, uml, xen}.postinst: Set proper permissions
+    on /etc/nova/nova-compute.conf (LP: #861459)
 
   [ Chuck Short ]
   * debian/patches/libvirt-use-console-pipe.patch: Dropped.

@@ -4,4 +4,7 @@ if [ "$1" = "configure" ]; then
     adduser --quiet nova libvirt
 fi
 
+chown nova:nova /etc/nova/nova-compute.conf
+chmod 0600 /etc/nova/nova-compute.conf
+
 #DEBHELPER#
