@@ -7,6 +7,8 @@ nova (2012.1~rc1-0ubuntu3) precise; urgency=low
     set blanket 0700 nova.nova permissions on /etc/nova/
   * debian/nova-compute-{kvm, lxc, uml, xen}.postinst: Set proper permissions
     on /etc/nova/nova-compute.conf (LP: #861459)
+  * debian/nova-common.postinst:  Ensure default nova.sqlite database is not
+    world-readable.
 
   [ Chuck Short ]
   * debian/patches/libvirt-use-console-pipe.patch: Dropped.
