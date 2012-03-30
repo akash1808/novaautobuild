@@ -163,7 +163,7 @@ nova (2012.1~e4~20120217.12709-0ubuntu1) precise; urgency=low
   * Temporarily disable console patch. (LP: #932787)
   * New usptream version.
 
- -- Chuck Short <zulcss@ubuntu.com> Fri, 17 Feb 2012 11:02:12 -0500
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 17 Feb 2012 11:02:12 -0500
 
 nova (2012.1~e4~20120210.12574-0ubuntu1) precise; urgency=low
 
@@ -177,7 +177,7 @@ nova (2012.1~e4~20120210.12574-0ubuntu1) precise; urgency=low
   * debian/control:
     - Dropped recommends on ajaxterm for nova-compute
     - Dropped nova-ajaxterm package.
-  
+
   [Adam Gandleman]
   * debian/patches/temp_fix_linux_net.patch: Temporary patch until LP:
    929127 is resolved.
