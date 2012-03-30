@@ -17,8 +17,8 @@ nova (2012.1~rc1-0ubuntu3) precise; urgency=low
   * debian/nova.conf: Enable use_console_monitor
   * debian/patches/fix-ubuntu-tests.patch: Fix nova testsuite.
   * debian/rules: fail package build if testsuite fails.
-  * debian/nova-common.{nova-manage, nova-dhcpbridge}.logroate: Add
-    lograte. (LP: #942646)
+  * debian/nova-common.nova-manage.logrotate,
+    nova-network.nova-dhcpbridge.logroate: Add lograte. (LP: #942646)
 
   [ Tyler Hicks ]
   * SECURITY UPDATE: Denial of service via resource exhaustion in nova-api
@@ -28,7 +28,7 @@ nova (2012.1~rc1-0ubuntu3) precise; urgency=low
       exhausting storage space. Based on upstream patch.
     - CVE-2012-1585
 
- -- Chuck Short <zulcss@ubuntu.com>  Fri, 30 Mar 2012 09:20:00 -0400
+ -- Adam Gandelman <adamg@canonical.com>  Fri, 30 Mar 2012 14:40:19 -0700
 
 nova (2012.1~rc1-0ubuntu2) precise; urgency=low
 
