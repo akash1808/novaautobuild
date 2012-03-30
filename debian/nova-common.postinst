@@ -49,6 +49,7 @@ if [ "$1" = "configure" ]; then
 
     chmod 0600 /etc/nova/nova.conf
     chmod 0600 /etc/nova/policy.json
+    chmod 0600 /etc/nova/api-paste.ini
     chmod 0700 /etc/nova
     chmod 0440 /etc/sudoers.d/nova_sudoers
     chmod 0700 /var/log/nova

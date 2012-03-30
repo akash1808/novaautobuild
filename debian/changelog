@@ -9,7 +9,11 @@ nova (2012.1~rc1-0ubuntu3) precise; urgency=low
     on /etc/nova/nova-compute.conf (LP: #861459)
   * debian/nova-common.postinst:  Ensure default nova.sqlite database is not
     world-readable.
-  * debian/{rules, nova-common.install}: Install api-paste.ini with nova-common
+  * debian/{rules, nova-common.{install, postinst}}: Install api-paste.ini 0600
+    with nova-common
+  * debian/{nova-common.nova-manage.logrotate,
+    nova-network.nova-dhcpbridge.logrotate, rules}: Add lograte files,
+    override_dh_installlogrotate. (LP: #942646)
 
   [ Chuck Short ]
   * debian/patches/libvirt-use-console-pipe.patch: Dropped.
@@ -18,8 +22,6 @@ nova (2012.1~rc1-0ubuntu3) precise; urgency=low
   * debian/nova.conf: Enable use_console_monitor
   * debian/patches/fix-ubuntu-tests.patch: Fix nova testsuite.
   * debian/rules: fail package build if testsuite fails.
-  * debian/nova-common.nova-manage.logrotate,
-    nova-network.nova-dhcpbridge.logroate: Add lograte. (LP: #942646)
 
   [ Tyler Hicks ]
   * SECURITY UPDATE: Denial of service via resource exhaustion in nova-api
