@@ -10,7 +10,7 @@ nova (2012.1~rc1-0ubuntu3) precise; urgency=low
   * debian/nova-common.postinst:  Ensure default nova.sqlite database is not
     world-readable.
   * debian/{rules, nova-common.{install, postinst}}: Install api-paste.ini 0600
-    with nova-common
+    with nova-common (in prepartion for proper nova-api-* package separation)
   * debian/{nova-common.nova-manage.logrotate,
     nova-network.nova-dhcpbridge.logrotate, rules}: Add lograte files,
     override_dh_installlogrotate. (LP: #942646)
