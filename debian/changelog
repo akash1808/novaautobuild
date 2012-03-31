@@ -17,6 +17,9 @@ nova (2012.1~rc1-0ubuntu3) precise; urgency=low
   * Add manpage stubs for nova-api-ec2, nova-api-metadata,
     nova-api-os-{volume, compute}, nova-rootwrap. Use sphinx built manpage
     for nova-manage (nova-common.manpages)
+  * debian/nova-compute-{kvm, xen, uml, qemu}.postinst: Remove calls to
+    adduser since this is already handled from nova-compute.postsinst in a
+    vendor neutral way.  Silences lintian errors regarding adduser dependency
 
   [ Chuck Short ]
   * debian/patches/libvirt-use-console-pipe.patch: Dropped.
