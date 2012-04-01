@@ -3,4 +3,3 @@ kombu_tests_timeout.patch
 nova-console-monitor.patch
 path-to-the-xenhost.conf-fixup.patch
 fix-ubuntu-tests.patch
-validate_server_name_length.patch

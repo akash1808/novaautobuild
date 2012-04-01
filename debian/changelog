@@ -15,6 +15,8 @@ nova (2012.1~rc1-0ubuntu3) precise; urgency=low
     lograte. (LP: #942646)
   * debian/nova-common.postinst: Make sure /etc/nova/nova-compute.conf
     have the right permissions. (LP: #861459)
+  * debian/patches/validate_server_name_length.patch: Dropped no longer
+    needed.
 
   [ Tyler Hicks ]
   * SECURITY UPDATE: Denial of service via resource exhaustion in nova-api
@@ -24,7 +26,7 @@ nova (2012.1~rc1-0ubuntu3) precise; urgency=low
       exhausting storage space. Based on upstream patch.
     - CVE-2012-1585
 
- -- Chuck Short <zulcss@ubuntu.com>  Fri, 30 Mar 2012 09:20:00 -0400
+ -- Chuck Short <zulcss@ubuntu.com>  Sun, 01 Apr 2012 08:36:49 -0400
 
 nova (2012.1~rc1-0ubuntu2) precise; urgency=low
 
