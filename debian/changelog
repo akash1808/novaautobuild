@@ -3,6 +3,23 @@ nova (2012.1~rc1-0ubuntu3) precise; urgency=low
   [ Adam Gandelman ]
   * debian/control: Remove unncessary nova-cert dependency from nova-api.
     (LP: #965356)
+  * debian/nova-common.postinst: Clean up spacing, remove redundant chown,
+    set blanket 0700 nova.nova permissions on /etc/nova/
+  * debian/nova-compute-{kvm, lxc, uml, xen}.postinst: Set proper permissions
+    on /etc/nova/nova-compute.conf (LP: #861459)
+  * debian/nova-common.postinst:  Ensure default nova.sqlite database is not
+    world-readable.
+  * debian/{rules, nova-common.{install, postinst}}: Install api-paste.ini 0600
+    with nova-common (in prepartion for proper nova-api-* package separation)
+  * debian/{nova-common.nova-manage.logrotate,
+    nova-network.nova-dhcpbridge.logrotate, rules}: Add lograte files,
+    override_dh_installlogrotate. (LP: #942646)
+  * Add manpage stubs for nova-api-ec2, nova-api-metadata,
+    nova-api-os-{volume, compute}, nova-rootwrap. Use sphinx built manpage
+    for nova-manage (nova-common.manpages)
+  * debian/nova-compute-{kvm, xen, uml, qemu}.postinst: Remove calls to
+    adduser since this is already handled from nova-compute.postsinst in a
+    vendor neutral way.  Silences lintian errors regarding adduser dependency
 
   [ Chuck Short ]
   * debian/patches/libvirt-use-console-pipe.patch: Dropped.
@@ -11,10 +28,6 @@ nova (2012.1~rc1-0ubuntu3) precise; urgency=low
   * debian/nova.conf: Enable use_console_monitor
   * debian/patches/fix-ubuntu-tests.patch: Fix nova testsuite.
   * debian/rules: fail package build if testsuite fails.
-  * debian/nova-common.{nova-manage, nova-dhcpbridge}.logroate: Add
-    lograte. (LP: #942646)
-  * debian/nova-common.postinst: Make sure /etc/nova/nova-compute.conf
-    have the right permissions. (LP: #861459)
   * debian/patches/validate_server_name_length.patch: Dropped no longer
     needed.
 
@@ -155,7 +168,7 @@ nova (2012.1~e4~20120217.12709-0ubuntu1) precise; urgency=low
   * Temporarily disable console patch. (LP: #932787)
   * New usptream version.
 
- -- Chuck Short <zulcss@ubuntu.com> Fri, 17 Feb 2012 11:02:12 -0500
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 17 Feb 2012 11:02:12 -0500
 
 nova (2012.1~e4~20120210.12574-0ubuntu1) precise; urgency=low
 
@@ -169,7 +182,7 @@ nova (2012.1~e4~20120210.12574-0ubuntu1) precise; urgency=low
   * debian/control:
     - Dropped recommends on ajaxterm for nova-compute
     - Dropped nova-ajaxterm package.
-  
+
   [Adam Gandleman]
   * debian/patches/temp_fix_linux_net.patch: Temporary patch until LP:
    929127 is resolved.

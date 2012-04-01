@@ -32,6 +32,8 @@ ifeq (,$(findstring nodocs, $(DEB_BUILD_OPTIONS)))
 	python setup.py build_sphinx
 else
 	mkdir -p $(CURDIR)/doc/build/html
+	mkdir -p $(CURDIR)/doc/build/html
+	touch $(CURDIR)/doc/build/man/nova-manage.1
 endif
 
 get-orig-source:
@@ -56,7 +58,6 @@ override_dh_install:
 	for hypervisor in qemu kvm xen uml lxc; do \
 		install -D -m 0600 $(CURDIR)/debian/nova-compute-$${hypervisor}.conf $(CURDIR)/debian/nova-compute-$${hypervisor}/etc/nova/nova-compute.conf; \
 	done
-	install -D -m 0600 $(CURDIR)/etc/nova/api-paste.ini $(CURDIR)/debian/nova-api/etc/nova/api-paste.ini
 
 override_dh_fixperms:
 	dh_fixperms -Xnova_sudoers
@@ -81,3 +82,8 @@ override_dh_installinit:
 override_dh_python2:
 	dh_python2
 	dh_python2  /usr/lib/xcp
+
+override_dh_installlogrotate:
+	dh_installlogrotate
+	dh_installlogrotate --name=nova-manage
+	dh_installlogrotate --name=nova-dhcpbridge
