@@ -30,6 +30,11 @@ nova (2012.1~rc1-0ubuntu3) precise; urgency=low
   * debian/rules: fail package build if testsuite fails.
   * debian/patches/validate_server_name_length.patch: Dropped no longer
     needed.
+  * debian/patches/fix-docs-build-without-network.patch: Some docs need
+    a network connection in order to build. Disable fetching docs from
+    the internet.
+  * debian/patches/0001-fix-useexisting-deprecation-warnings.patch:
+    Remove deprecated warnings with sqlalchemy.
 
   [ Tyler Hicks ]
   * SECURITY UPDATE: Denial of service via resource exhaustion in nova-api
@@ -39,7 +44,7 @@ nova (2012.1~rc1-0ubuntu3) precise; urgency=low
       exhausting storage space. Based on upstream patch.
     - CVE-2012-1585
 
- -- Chuck Short <zulcss@ubuntu.com>  Sun, 01 Apr 2012 08:36:49 -0400
+ -- Chuck Short <zulcss@ubuntu.com>  Sun, 01 Apr 2012 09:25:23 -0400
 
 nova (2012.1~rc1-0ubuntu2) precise; urgency=low
 
