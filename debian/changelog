@@ -1,4 +1,4 @@
-nova (2012.1~rc1-0ubuntu3) precise; urgency=low
+nova (2012.1~rc2-0ubuntu1) precise; urgency=low
 
   [ Adam Gandelman ]
   * debian/control: Remove unncessary nova-cert dependency from nova-api.
@@ -22,6 +22,7 @@ nova (2012.1~rc1-0ubuntu3) precise; urgency=low
     vendor neutral way.  Silences lintian errors regarding adduser dependency
 
   [ Chuck Short ]
+  * New upstream version.
   * debian/patches/libvirt-use-console-pipe.patch: Dropped.
   * debian/patches/nova-console-monitor.patch: Add console-monitor
     option.
@@ -44,7 +45,7 @@ nova (2012.1~rc1-0ubuntu3) precise; urgency=low
       exhausting storage space. Based on upstream patch.
     - CVE-2012-1585
 
- -- Chuck Short <zulcss@ubuntu.com>  Sun, 01 Apr 2012 09:25:23 -0400
+ -- Chuck Short <zulcss@ubuntu.com>  Mon, 02 Apr 2012 11:17:33 -0400
 
 nova (2012.1~rc1-0ubuntu2) precise; urgency=low
 
