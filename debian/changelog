@@ -1,10 +1,10 @@
-nova (2012.1~rc4-0ubuntu1) UNRELEASED; urgency=low
+nova (2012.1~rc4-0ubuntu1) precise; urgency=low
 
   * New upstream release.
   * debian/patches/nova-console-monitor.patch: Disabled.
-  * debian/nova.conf: Removed console-monitor-patch
+  * debian/nova.conf: Removed console-monitor option.
 
- -- Chuck Short <zulcss@ubuntu.com>  Wed, 04 Apr 2012 16:43:53 -0400
+ -- Chuck Short <zulcss@ubuntu.com>  Wed, 04 Apr 2012 16:55:52 -0400
 
 nova (2012.1~rc3-0ubuntu1) precise; urgency=low
 
