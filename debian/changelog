@@ -1,9 +1,9 @@
-nova (2012.1~rc3-0ubuntu1) UNRELEASED; urgency=low
+nova (2012.1~rc3-0ubuntu1) precise; urgency=low
 
   * New Upstream release. 
   * debian/control: Conflict nova-vncproxy with novnc.
 
- -- Chuck Short <zulcss@ubuntu.com>  Wed, 04 Apr 2012 09:00:50 -0400
+ -- Chuck Short <zulcss@ubuntu.com>  Wed, 04 Apr 2012 09:25:14 -0400
 
 nova (2012.1~rc2-0ubuntu1) precise; urgency=low
 
