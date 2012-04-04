@@ -1,7 +1,7 @@
-From 3ab8f771d595e421304969fb0f8929ce532423bd Mon Sep 17 00:00:00 2001
+From 742e5512dbee26080f14490292d50278d59f10ac Mon Sep 17 00:00:00 2001
 From: Chuck Short <chuck.short@canonical.com>
 Date: Thu, 29 Mar 2012 13:10:22 -0400
-Subject: [PATCH 2/2] Monitor console.log for indefinite growth
+Subject: [PATCH] Monitor console.log for indefinite growth
 
 Using the libvirt serial console, everything
 that is dumped into a console.log file, this file can
@@ -12,10 +12,6 @@ the console monitor will check the instance's console.log size.
 If it goes past a certain amount it will warn in the nova-compute.log
 file that it is growing and when was the file last modified.
 
-Finally, if the console.log goes past a certain threshold an
-additional flag has been added to allow the console monitor to
-truncate it.
-
 This bug does not entirely fix bug 832507, but it is a stop
 gap measure until we can resolve it properly in libvirt
 or qemu-kvm.
@@ -23,17 +19,17 @@ or qemu-kvm.
 Change-Id: I00ebc716dccbe9fb97e2b8a3cb5d5e496bc7719b
 Signed-off-by: Chuck Short <chuck.short@canonical.com>
 ---
- nova/compute/manager.py         |   28 +++++++++++++++++++++++++++-
+ nova/compute/manager.py         |   24 +++++++++++++++++++++++-
  nova/tests/test_compute.py      |    9 +++++++++
  nova/virt/driver.py             |   11 +++++++++++
- nova/virt/libvirt/connection.py |   22 ++++++++++++++++++++++
- 4 files changed, 69 insertions(+), 1 deletions(-)
+ nova/virt/libvirt/connection.py |   13 +++++++++++++
+ 4 files changed, 56 insertions(+), 1 deletions(-)
 
 diff --git a/nova/compute/manager.py b/nova/compute/manager.py
-index 48e135b..d74d863 100644
+index 48e135b..c5a4bb3 100644
 --- a/nova/compute/manager.py
 +++ b/nova/compute/manager.py
-@@ -118,7 +118,17 @@ compute_opts = [
+@@ -118,7 +118,13 @@ compute_opts = [
      cfg.IntOpt("heal_instance_info_cache_interval",
                 default=60,
                 help="Number of seconds between instance info_cache self "
@@ -44,15 +40,11 @@ index 48e135b..d74d863 100644
 +                help="Use scheduler to monitor the console.log."),
 +    cfg.IntOpt("console_threshold_size",
 +                default=104857600,
-+                help="Max console.log size."),
-+    cfg.BoolOpt("console_monitor_truncate",
-+                default=False,
-+                help="Truncate console.log when it reaches "
-+                     "past the console threshhold size.")
++                help="Max console.log size.")
      ]
  
  FLAGS = flags.FLAGS
-@@ -2393,6 +2403,22 @@ class ComputeManager(manager.SchedulerDependentManager):
+@@ -2393,6 +2399,22 @@ class ComputeManager(manager.SchedulerDependentManager):
                  self._delete_instance(context, instance)
  
      @manager.periodic_task
@@ -118,10 +110,10 @@ index 9658273..e0a0ca1 100644
      def add_to_aggregate(self, context, aggregate, host, **kwargs):
          """Add a compute host to an aggregate."""
 diff --git a/nova/virt/libvirt/connection.py b/nova/virt/libvirt/connection.py
-index 3c4bbb0..4a672bf 100644
+index 3c4bbb0..10e4cf1 100644
 --- a/nova/virt/libvirt/connection.py
 +++ b/nova/virt/libvirt/connection.py
-@@ -2434,6 +2434,28 @@ class LibvirtConnection(driver.ComputeDriver):
+@@ -2434,6 +2434,19 @@ class LibvirtConnection(driver.ComputeDriver):
          """Manage the local cache of images."""
          self.image_cache_manager.verify_base_images(context)
  
@@ -137,15 +129,6 @@ index 3c4bbb0..4a672bf 100644
 +                LOG.warn(_('console.log size: %(size)s bytes, '
 +                           'last accessed: %(file_acess_time)s.')
 +                         % locals(), instance=instance)
-+                if FLAGS.console_monitor_truncate:
-+                    LOG.warn(_('Truncating console.log for %s.'),
-+                                instance['name'])
-+                    libvirt_utils.chown(console_log_fle, os.getuid())
-+                    utils.execute('truncate',
-+                                  '--size=%s' % FLAGS.console_threshold_size,
-+                                  console_log_file)
-+                else:
-+                    LOG.warn(_('Truncate console.log not set.'))
 +
      @exception.wrap_exception()
      def migrate_disk_and_power_off(self, context, instance, dest,
