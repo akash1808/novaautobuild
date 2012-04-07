@@ -2,8 +2,10 @@ nova (2012.1-0ubuntu2) UNRELEASED; urgency=low
 
   * debian/nova.conf: Enabled ec2_private_dns_show_ip so that juju can
     connect to openstack instances.
+  * debian/control: Conflicts for nova-compute-
+    {lxc,uml,xen,qemu,kvm,xcp}wq
 
- -- Chuck Short <zulcss@ubuntu.com>  Thu, 05 Apr 2012 14:55:28 -0400
+ -- Chuck Short <zulcss@ubuntu.com>  Sat, 07 Apr 2012 09:45:01 -0400
 
 nova (2012.1-0ubuntu1) precise; urgency=low
 
