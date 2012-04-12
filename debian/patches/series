@@ -6,4 +6,3 @@ path-to-the-xenhost.conf-fixup.patch
 fix-ubuntu-tests.patch
 fix-docs-build-without-network.patch
 0001-fix-useexisting-deprecation-warnings.patch
-fix_deprecated_auth_img_publish.patch

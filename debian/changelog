@@ -11,6 +11,8 @@ nova (2012.1-0ubuntu2) UNRELEASED; urgency=low
     publication using deprecated auth.  (LP: #977765)
 
   [ Chuck Short ]
+  * Resynchronize with stable/essex:
+    - Fixes image publication using deprecated auth. (LP: #977765)
   * debian/nova.conf: Enabled ec2_private_dns_show_ip so that juju can
     connect to openstack instances.
 
