@@ -1,4 +1,4 @@
-nova (2012.1-0ubuntu2) UNRELEASED; urgency=low
+nova (2012.1-0ubuntu2) precise; urgency=low
 
   [ Adam Gandelman ]
   * debian/rules: Properly create empty doc/build/man dir for builds that
@@ -10,7 +10,8 @@ nova (2012.1-0ubuntu2) UNRELEASED; urgency=low
 
   [ Chuck Short ]
   * Resynchronize with stable/essex:
-    - Fixes image publication using deprecated auth. (LP: #977765)
+    - b1d11b8 Use project_id in ec2.cloud._format_image()
+    - 6e988ed Fixes image publication using deprecated auth. (LP: #977765)
     - 6e988ed Populate image properties with project_id again
     - 3b14c74 Fixed bug 962840, added a test case.
     - d4e96fe Allow unprivileged RADOS users to access rbd volumes.
@@ -21,7 +22,7 @@ nova (2012.1-0ubuntu2) UNRELEASED; urgency=low
   * debian/patches/fix-docs-build-without-network.patch: Fix docs build
     when there is no network access.
 
- -- Adam Gandelman <adamg@canonical.com>  Sat, 07 Apr 2012 09:45:01 -0400
+ -- Chuck Short <zulcss@ubuntu.com>  Thu, 12 Apr 2012 12:51:54 -0400
 
 nova (2012.1-0ubuntu1) precise; urgency=low
 

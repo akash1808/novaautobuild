@@ -13,3 +13,4 @@ upstream/0002-Stop-libvirt-test-from-deleting-instances-dir.patch
 upstream/0003-Allow-unprivileged-RADOS-users-to-access-rbd-volumes.patch
 upstream/0004-Fixed-bug-962840-added-a-test-case.patch
 upstream/0005-Populate-image-properties-with-project_id-again.patch
+upstream/0006-Use-project_id-in-ec2.cloud._format_image.patch
