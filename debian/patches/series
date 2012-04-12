@@ -6,3 +6,10 @@ path-to-the-xenhost.conf-fixup.patch
 fix-ubuntu-tests.patch
 fix-docs-build-without-network.patch
 0001-fix-useexisting-deprecation-warnings.patch
+# stable/essex patch series - remove these patches 
+# when 2012.1.1 is released.
+upstream/0001-fix-bug-where-nova-ignores-glance-host-in-imageref.patch
+upstream/0002-Stop-libvirt-test-from-deleting-instances-dir.patch
+upstream/0003-Allow-unprivileged-RADOS-users-to-access-rbd-volumes.patch
+upstream/0004-Fixed-bug-962840-added-a-test-case.patch
+upstream/0005-Populate-image-properties-with-project_id-again.patch

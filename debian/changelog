@@ -1,3 +1,28 @@
+nova (2012.1-0ubuntu2) UNRELEASED; urgency=low
+
+  [ Adam Gandelman ]
+  * debian/rules: Properly create empty doc/build/man dir for builds that
+    skip doc building
+  * debian/control: Set 'Conflicts: nova-compute-hypervisor' for the various
+    nova-compute-$type packages. (LP: #975616)
+  * debian/control: Set 'Breaks: nova-api' for the various nova-api-$service
+    sub-packages. (LP: #966115)
+
+  [ Chuck Short ]
+  * Resynchronize with stable/essex:
+    - Fixes image publication using deprecated auth. (LP: #977765)
+    - 6e988ed Populate image properties with project_id again
+    - 3b14c74 Fixed bug 962840, added a test case.
+    - d4e96fe Allow unprivileged RADOS users to access rbd volumes.
+    - 4acfab6 Stop libvirt test from deleting instances dir
+    - 155c7b2 fix bug where nova ignores glance host in imageref
+  * debian/nova.conf: Enabled ec2_private_dns_show_ip so that juju can
+    connect to openstack instances.
+  * debian/patches/fix-docs-build-without-network.patch: Fix docs build
+    when there is no network access.
+
+ -- Adam Gandelman <adamg@canonical.com>  Sat, 07 Apr 2012 09:45:01 -0400
+
 nova (2012.1-0ubuntu1) precise; urgency=low
 
   * New upstream release.
