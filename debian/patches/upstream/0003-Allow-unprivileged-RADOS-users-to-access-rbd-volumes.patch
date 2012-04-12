@@ -14,30 +14,9 @@ from master.
 Fixes bug 975335.
 
 Change-Id: I3fbb2c03e5f63940c3a42f2d4f8d03ee16b30f7e
----
- .mailmap                    |    1 +
- Authors                     |    2 +-
- nova/tests/test_libvirt.py  |   51 +++++++++++++++++++++++++++++++++++++++++++
- nova/virt/libvirt/volume.py |   24 ++++++++++++++++----
- nova/volume/driver.py       |   15 +++++++++++-
- 5 files changed, 85 insertions(+), 8 deletions(-)
-
-diff --git a/.mailmap b/.mailmap
-index 4f9e4e6..7fd6cb6 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -37,6 +37,7 @@
- <jmckenty@gmail.com> <joshua.mckenty@nasa.gov>
- <johannes.erdfelt@rackspace.com> <johannes@compute3.221.st>
- <josh@jk0.org> <josh.kearney@rackspace.com>
-+<josh.durgin@dreamhost.com> <joshd@hq.newdream.net>
- <justin@fathomdb.com> <justinsb@justinsb-desktop>
- <justin@fathomdb.com> <superstack@superstack.org>
- <lorin@nimbisservices.com> <lorin@isi.edu>
-diff --git a/Authors b/Authors
-index e1a947c..a229313 100644
---- a/Authors
-+++ b/Authors
+diff -Naupr nova-2012.1.orig/Authors nova-2012.1/Authors
+--- nova-2012.1.orig/Authors	2012-04-04 14:29:56.000000000 -0400
++++ nova-2012.1/Authors	2012-04-12 12:49:23.608123414 -0400
 @@ -98,7 +98,7 @@ Jonathan Bryce <jbryce@jbryce.com>
  Jordan Rinke <jordan@openstack.org>
  Joseph Suh <jsuh@isi.edu>
@@ -47,11 +26,10 @@ index e1a947c..a229313 100644
  Josh Kearney <josh@jk0.org>
  Josh Kleinpeter <josh@kleinpeter.org>
  Joshua Harlow <harlowja@yahoo-inc.com>
-diff --git a/nova/tests/test_libvirt.py b/nova/tests/test_libvirt.py
-index 4ce91cb..ad4bb06 100644
---- a/nova/tests/test_libvirt.py
-+++ b/nova/tests/test_libvirt.py
-@@ -240,6 +240,57 @@ class LibvirtVolumeTestCase(test.TestCase):
+diff -Naupr nova-2012.1.orig/nova/tests/test_libvirt.py nova-2012.1/nova/tests/test_libvirt.py
+--- nova-2012.1.orig/nova/tests/test_libvirt.py	2012-04-04 14:29:56.000000000 -0400
++++ nova-2012.1/nova/tests/test_libvirt.py	2012-04-12 12:49:23.612123413 -0400
+@@ -240,6 +240,57 @@ class LibvirtVolumeTestCase(test.TestCas
          self.assertEqual(tree.find('./source').get('protocol'), 'rbd')
          rbd_name = '%s/%s' % (FLAGS.rbd_pool, name)
          self.assertEqual(tree.find('./source').get('name'), rbd_name)
@@ -109,11 +87,10 @@ index 4ce91cb..ad4bb06 100644
          libvirt_driver.disconnect_volume(connection_info, mount_device)
          connection_info = vol_driver.terminate_connection(vol, self.connr)
  
-diff --git a/nova/virt/libvirt/volume.py b/nova/virt/libvirt/volume.py
-index 784867e..10338c2 100644
---- a/nova/virt/libvirt/volume.py
-+++ b/nova/virt/libvirt/volume.py
-@@ -76,11 +76,25 @@ class LibvirtNetVolumeDriver(LibvirtVolumeDriver):
+diff -Naupr nova-2012.1.orig/nova/virt/libvirt/volume.py nova-2012.1/nova/virt/libvirt/volume.py
+--- nova-2012.1.orig/nova/virt/libvirt/volume.py	2012-04-04 14:29:56.000000000 -0400
++++ nova-2012.1/nova/virt/libvirt/volume.py	2012-04-12 12:49:23.612123413 -0400
+@@ -76,11 +76,25 @@ class LibvirtNetVolumeDriver(LibvirtVolu
          driver = self._pick_volume_driver()
          protocol = connection_info['driver_volume_type']
          name = connection_info['data']['name']
@@ -144,10 +121,9 @@ index 784867e..10338c2 100644
          return xml
  
  
-diff --git a/nova/volume/driver.py b/nova/volume/driver.py
-index ffdd1f5..8b316be 100644
---- a/nova/volume/driver.py
-+++ b/nova/volume/driver.py
+diff -Naupr nova-2012.1.orig/nova/volume/driver.py nova-2012.1/nova/volume/driver.py
+--- nova-2012.1.orig/nova/volume/driver.py	2012-04-04 14:29:56.000000000 -0400
++++ nova-2012.1/nova/volume/driver.py	2012-04-12 12:49:23.612123413 -0400
 @@ -56,7 +56,14 @@ volume_opts = [
                 help='The port that the iSCSI daemon is listening on'),
      cfg.StrOpt('rbd_pool',
@@ -177,6 +153,3 @@ index ffdd1f5..8b316be 100644
              }
          }
  
--- 
-1.7.9.1
-
