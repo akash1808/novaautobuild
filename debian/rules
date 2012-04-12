@@ -32,7 +32,7 @@ ifeq (,$(findstring nodocs, $(DEB_BUILD_OPTIONS)))
 	python setup.py build_sphinx
 else
 	mkdir -p $(CURDIR)/doc/build/html
-	mkdir -p $(CURDIR)/doc/build/html
+	mkdir -p $(CURDIR)/doc/build/man
 	touch $(CURDIR)/doc/build/man/nova-manage.1
 endif
 
