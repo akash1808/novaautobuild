@@ -1,3 +1,15 @@
+nova (2012.1-0ubuntu3) UNRELEASED; urgency=low
+
+  * Prepare for quantal:
+    - Dropped debian/patches/upstream/0006-Use-project_id-in-ec2.cloud._format_image.patch
+    - Dropped debian/patches/upstream/0005-Populate-image-properties-with-project_id-again.patch
+    - Dropped debian/patches/upstream/0004-Fixed-bug-962840-added-a-test-case.patch
+    - Dropped debian/patches/upstream/0003-Allow-unprivileged-RADOS-users-to-access-rbd-volumes.patch
+    - Dropped debian/patches/upstream/0002-Stop-libvirt-test-from-deleting-instances-dir.patch
+    - Dropped debian/patches/upstream/0001-fix-bug-where-nova-ignores-glance-host-in-imageref.patch 
+
+ -- Chuck Short <zulcss@ubuntu.com>  Tue, 01 May 2012 12:47:36 -0400
+
 nova (2012.1-0ubuntu2) precise; urgency=low
 
   [ Adam Gandelman ]
