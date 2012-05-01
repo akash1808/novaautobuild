@@ -7,8 +7,9 @@ nova (2012.1-0ubuntu3) UNRELEASED; urgency=low
     - Dropped debian/patches/upstream/0003-Allow-unprivileged-RADOS-users-to-access-rbd-volumes.patch
     - Dropped debian/patches/upstream/0002-Stop-libvirt-test-from-deleting-instances-dir.patch
     - Dropped debian/patches/upstream/0001-fix-bug-where-nova-ignores-glance-host-in-imageref.patch 
+  * debian/control: Add python-keystone as a dependency. (LP: #907197)
 
- -- Chuck Short <zulcss@ubuntu.com>  Tue, 01 May 2012 12:47:36 -0400
+ -- Chuck Short <zulcss@ubuntu.com>  Tue, 01 May 2012 12:52:02 -0400
 
 nova (2012.1-0ubuntu2) precise; urgency=low
 
