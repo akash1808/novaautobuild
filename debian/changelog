@@ -1,5 +1,6 @@
-nova (2012.1-0ubuntu3) UNRELEASED; urgency=low
+nova (2012.2~f1~20120502.13916-0ubuntu1) UNRELEASED; urgency=low
 
+  * New upstream release.
   * Prepare for quantal:
     - Dropped debian/patches/upstream/0006-Use-project_id-in-ec2.cloud._format_image.patch
     - Dropped debian/patches/upstream/0005-Populate-image-properties-with-project_id-again.patch
