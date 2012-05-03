@@ -1,6 +1,6 @@
 diff -Naurp nova-2012.2.orig/nova/tests/rpc/test_kombu.py nova-2012.2/nova/tests/rpc/test_kombu.py
 --- nova-2012.2.orig/nova/tests/rpc/test_kombu.py	2012-05-03 03:02:36.000000000 -0400
-+++ nova-2012.2/nova/tests/rpc/test_kombu.py	2012-05-03 10:13:54.961556798 -0400
++++ nova-2012.2/nova/tests/rpc/test_kombu.py	2012-05-03 10:24:15.693557103 -0400
 @@ -19,6 +19,7 @@
  Unit Tests for remote procedure calls using kombu
  """
@@ -9,7 +9,7 @@ diff -Naurp nova-2012.2.orig/nova/tests/rpc/test_kombu.py nova-2012.2/nova/tests
  from nova import context
  from nova import exception
  from nova import flags
-@@ -66,6 +67,13 @@ class RpcKombuTestCase(common.BaseRpcAMQ
+@@ -66,6 +67,12 @@ class RpcKombuTestCase(common.BaseRpcAMQ
              self.rpc = None
          super(RpcKombuTestCase, self).setUp()
  
@@ -18,7 +18,6 @@ diff -Naurp nova-2012.2.orig/nova/tests/rpc/test_kombu.py nova-2012.2/nova/tests
 +            fh = open('/dev/log')
 +        except IOError as e:
 +            raise SkipTest
-+
 +
      def tearDown(self):
          if kombu:
