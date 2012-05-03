@@ -43,6 +43,7 @@ Build-Depends-Indep:
  python-feedparser,
  python-crypto,
  python-iso8601,
+ python-kombu,
  pep8
 Build-Conflicts: python-cjson
 Standards-Version: 3.9.2
@@ -62,7 +63,6 @@ Depends: ${python:Depends},
  python-pycurl,
  python-daemon,
  python-carrot,
- python-kombu,
  python-lockfile,
  python-gflags,
  python-libxml2,
