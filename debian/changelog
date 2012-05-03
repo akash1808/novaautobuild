@@ -12,8 +12,11 @@ nova (2012.2~f1~20120502.13916-0ubuntu1) UNRELEASED; urgency=low
   * debian/patches/kombu_tests_timeout.patch: Refreshed.
   * debian/patches/ignore-w602-hacking-temporarily.patch: Temporarily
     ignore pep8 w602 erorrs.
+  * debian/patches/debian/patches/kombu_tests_timeout.patch: Dropped.
+  * debian/control: Removed python-kombu as a build depends, so we dont
+    run the kombu tests during build.
 
- -- Chuck Short <zulcss@ubuntu.com>  Thu, 03 May 2012 09:05:05 -0400
+ -- Chuck Short <zulcss@ubuntu.com>  Thu, 03 May 2012 09:20:13 -0400
 
 nova (2012.1-0ubuntu2) precise; urgency=low
 

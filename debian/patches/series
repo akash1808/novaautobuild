@@ -1,6 +1,5 @@
 nova-manage_flagfile_location.patch
 # Ubuntu specific patches below here. Note these can be dropped eventually.
-kombu_tests_timeout.patch
 #nova-console-monitor.patch
 path-to-the-xenhost.conf-fixup.patch
 fix-ubuntu-tests.patch
