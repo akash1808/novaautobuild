@@ -8,6 +8,7 @@ nova (2012.2~f1~20120503.13935-0ubuntu1) UNRELEASED; urgency=low
     - Dropped debian/patches/upstream/0003-Allow-unprivileged-RADOS-users-to-access-rbd-volumes.patch
     - Dropped debian/patches/upstream/0002-Stop-libvirt-test-from-deleting-instances-dir.patch
     - Dropped debian/patches/upstream/0001-fix-bug-where-nova-ignores-glance-host-in-imageref.patch 
+    - Dropped debian/patches/0001-fix-useexisting-deprecation-warnings.patch
   * debian/control: Add python-keystone as a dependency. (LP: #907197)
   * debian/patches/kombu_tests_timeout.patch: Refreshed.
   * debian/patches/ignore-w602-hacking-temporarily.patch: Temporarily
