@@ -13,8 +13,10 @@ nova (2012.2~f1~20120503.13935-0ubuntu1) UNRELEASED; urgency=low
   * debian/patches/kombu_tests_timeout.patch: Refreshed.
   * debian/patches/ignore-w602-hacking-temporarily.patch: Temporarily
     ignore pep8 w602 erorrs.
+  * debian/nova.conf, debian/nova-common.postinst: Convert to new ini
+    file configuration
 
- -- Chuck Short <zulcss@ubuntu.com>  Thu, 03 May 2012 09:20:13 -0400
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 18 May 2012 13:49:46 -0400
 
 nova (2012.1-0ubuntu2) precise; urgency=low
 
