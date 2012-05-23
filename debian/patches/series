@@ -5,4 +5,3 @@ kombu_tests_timeout.patch
 path-to-the-xenhost.conf-fixup.patch
 fix-ubuntu-tests.patch
 fix-docs-build-without-network.patch
-ignore-w602-hacking-temporarily.patch
