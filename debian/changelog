@@ -1,3 +1,9 @@
+nova (2012.2~f2~20120531.14249-0ubuntu2) quantal; urgency=low
+
+  * Really fix quantal postinst. 
+
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 01 Jun 2012 11:31:33 -0400
+
 nova (2012.2~f2~20120531.14249-0ubuntu1) quantal; urgency=low
 
   * New upstream release.
