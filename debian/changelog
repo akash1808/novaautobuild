@@ -3,8 +3,10 @@ nova (2012.2~f2~20120531.14249-0ubuntu1) UNRELEASED; urgency=low
   * New upstream release.
   * debian/nova-common.postinst: Fix typo when upgrading. (LP: #1005479) 
   * debian/nova-common.docs: Add ChangeLog
+  * debian/patches/nova-manage_flagfile_location.patch: Refreshed
+  * debian/patches/upstream: Removed
 
- -- Chuck Short <zulcss@ubuntu.com>  Thu, 31 May 2012 14:20:53 -0400
+ -- Chuck Short <zulcss@ubuntu.com>  Thu, 31 May 2012 14:25:05 -0400
 
 nova (2012.2~f1-0ubuntu1) quantal; urgency=low
 
