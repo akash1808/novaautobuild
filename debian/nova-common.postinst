@@ -24,12 +24,12 @@ if [ "$1" = "configure" ]; then
       find /var/lib/nova/ -name 'rootfs' -prune -o \
         -group nogroup -a -user nova -exec chown nova:nova {} \;
     elif dpkg --compare-versions "$2" lt "2012.2~f1~20120503.13935-0ubuntu1"; then
-	# convert the /etc/nova/nova.conf to the new configuration
-	cp /etc/nova/nova.conf /etc/nova/nova.conf.upgrade
-	nova-manage config convert --infile=/etc/nova/nova.conf \
-		--outfile=/etc/nova/nova.conf
-	chmod 600 /etc/nova/nova.conf
-	chown nova:nova /etc/nova/nova.conf
+      # convert the /etc/nova/nova.conf to the new configuration
+      mv /etc/nova/nova.conf /etc/nova/nova.conf.upgrade
+      nova-manage config convert --infile=/etc/nova/nova.conf.upgrade \
+        --outfile=/etc/nova/nova.conf
+      chmod 600 /etc/nova/nova.conf
+      chown nova:nova /etc/nova/nova.conf
     fi	
 
     if [ "$(id -gn nova)"  = "nogroup" ]; then
