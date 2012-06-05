@@ -1,3 +1,9 @@
+nova (2012.2~f2~20120531.14249-0ubuntu3) quantal; urgency=low
+
+  * debian/patches/nova-manage_flagfile_location.patch: Dropped. 
+
+ -- Adam Gandelman <adamg@canonical.com>  Tue, 05 Jun 2012 10:39:42 -0700
+
 nova (2012.2~f2~20120531.14249-0ubuntu2) quantal; urgency=low
 
   * Really fix quantal postinst. 
