@@ -8,8 +8,8 @@ nova (2012.2~f2~20120531.14249-0ubuntu3) quantal; urgency=low
   * debian/*.init, debian/*.upstart.in, debian/mans/*: Update to use
     --config-file
     flag instead of obsolete --flagfile.
-  * debian/nova-compute-{kvm, lxc, qemu, uml, xen}.conf: Convert to new .ini
-    format.
+  * debian/nova-common.postinst: Also handle conversion of nova-compute.conf
+    to new .ini format.
 
  -- Adam Gandelman <adamg@canonical.com>  Tue, 05 Jun 2012 10:39:42 -0700
 
