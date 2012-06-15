@@ -1,5 +1,6 @@
 nova (2012.2~f2~20120531.14249-0ubuntu3) quantal; urgency=low
 
+  [ Adam Gandelman ]
   * debian/patches/nova-manage_flagfile_location.patch: Dropped. 
   * debian/nova-common.postinst: Old format config will break nova-manage
     if left in place.  Move it away instead of copying before conversion.
@@ -10,6 +11,10 @@ nova (2012.2~f2~20120531.14249-0ubuntu3) quantal; urgency=low
     flag instead of obsolete --flagfile.
   * debian/nova-common.postinst: Also handle conversion of nova-compute.conf
     to new .ini format.
+
+  [ Paul Belanger ]
+  * Give nova group read permissions nova files / directories (LP: #989241)
+  * Add adm group to /var/log/nova (LP: #989242)
 
  -- Adam Gandelman <adamg@canonical.com>  Tue, 05 Jun 2012 10:39:42 -0700
 

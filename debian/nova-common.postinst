@@ -46,7 +46,8 @@ if [ "$1" = "configure" ]; then
       usermod -s "/bin/false" nova
     fi
 
-    chown -R nova:nova /var/log/nova/ /etc/nova/
+    chown -R nova:nova /etc/nova
+    chown -R nova:adm /var/log/nova
 
     if [ -z "$2" ]; then
         # New install - blanket permissions
@@ -60,12 +61,12 @@ if [ "$1" = "configure" ]; then
            -group nogroup -a -user nova -exec chown nova:nova {} \;
     fi
 
-    chmod 0600 /etc/nova/nova.conf
-    chmod 0600 /etc/nova/policy.json
-    chmod 0600 /etc/nova/api-paste.ini
-    chmod 0700 /etc/nova
+    chmod 0640 /etc/nova/nova.conf
+    chmod 0640 /etc/nova/policy.json
+    chmod 0640 /etc/nova/api-paste.ini
+    chmod 0750 /etc/nova
     chmod 0440 /etc/sudoers.d/nova_sudoers
-    chmod 0700 /var/log/nova
+    chmod 0750 /var/log/nova
 
     if ! grep -q sql_connection /etc/nova/nova.conf
     then
@@ -75,7 +76,7 @@ if [ "$1" = "configure" ]; then
     if [ -e /var/lib/nova/nova.sqlite ]
     then
       chown nova:nova /var/lib/nova/nova.sqlite
-      chmod 0600 /var/lib/nova/nova.sqlite
+      chmod 0640 /var/lib/nova/nova.sqlite
     fi
 
 fi
