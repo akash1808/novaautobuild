@@ -2,6 +2,7 @@ nova (2012.2~f2~20120531.14249-0ubuntu4) quantal; urgency=low
 
   * debian/rules: Temporarily disable test suite while blocking
     tests are investigated. 
+  * debian/patches/kombu_tests_timeout.patch: Dropped.
 
  -- Adam Gandelman <adamg@canonical.com>  Tue, 19 Jun 2012 17:10:26 -0700
 
