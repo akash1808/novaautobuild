@@ -1,1 +1,2 @@
 usr/bin/nova-volume
+etc/nova/rootwrap.d/volume.filters
