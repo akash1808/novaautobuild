@@ -1,4 +1,4 @@
-nova (2012.2~f2~20120531.14249-0ubuntu5) UNRELEASED; urgency=low
+nova (2012.2~f2~20120625.14533-0ubuntu1) UNRELEASED; urgency=low
 
   * debian/nova-common.docs: Dropped, ChangeLog is gone in upstream tree.
   * Use new rootwrap configuration structure:
