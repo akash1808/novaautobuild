@@ -5,8 +5,8 @@ nova (2012.2~f2~20120625.14533-0ubuntu1) UNRELEASED; urgency=low
     - debian/nova-{compute, network, volume}.{pyinstall, pyremove}: Dropped.
     - debian/nova-common.dirs: Add /etc/nova/rootwrap.d/.
     - debian/nova-common.install: Install /etc/nova/rootwrap.conf.
-    - debian/nova_sudoers, debian/nova.conf: Reference rootwrap.conf in calls
-      to nova-rootwrap.
+    - debian/debian/nova.conf: Reference rootwrap.conf in calls to
+      nova-rootwrap.
     - debian/nova-{compute, network, volume}.install: Install corresponding
       filter in /etc/nova/rootwrap.d/
 
