@@ -1,0 +1,130 @@
+Description: Revert setuptools-git plugin usage.
+Author: Chuck Short <zulcss@ubuntu.com>
+Forwarded: Not on your life.
+diff -Naurp nova-2012.2.orig/MANIFEST.in nova-2012.2/MANIFEST.in
+--- nova-2012.2.orig/MANIFEST.in	2012-06-28 19:50:35.000000000 -0400
++++ nova-2012.2/MANIFEST.in	2012-06-29 08:09:35.298599197 -0400
+@@ -1,6 +1,51 @@
+-include Authors
++include HACKING.rst
++include LICENSE run_tests.sh
++include README.rst
++include MANIFEST.in pylintrc Authors
++include openstack-common.conf
++include babel.cfg tox.ini
+ include ChangeLog
+-exclude .gitignore
+-exclude .gitreview
+-
++graft nova/CA
++graft doc
++graft smoketests
++graft tools
++graft etc
++graft contrib
++graft plugins
++graft nova/api/openstack/*/schemas
++include nova/auth/*.schema
++include nova/auth/novarc.template
++include nova/auth/opendj.sh
++include nova/auth/slap.sh
++include nova/cloudpipe/bootscript.sh
++include nova/cloudpipe/client.ovpn.template
++include nova/cloudpipe/bootscript.template
++include nova/compute/fakevirtinstance.xml
++include nova/compute/interfaces.template
++include nova/console/xvp.conf.template
++include nova/db/sqlalchemy/migrate_repo/migrate.cfg
++include nova/db/sqlalchemy/migrate_repo/README
++include nova/db/sqlalchemy/migrate_repo/versions/*.sql
++include nova/openstack/common/README
++include nova/virt/interfaces.template
++include nova/testing/README.rst
++include nova/tests/CA/
++include nova/tests/CA/cacert.pem
++include nova/tests/CA/private/
++include nova/tests/CA/private/cakey.pem
++include nova/tests/bundle/
++include nova/tests/bundle/1mb.manifest.xml
++include nova/tests/bundle/1mb.no_kernel_or_ramdisk.manifest.xml
++include nova/tests/bundle/1mb.part.0
++include nova/tests/bundle/1mb.part.1
++include nova/tests/api/ec2/public_key/*
++include nova/tests/image/*.tar.gz
++include nova/tests/policy.json
++include nova/tests/test_migrations.conf
++include nova/tests/xenapi/vm_rrd.xml
++include plugins/xenapi/README
++include plugins/xenapi/etc/xapi.d/plugins/objectstore
++include plugins/xenapi/etc/xapi.d/plugins/pluginlib_nova.py
+ global-exclude *.pyc
++
++recursive-include nova/locale *
+diff -Naurp nova-2012.2.orig/setup.py nova-2012.2/setup.py
+--- nova-2012.2.orig/setup.py	2012-06-28 19:50:35.000000000 -0400
++++ nova-2012.2/setup.py	2012-06-29 08:09:35.298599197 -0400
+@@ -72,7 +72,6 @@ setuptools.setup(name='nova',
+       packages=setuptools.find_packages(exclude=['bin', 'smoketests']),
+       include_package_data=True,
+       test_suite='nose.collector',
+-      setup_requires=['setuptools_git>=0.4'],
+       scripts=['bin/nova-all',
+                'bin/nova-api',
+                'bin/nova-api-ec2',
+diff -Naurp nova-2012.2.orig/tools/pip-requires nova-2012.2/tools/pip-requires
+--- nova-2012.2.orig/tools/pip-requires	2012-06-28 19:50:35.000000000 -0400
++++ nova-2012.2/tools/pip-requires	2012-06-29 08:09:35.298599197 -0400
+@@ -23,4 +23,3 @@ pycrypto
+ Babel>=0.9.6
+ iso8601>=0.1.4
+ httplib2
+-setuptools_git>=0.4
+diff -Naurp nova-2012.2.orig/tox.ini nova-2012.2/tox.ini
+--- nova-2012.2.orig/tox.ini	2012-06-28 19:50:35.000000000 -0400
++++ nova-2012.2/tox.ini	2012-06-29 08:09:35.298599197 -0400
+@@ -18,7 +18,7 @@ downloadcache = ~/cache/pip
+ 
+ [testenv:pep8]
+ deps = pep8==1.1
+-commands = pep8 --repeat --show-source --exclude=.venv,.tox,dist,doc,*egg .
++commands = pep8 --repeat --show-source --exclude=.venv,.tox,dist,doc .
+ 
+ [testenv:cover]
+ setenv = NOSE_WITH_COVERAGE=1
+diff -Naurp nova-2012.2.orig/tox.ini.orig nova-2012.2/tox.ini.orig
+--- nova-2012.2.orig/tox.ini.orig	1969-12-31 19:00:00.000000000 -0500
++++ nova-2012.2/tox.ini.orig	2012-06-28 19:50:35.000000000 -0400
+@@ -0,0 +1,33 @@
++[tox]
++envlist = py26,py27,pep8
++
++[testenv]
++setenv = VIRTUAL_ENV={envdir}
++         NOSE_WITH_OPENSTACK=1
++         NOSE_OPENSTACK_COLOR=1
++         NOSE_OPENSTACK_RED=0.05
++         NOSE_OPENSTACK_YELLOW=0.025
++         NOSE_OPENSTACK_SHOW_ELAPSED=1
++         NOSE_OPENSTACK_STDOUT=1
++deps = -r{toxinidir}/tools/pip-requires
++       -r{toxinidir}/tools/test-requires
++commands = nosetests {posargs}
++
++[tox:jenkins]
++downloadcache = ~/cache/pip
++
++[testenv:pep8]
++deps = pep8==1.1
++commands = pep8 --repeat --show-source --exclude=.venv,.tox,dist,doc,*egg .
++
++[testenv:cover]
++setenv = NOSE_WITH_COVERAGE=1
++
++[testenv:venv]
++commands = {posargs}
++
++[testenv:full]
++sitepackages = True
++deps = -r{toxinidir}/tools/pip-requires
++       -r{toxinidir}/tools/test-requires
++       -r{toxinidir}/tools/test-options
