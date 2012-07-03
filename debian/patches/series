@@ -2,4 +2,3 @@
 path-to-the-xenhost.conf-fixup.patch
 fix-ubuntu-tests.patch
 fix-docs-build-without-network.patch
-revert-setuptools-dmd.patch

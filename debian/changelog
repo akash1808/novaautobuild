@@ -13,11 +13,6 @@ nova (2012.2~f2~20120625.14533-0ubuntu1) UNRELEASED; urgency=low
   * debian/rules: Install logging_conf.sample to /etc/nova as part of
     nova-common.
 
-  [ Chuck Short ]
-  * debian/patches/revert-setuptools-dmd.patch: Revert setuptools-git
-    plugin until we have it packaged.
-  * New upstream version
-
  -- Adam Gandelman <adamg@canonical.com>  Mon, 25 Jun 2012 12:23:01 -0700
 
 nova (2012.2~f2~20120531.14249-0ubuntu4) quantal; urgency=low
