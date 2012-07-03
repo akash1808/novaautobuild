@@ -13,6 +13,7 @@ nova (2012.2~f2~20120625.14533-0ubuntu1) UNRELEASED; urgency=low
   * debian/rules: Install logging_sample.conf to /etc/nova/logging.conf\
     as part of nova-common.
   * debian/pydist-overrides: Add setuptools-git.
+  * debian/control: Add python-setuptools-git as a Build-Depends.
 
  -- Adam Gandelman <adamg@canonical.com>  Mon, 25 Jun 2012 12:23:01 -0700
 
