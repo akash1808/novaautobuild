@@ -10,6 +10,8 @@ nova (2012.2~f2~20120625.14533-0ubuntu1) UNRELEASED; urgency=low
       nova-rootwrap.
     - debian/nova-{compute, network, volume}.install: Install corresponding
       filter in /etc/nova/rootwrap.d/
+  * debian/rules: Install logging_conf.sample to /etc/nova as part of
+    nova-common.
 
   [ Chuck Short ]
   * debian/patches/revert-setuptools-dmd.patch: Revert setuptools-git
