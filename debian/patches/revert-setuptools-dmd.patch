@@ -1,9 +1,10 @@
 Description: Revert setuptools-git plugin usage.
 Author: Chuck Short <zulcss@ubuntu.com>
 Forwarded: Not on your life.
-diff -Naurp nova-2012.2.orig/MANIFEST.in nova-2012.2/MANIFEST.in
---- nova-2012.2.orig/MANIFEST.in	2012-06-28 19:50:35.000000000 -0400
-+++ nova-2012.2/MANIFEST.in	2012-06-29 08:09:35.298599197 -0400
+Index: nova/MANIFEST.in
+===================================================================
+--- nova.orig/MANIFEST.in	2012-07-03 11:24:45.000000000 -0700
++++ nova/MANIFEST.in	2012-07-03 11:24:55.091697023 -0700
 @@ -1,6 +1,51 @@
 -include Authors
 +include HACKING.rst
@@ -60,10 +61,11 @@ diff -Naurp nova-2012.2.orig/MANIFEST.in nova-2012.2/MANIFEST.in
  global-exclude *.pyc
 +
 +recursive-include nova/locale *
-diff -Naurp nova-2012.2.orig/setup.py nova-2012.2/setup.py
---- nova-2012.2.orig/setup.py	2012-06-28 19:50:35.000000000 -0400
-+++ nova-2012.2/setup.py	2012-06-29 08:09:35.298599197 -0400
-@@ -72,7 +72,6 @@ setuptools.setup(name='nova',
+Index: nova/setup.py
+===================================================================
+--- nova.orig/setup.py	2012-07-03 11:24:45.000000000 -0700
++++ nova/setup.py	2012-07-03 11:24:55.091697023 -0700
+@@ -72,7 +72,6 @@
        packages=setuptools.find_packages(exclude=['bin', 'smoketests']),
        include_package_data=True,
        test_suite='nose.collector',
@@ -71,29 +73,32 @@ diff -Naurp nova-2012.2.orig/setup.py nova-2012.2/setup.py
        scripts=['bin/nova-all',
                 'bin/nova-api',
                 'bin/nova-api-ec2',
-diff -Naurp nova-2012.2.orig/tools/pip-requires nova-2012.2/tools/pip-requires
---- nova-2012.2.orig/tools/pip-requires	2012-06-28 19:50:35.000000000 -0400
-+++ nova-2012.2/tools/pip-requires	2012-06-29 08:09:35.298599197 -0400
-@@ -23,4 +23,3 @@ pycrypto
+Index: nova/tools/pip-requires
+===================================================================
+--- nova.orig/tools/pip-requires	2012-07-03 11:24:45.000000000 -0700
++++ nova/tools/pip-requires	2012-07-03 11:24:55.091697023 -0700
+@@ -23,4 +23,3 @@
  Babel>=0.9.6
  iso8601>=0.1.4
  httplib2
 -setuptools_git>=0.4
-diff -Naurp nova-2012.2.orig/tox.ini nova-2012.2/tox.ini
---- nova-2012.2.orig/tox.ini	2012-06-28 19:50:35.000000000 -0400
-+++ nova-2012.2/tox.ini	2012-06-29 08:09:35.298599197 -0400
-@@ -18,7 +18,7 @@ downloadcache = ~/cache/pip
+Index: nova/tox.ini
+===================================================================
+--- nova.orig/tox.ini	2012-07-03 11:24:45.000000000 -0700
++++ nova/tox.ini	2012-07-03 11:25:22.251698198 -0700
+@@ -18,7 +18,7 @@
  
  [testenv:pep8]
  deps = pep8==1.1
--commands = pep8 --repeat --show-source --exclude=.venv,.tox,dist,doc,*egg .
-+commands = pep8 --repeat --show-source --exclude=.venv,.tox,dist,doc .
+-commands = python tools/hacking.py --ignore=N4 --repeat --show-source --exclude=.venv,.tox,dist,doc,*egg .
++commands = python tools/hacking.py --ignore=N4 --repeat --show-source --exclude=.venv,.tox,dist,doc .
  
  [testenv:cover]
  setenv = NOSE_WITH_COVERAGE=1
-diff -Naurp nova-2012.2.orig/tox.ini.orig nova-2012.2/tox.ini.orig
---- nova-2012.2.orig/tox.ini.orig	1969-12-31 19:00:00.000000000 -0500
-+++ nova-2012.2/tox.ini.orig	2012-06-28 19:50:35.000000000 -0400
+Index: nova/tox.ini.orig
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ nova/tox.ini.orig	2012-07-03 11:24:55.091697023 -0700
 @@ -0,0 +1,33 @@
 +[tox]
 +envlist = py26,py27,pep8
