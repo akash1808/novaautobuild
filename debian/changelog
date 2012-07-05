@@ -13,6 +13,9 @@ nova (2012.2~f2~20120625.14533-0ubuntu1) UNRELEASED; urgency=low
     as part of nova-common.
   * debian/pydist-overrides: Add setuptools-git.
   * debian/control: Add python-setuptools-git as a Build-Depends.
+  * debian/rules: Do not remove nova.egg-info during auto_clean.  Now that
+    upstream has moved to setuptools-git, doing so results in missing files
+    from built package.
 
  -- Adam Gandelman <adamg@canonical.com>  Mon, 25 Jun 2012 12:23:01 -0700
 
