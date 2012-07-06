@@ -20,7 +20,7 @@ nova (2012.2~f2-0ubuntu1) quantal; urgency=low
   [ Chuck Short ]
   * New upstream release.
 
- -- chuck <chuck@butters>  Fri, 06 Jul 2012 09:59:58 -0400
+ -- chuck <chuck@butters>  Fri, 06 Jul 2012 10:18:33 -0400
 
 nova (2012.2~f2~20120531.14249-0ubuntu4) quantal; urgency=low
 
