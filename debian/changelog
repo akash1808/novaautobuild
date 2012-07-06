@@ -1,4 +1,4 @@
-nova (2012.2~f2~20120625.14533-0ubuntu1) UNRELEASED; urgency=low
+nova (2012.2~f2-0ubuntu1) UNRELEASED; urgency=low
 
   [ Adam Gandelman ]
   * Use new rootwrap configuration structure:
@@ -9,7 +9,7 @@ nova (2012.2~f2~20120625.14533-0ubuntu1) UNRELEASED; urgency=low
       nova-rootwrap.
     - debian/nova-{compute, network, volume}.install: Install corresponding
       filter in /etc/nova/rootwrap.d/
-  * debian/rules: Install logging_sample.conf to /etc/nova/logging.conf\
+  * debian/rules: Install logging_sample.conf to /etc/nova/logging.conf
     as part of nova-common.
   * debian/pydist-overrides: Add setuptools-git.
   * debian/control: Add python-setuptools-git as a Build-Depends.
@@ -17,7 +17,10 @@ nova (2012.2~f2~20120625.14533-0ubuntu1) UNRELEASED; urgency=low
     upstream has moved to setuptools-git, doing so results in missing files
     from built package.
 
- -- Adam Gandelman <adamg@canonical.com>  Mon, 25 Jun 2012 12:23:01 -0700
+  [ Chuck Short ]
+  * New upstream release.
+
+ -- Chuck Short <zulcss@ubuntu.com> Fri, 06 Jul 2012 09:34:35 -0400
 
 nova (2012.2~f2~20120531.14249-0ubuntu4) quantal; urgency=low
 
