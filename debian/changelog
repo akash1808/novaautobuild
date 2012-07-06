@@ -1,3 +1,13 @@
+nova (2012.2~f3~20120706.14734-0ubuntu1) UNRELEASED; urgency=low
+
+  * debian/rules: Re-enable testsuite. 
+  * debian/control: 
+    - Add python-quantumclient as a build depends.
+    - Bump standards to 3.9.3
+    - Fix lintian warnings.
+
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 06 Jul 2012 13:24:34 -0400
+
 nova (2012.2~f2-0ubuntu1) quantal; urgency=low
 
   [ Adam Gandelman ]

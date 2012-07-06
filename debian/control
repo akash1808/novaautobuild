@@ -45,9 +45,10 @@ Build-Depends-Indep:
  python-crypto,
  python-iso8601,
  python-kombu,
+ python-quantumclient,
  pep8
 Build-Conflicts: python-cjson
-Standards-Version: 3.9.2
+Standards-Version: 3.9.3
 Homepage: http://launchpad.net/nova
 Vcs-Browser: http://bazaar.launchpad.net/~ubuntu-server-dev/nova/essex/debian/files
 Vcs-Bzr: http://bazaar.launchpad.net/~ubuntu-server-dev/nova/essex
@@ -401,6 +402,7 @@ Description: OpenStack Compute - storage
 
 Package: nova-ajax-console-proxy
 Architecture: all
+Depends: ${ostack-lsb-base}, nova-common (= ${binary:Version}), ${python:Depends}, ${misc:Depends}
 Description: OpenStack Compute - AJAX console proxy - transitional package
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
