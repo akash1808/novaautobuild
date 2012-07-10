@@ -6,6 +6,7 @@ nova (20120709~f3~20120709.14742-0ubuntu1) UNRELEASED; urgency=low
     - Add python-quantumclient as a build depends.
     - Bump standards to 3.9.3
     - Fix lintian warnings.
+    - Recommend python-glanceclient and python-keystoneclient.
   * debian/watch: Update
   * debian/rules: Do not run pep8 tests since upstream is still using an
     older pep8.
