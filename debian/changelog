@@ -9,6 +9,8 @@ nova (20120709~f3~20120709.14742-0ubuntu1) UNRELEASED; urgency=low
   * debian/watch: Update
   * debian/rules: Do not run pep8 tests since upstream is still using an
     older pep8.
+  * debian/patches/0001-Update-tools-hacking-for-pep8-1.2-and-
+    beyond.patch: Get the testsuite running again.
 
  -- chuck <chuck@butters>  Mon, 09 Jul 2012 21:47:03 -0400
 
