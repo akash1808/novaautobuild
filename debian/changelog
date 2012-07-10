@@ -7,6 +7,8 @@ nova (20120709~f3~20120709.14742-0ubuntu1) UNRELEASED; urgency=low
     - Bump standards to 3.9.3
     - Fix lintian warnings.
   * debian/watch: Update
+  * debian/rules: Do not run pep8 tests since upstream is still using an
+    older pep8.
 
  -- chuck <chuck@butters>  Mon, 09 Jul 2012 21:47:03 -0400
 
