@@ -1,0 +1,44 @@
+From: Adam Gandelman <adamg@canonical.com>
+Subject: A test patch to see if removing calls to logging from
+ within signal handlers will help avoid eventlet deadlock.
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/1029727
+
+Index: nova-2012.2/nova/service.py
+===================================================================
+--- nova-2012.2.orig/nova/service.py	2012-07-27 20:18:02.000000000 -0700
++++ nova-2012.2/nova/service.py	2012-07-27 20:23:42.494480964 -0700
+@@ -161,7 +161,6 @@
+ class ServiceLauncher(Launcher):
+     def _handle_signal(self, signo, frame):
+         signame = {signal.SIGTERM: 'SIGTERM', signal.SIGINT: 'SIGINT'}[signo]
+-        LOG.info(_('Caught %s, exiting'), signame)
+ 
+         # Allow the process to be killed again and die from natural causes
+         signal.signal(signal.SIGTERM, signal.SIG_DFL)
+@@ -216,7 +215,6 @@
+ 
+     def _handle_signal(self, signo, frame):
+         signame = {signal.SIGTERM: 'SIGTERM', signal.SIGINT: 'SIGINT'}[signo]
+-        LOG.info(_('Caught %s, stopping children'), signame)
+ 
+         self.running = False
+         for pid in self.children:
+@@ -242,7 +240,6 @@
+     def _child_process(self, server):
+         # Setup child signal handlers differently
+         def _sigterm(*args):
+-            LOG.info(_('Received SIGTERM, stopping'))
+             signal.signal(signal.SIGTERM, signal.SIG_DFL)
+             server.stop()
+ 
+@@ -289,8 +286,8 @@
+                 self._child_process(wrap.server)
+             except SystemExit as exc:
+                 status = exc.code
+-            except BaseException:
+-                LOG.exception(_('Unhandled exception'))
++            except BaseException as exc:
++                LOG.exception(_('Unhandled exception: %s' % exc))
+                 status = 2
+ 
+             os._exit(status)
