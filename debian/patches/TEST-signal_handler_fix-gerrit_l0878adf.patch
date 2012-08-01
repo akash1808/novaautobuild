@@ -1,0 +1,154 @@
+From 5de983ae390993450ac182eff2de3f358593f847 Mon Sep 17 00:00:00 2001
+From: Johannes Erdfelt <johannes.erdfelt@rackspace.com>
+Date: Wed, 1 Aug 2012 18:19:22 +0000
+Subject: [PATCH] Avoid using logging in signal handler
+
+Fixes bug 1029727
+
+In some cases, logging can grab locks and thusly attempt to reschedule,
+which will fail in signal handlers.
+
+This patch simplifies the signal handlers for multi-process support to
+only reset the signal handlers and then raise an exception. This will
+move all logging and other cleanup out of the signal handler and into
+safer places.
+
+Change-Id: I0878adf6ef5c54e577ab2ea39e2ff9845e0e9191
+---
+ nova/service.py |   51 +++++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 35 insertions(+), 16 deletions(-)
+
+diff --git a/nova/service.py b/nova/service.py
+index bb2964b..71d2625 100644
+--- a/nova/service.py
++++ b/nova/service.py
+@@ -103,6 +103,12 @@ FLAGS = flags.FLAGS
+ FLAGS.register_opts(service_opts)
+ 
+ 
++class SignalExit(SystemExit):
++    def __init__(self, signo, exccode=1):
++        super(SignalExit, self).__init__(exccode)
++        self.signo = signo
++
++
+ class Launcher(object):
+     """Launch one or more services and wait for them to complete."""
+ 
+@@ -160,14 +166,11 @@ class Launcher(object):
+ 
+ class ServiceLauncher(Launcher):
+     def _handle_signal(self, signo, frame):
+-        signame = {signal.SIGTERM: 'SIGTERM', signal.SIGINT: 'SIGINT'}[signo]
+-        LOG.info(_('Caught %s, exiting'), signame)
+-
+         # Allow the process to be killed again and die from natural causes
+         signal.signal(signal.SIGTERM, signal.SIG_DFL)
+         signal.signal(signal.SIGINT, signal.SIG_DFL)
+ 
+-        sys.exit(1)
++        raise SignalExit(signo)
+ 
+     def wait(self):
+         signal.signal(signal.SIGTERM, self._handle_signal)
+@@ -187,8 +190,14 @@ class ServiceLauncher(Launcher):
+         status = None
+         try:
+             super(ServiceLauncher, self).wait()
++        except SignalExit as exc:
++            signame = {signal.SIGTERM: 'SIGTERM',
++                       signal.SIGINT: 'SIGINT'}[exc.signo]
++            LOG.info(_('Caught %s, exiting'), signame)
++            status = exc.code
+         except SystemExit as exc:
+             status = exc.code
++        finally:
+             self.stop()
+         rpc.cleanup()
+ 
+@@ -207,6 +216,7 @@ class ServerWrapper(object):
+ class ProcessLauncher(object):
+     def __init__(self):
+         self.children = {}
++        self.sigcaught = None
+         self.running = True
+         rfd, self.writepipe = os.pipe()
+         self.readpipe = eventlet.greenio.GreenPipe(rfd, 'r')
+@@ -215,16 +225,8 @@ class ProcessLauncher(object):
+         signal.signal(signal.SIGINT, self._handle_signal)
+ 
+     def _handle_signal(self, signo, frame):
+-        signame = {signal.SIGTERM: 'SIGTERM', signal.SIGINT: 'SIGINT'}[signo]
+-        LOG.info(_('Caught %s, stopping children'), signame)
+-
++        self.sigcaught = signo
+         self.running = False
+-        for pid in self.children:
+-            try:
+-                os.kill(pid, signal.SIGTERM)
+-            except OSError as exc:
+-                if exc.errno != errno.ESRCH:
+-                    raise
+ 
+         # Allow the process to be killed again and die from natural causes
+         signal.signal(signal.SIGTERM, signal.SIG_DFL)
+@@ -242,9 +244,8 @@ class ProcessLauncher(object):
+     def _child_process(self, server):
+         # Setup child signal handlers differently
+         def _sigterm(*args):
+-            LOG.info(_('Received SIGTERM, stopping'))
+             signal.signal(signal.SIGTERM, signal.SIG_DFL)
+-            server.stop()
++            raise SignalExit(signal.SIGTERM)
+ 
+         signal.signal(signal.SIGTERM, _sigterm)
+         # Block SIGINT and let the parent send us a SIGTERM
+@@ -287,11 +288,18 @@ class ProcessLauncher(object):
+             status = 0
+             try:
+                 self._child_process(wrap.server)
++            except SignalExit as exc:
++                signame = {signal.SIGTERM: 'SIGTERM',
++                           signal.SIGINT: 'SIGINT'}[exc.signo]
++                LOG.info(_('Caught %s, exiting'), signame)
++                status = exc.code
+             except SystemExit as exc:
+                 status = exc.code
+             except BaseException:
+                 LOG.exception(_('Unhandled exception'))
+                 status = 2
++            finally:
++                wrap.server.stop()
+ 
+             os._exit(status)
+ 
+@@ -334,7 +342,6 @@ class ProcessLauncher(object):
+ 
+     def wait(self):
+         """Loop waiting on children to die and respawning as necessary"""
+-        # Loop calling wait and respawning as necessary
+         while self.running:
+             wrap = self._wait_child()
+             if not wrap:
+@@ -343,6 +350,18 @@ class ProcessLauncher(object):
+             while self.running and len(wrap.children) < wrap.workers:
+                 self._start_child(wrap)
+ 
++        if self.sigcaught:
++            signame = {signal.SIGTERM: 'SIGTERM',
++                       signal.SIGINT: 'SIGINT'}[self.sigcaught]
++            LOG.info(_('Caught %s, stopping children'), signame)
++
++        for pid in self.children:
++            try:
++                os.kill(pid, signal.SIGTERM)
++            except OSError as exc:
++                if exc.errno != errno.ESRCH:
++                    raise
++
+         # Wait for children to die
+         if self.children:
+             LOG.info(_('Waiting on %d children to exit'), len(self.children))
+-- 
+1.7.9.5
+
