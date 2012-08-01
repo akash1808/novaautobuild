@@ -12,6 +12,8 @@ nova (20120709~f3~20120709.14742-0ubuntu1) UNRELEASED; urgency=low
     older pep8.
   * debian/patches/0001-Update-tools-hacking-for-pep8-1.2-and-
     beyond.patch: Get the testsuite running again.
+  * debian/nova-volume.install, debian/nova_tgt: Add support for
+    persistent volumes.
 
   [ Adam Gandelman ]
   * debian/{nova-api.install, nova-api-metadata.install}: Install
@@ -46,7 +48,7 @@ nova (2012.2~f2-0ubuntu1) quantal; urgency=low
 nova (2012.2~f2~20120531.14249-0ubuntu4) quantal; urgency=low
 
   * debian/rules: Temporarily disable test suite while blocking
-    tests are investigated. 
+    tests are investigated.
   * debian/patches/kombu_tests_timeout.patch: Dropped.
 
  -- Adam Gandelman <adamg@canonical.com>  Tue, 19 Jun 2012 17:10:26 -0700
@@ -54,7 +56,7 @@ nova (2012.2~f2~20120531.14249-0ubuntu4) quantal; urgency=low
 nova (2012.2~f2~20120531.14249-0ubuntu3) quantal; urgency=low
 
   [ Adam Gandelman ]
-  * debian/patches/nova-manage_flagfile_location.patch: Dropped. 
+  * debian/patches/nova-manage_flagfile_location.patch: Dropped.
   * debian/nova-common.postinst: Old format config will break nova-manage
     if left in place.  Move it away instead of copying before conversion.
   * debian/nova.conf:  Set booleans explicitly '=true', specify path to paste
@@ -73,14 +75,14 @@ nova (2012.2~f2~20120531.14249-0ubuntu3) quantal; urgency=low
 
 nova (2012.2~f2~20120531.14249-0ubuntu2) quantal; urgency=low
 
-  * Really fix quantal postinst. 
+  * Really fix quantal postinst.
 
  -- Chuck Short <zulcss@ubuntu.com>  Fri, 01 Jun 2012 11:31:33 -0400
 
 nova (2012.2~f2~20120531.14249-0ubuntu1) quantal; urgency=low
 
   * New upstream release.
-  * debian/nova-common.postinst: Fix typo when upgrading. (LP: #1005479) 
+  * debian/nova-common.postinst: Fix typo when upgrading. (LP: #1005479)
   * debian/nova-common.docs: Add ChangeLog
   * debian/patches/nova-manage_flagfile_location.patch: Refreshed
   * debian/patches/upstream: Removed
@@ -96,7 +98,7 @@ nova (2012.2~f1-0ubuntu1) quantal; urgency=low
     - Dropped debian/patches/upstream/0004-Fixed-bug-962840-added-a-test-case.patch
     - Dropped debian/patches/upstream/0003-Allow-unprivileged-RADOS-users-to-access-rbd-volumes.patch
     - Dropped debian/patches/upstream/0002-Stop-libvirt-test-from-deleting-instances-dir.patch
-    - Dropped debian/patches/upstream/0001-fix-bug-where-nova-ignores-glance-host-in-imageref.patch 
+    - Dropped debian/patches/upstream/0001-fix-bug-where-nova-ignores-glance-host-in-imageref.patch
     - Dropped debian/patches/0001-fix-useexisting-deprecation-warnings.patch
   * debian/control: Add python-keystone as a dependency. (LP: #907197)
   * debian/patches/kombu_tests_timeout.patch: Refreshed.
@@ -148,7 +150,7 @@ nova (2012.1~rc4-0ubuntu1) precise; urgency=low
 
 nova (2012.1~rc3-0ubuntu1) precise; urgency=low
 
-  * New Upstream release. 
+  * New Upstream release.
   * debian/control: Conflict nova-vncproxy with novnc.
 
  -- Chuck Short <zulcss@ubuntu.com>  Wed, 04 Apr 2012 09:25:14 -0400
@@ -205,7 +207,7 @@ nova (2012.1~rc2-0ubuntu1) precise; urgency=low
 nova (2012.1~rc1-0ubuntu2) precise; urgency=low
 
   * debian/control: Add Breaks/Replaces to nova-consoleauth, update
-    description, nova-console Recommends nova-consoleauth 
+    description, nova-console Recommends nova-consoleauth
   * debian/nova-console.install: Remove nova-consoleauth
 
  -- Adam Gandelman <adamg@canonical.com>  Thu, 22 Mar 2012 11:31:35 -0700
@@ -214,7 +216,7 @@ nova (2012.1~rc1-0ubuntu1) precise; urgency=low
 
   [ Adam Gandelman ]
   [Chuck Short]
-  * New upstream release. 
+  * New upstream release.
   * debian/patches/libvirt-use-console-pipe.patch: Refreshed
 
   [Adam Gandelman]
@@ -256,7 +258,7 @@ nova (2012.1~rc1~20120309.13261-0ubuntu1) precise; urgency=low
 nova (2012.1~e4-0ubuntu1) precise; urgency=low
 
   [ Adam Gandleman ]
-  * debian/patches/libvirt-use-console-pipe.patch: Refreshed. 
+  * debian/patches/libvirt-use-console-pipe.patch: Refreshed.
   * debain/nova-volume.upstart.in: Ensure lock directory is created
     (LP: #940780)
   * debain/control: Fix nova-compute-$flavor Depends
@@ -301,7 +303,7 @@ nova (2012.1~e4~20120224.12913-0ubuntu1) precise; urgency=low
   * debian/control: Add depends on python-babel.
   * debian/control: Add depends on python-iso8601.
   * debian/nova-api-os-volume.install: Fix FTBS.
-  * debian/patches/libvirt-use-console-pipe.patch: Refreshed and 
+  * debian/patches/libvirt-use-console-pipe.patch: Refreshed and
     Re-enabled. (LP: #879666)
   * debian/control: Make sure we install nova-cert
 
@@ -336,10 +338,10 @@ nova (2012.1~e4~20120210.12574-0ubuntu1) precise; urgency=low
   [Chuck Short]
   * New upstream release.
   * debian/patches/nova-manage_flagfile_location.patch:
-    Refreshed patch. 
+    Refreshed patch.
   * debian/patches/libvirt-use-console-pipe.patch:
-    Re-add from oneiric.  
-  * Dropped debian/patches/packaged-ajaxterm-calls.patch. 
+    Re-add from oneiric.
+  * Dropped debian/patches/packaged-ajaxterm-calls.patch.
   * debian/control:
     - Dropped recommends on ajaxterm for nova-compute
     - Dropped nova-ajaxterm package.
@@ -364,7 +366,7 @@ nova (2012.1~e4~20120208.12523-0ubuntu1) UNRELEASED; urgency=low
 
   [ Vish Ishaya ]
    * debian/mans/nova-cert.8, debian/nova-cert.init, debian/nova-cert.install,
-     debian/nova-cert.logrotate, debian/nova-cert.manpages, 
+     debian/nova-cert.logrotate, debian/nova-cert.manpages,
      debian/nova-cert.upstart.in, debian/control, debian/source_nova.py:
      Add nova-cert.
 
@@ -411,7 +413,7 @@ nova (2012.1~e3-0ubuntu1) precise; urgency=low
 
   [Vish Ishaya]
    * debian/mans/nova-cert.8, debian/nova-cert.init, debian/nova-cert.install,
-     debian/nova-cert.logrotate, debian/nova-cert.manpages, 
+     debian/nova-cert.logrotate, debian/nova-cert.manpages,
      debian/nova-cert.upstart.in, debian/control, debian/source_nova.py:
      Add nova-cert.
 
@@ -425,7 +427,7 @@ nova (2012.1~e3~20120120.12170-0ubuntu1) precise; urgency=low
     nova-vncproxy becomes nova-xvpvncproxy.
   * debian/nova.conf: Really use the nova rootwrapper. (LP: #918179)
   * debian/nova_sudoers: Fix typo in rootwrap usage.
-  * debian/patches/kombu_tests_timeout.patch: Skip 
+  * debian/patches/kombu_tests_timeout.patch: Skip
     "test_iterconsume_errors_will_reconnect" test.
 
   [Dan Prince]
@@ -434,7 +436,7 @@ nova (2012.1~e3~20120120.12170-0ubuntu1) precise; urgency=low
   [Thierry Carrez]
    * debian/*.pyinstall: Ship filter files in each node... (LP: #919105)
    * debian/python-nova.pyremove: ...and no longer in python-nova (LP: #919105)
-   * debian/patches/fix-nova-rootwraper-env.patch: Fix temporary issue with 
+   * debian/patches/fix-nova-rootwraper-env.patch: Fix temporary issue with
      nova-rootwrap and nova-compute.
 
  -- Chuck Short <zulcss@ubuntu.com>  Fri, 20 Jan 2012 11:54:15 -0500
@@ -443,9 +445,9 @@ nova (2012.1~e3~20120113.12049-0ubuntu1) precise; urgency=low
 
   [ Chuck Short ]
   * New upstream version.
-  * debian/nova_sudoers, debian/nova-common.install, 
+  * debian/nova_sudoers, debian/nova-common.install,
     Switch out to nova-rootwrap. (LP: #681774)
-  * Add "get-origsource-git" which allows developers to 
+  * Add "get-origsource-git" which allows developers to
     generate a tarball from github, by doing:
     fakeroot debian/rules get-orig-source-git
   * debian/debian/nova-objectstore.logrotate: Dont determine
@@ -468,7 +470,7 @@ nova (2012.1~e2-0ubuntu4) precise; urgency=low
 nova (2012.1~e2-0ubuntu2) precise; urgency=low
 
   [ Chuck Short ]
-  * debian/nova.conf: Fix misconfiguration. 
+  * debian/nova.conf: Fix misconfiguration.
 
   [ Dan Prince ]
   * debian/nova_sudoers: Fix typo
@@ -481,9 +483,9 @@ nova (2012.1~e2-0ubuntu1) precise; urgency=low
   * New usptream release. Fixes the following bugs:
     (LP: #871278, #848643, #859679, #83199)
   * debian/nova-console.install: Fix empty package.
-  * debian/patches, debian/pydist-overrides: Cleaner way 
+  * debian/patches, debian/pydist-overrides: Cleaner way
     of disabling unwanted python-dependencies.
-  * debian/control: 
+  * debian/control:
     - Suggest python-keystone. (LP: #901881)
     - Update build dependencies.
   * debian/nova.conf: Use virtio networking by default.
@@ -511,7 +513,7 @@ nova (2012.1~e2~20111208.11721-0ubuntu2) precise; urgency=low
 
 nova (2012.1~e2~20111208.11721-0ubuntu1) precise; urgency=low
 
-  * New upstream release. 
+  * New upstream release.
   * debian/control:
     + Add python-suds as a dependency.
   * debian/patches: Temporarily disable python-nosexcover.
@@ -520,7 +522,7 @@ nova (2012.1~e2~20111208.11721-0ubuntu1) precise; urgency=low
 
 nova (2012.1~e2~20111202.11641-0ubuntu2) precise; urgency=low
 
-  * debian/nova.conf: Remove parameter to --force_dhcp_release 
+  * debian/nova.conf: Remove parameter to --force_dhcp_release
     (LP: #891227)
 
  -- Adam Gandelman <adamg@canonical.com>  Fri, 02 Dec 2011 11:31:34 -0800
@@ -535,35 +537,35 @@ nova (2012.1~e2~20111202.11641-0ubuntu1) precise; urgency=low
 
 nova (2012.1~e2~20111125.11566-0ubuntu1) precise; urgency=low
 
-  * New upstream release. 
+  * New upstream release.
   * Refreshed debian/patches/packaged-ajaxterm-calls.patch.
 
  -- Chuck Short <zulcss@ubuntu.com>  Fri, 25 Nov 2011 14:02:18 -0500
 
 nova (2012.1~e2~20111116.11495-0ubuntu1) precise; urgency=low
 
-  * New upstream version. 
+  * New upstream version.
   * Refreshed debian/patches/packaged-ajaxterm-calls.patch.
 
  -- Chuck Short <zulcss@ubuntu.com>  Fri, 18 Nov 2011 09:40:58 -0500
 
 nova (2012.1~e1-0ubuntu3) precise; urgency=low
 
-  * debian/rules: Take the api-paste.ini from nova/etc.  
+  * debian/rules: Take the api-paste.ini from nova/etc.
 
  -- Chuck Short <zulcss@ubuntu.com>  Thu, 17 Nov 2011 14:10:03 -0500
 
 nova (2012.1~e1-0ubuntu2) precise; urgency=low
 
-  * Revert debian/nova-manage_flagfile_location.patch: It 
-    was causing more problems then it should have. (LP: #891229) 
+  * Revert debian/nova-manage_flagfile_location.patch: It
+    was causing more problems then it should have. (LP: #891229)
 
  -- Chuck Short <zulcss@ubuntu.com>  Wed, 16 Nov 2011 21:12:34 -0500
 
 nova (2012.1~e1-0ubuntu1) precise; urgency=low
 
   * New upstream release.
-  * debian/control: Dropped python-feedparser until MIR comes through. 
+  * debian/control: Dropped python-feedparser until MIR comes through.
   * Synced with upstream bzr packaging.
 
  -- Chuck Short <zulcss@ubuntu.com>  Fri, 11 Nov 2011 09:25:25 -0500
@@ -605,12 +607,12 @@ nova (2012.1~e1~20110909.1546-0ubuntu0) UNRELEASED; urgency=low
 
   [ Tushar Patil ]
   * Added iputils-arping to Depends and arping to sudoers
-  
+
   [Chuck Short]
   * Merged ubuntu packaging changes:
     - debian/control: Drop socat in favor of netcat.
     - debian/nova-compute.upstart.in, debian/nova.conf:
-      Move reference of nova-compute.conf from nova.conf to 
+      Move reference of nova-compute.conf from nova.conf to
       nova-compute's argv.
     - debian/nova-common.postinst: Create 'nova' group, add user to it.
     - debian/nova-common.postinst: Restrict permissions of /var/log/nova
@@ -633,14 +635,14 @@ nova (2011.3-0ubuntu6.1) oneiric-proposed; urgency=low
   [Chuck Short]
   * debian/patches/fix-iscsi-target-path.patch: Fix ISCSI target path patch.
     (LP: #871278)
-  * debian/control: Either install xen-hypervisor-4.1-amd64 or 
+  * debian/control: Either install xen-hypervisor-4.1-amd64 or
     xen-hypervisor-4.1-i386 for nova-compute-xen. (LP: #873243)
 
  -- Chuck Short <zulcss@ubuntu.com>  Wed, 12 Oct 2011 14:33:25 -0400
 
 nova (2011.3-0ubuntu6) oneiric; urgency=low
 
-  * debian/patches/backport-libvirt-console-pipe.patch: 
+  * debian/patches/backport-libvirt-console-pipe.patch:
     - Patch updated to fix race on instance termination (LP: #868349)
 
  -- Robie Basak <robie.basak@ubuntu.com>  Wed, 05 Oct 2011 17:37:49 +0100
@@ -660,7 +662,7 @@ nova (2011.3-0ubuntu4) oneiric; urgency=low
 
   [James Page]
   * debian/nova-common.postinst:
-    - Exclude mounted LXC rootfs filesystems within /var/lib/nova from 
+    - Exclude mounted LXC rootfs filesystems within /var/lib/nova from
       user/group ownership changes (LP: #861260).
     - Ensure that primary group for 'nova' user is 'nova' so that files
       created by this user have the correct group ownership.
@@ -711,17 +713,17 @@ nova (2011.3-0ubuntu2) oneiric; urgency=low
 
   [Chuck Short]
   * debian/rules, debian/control: Use dh_python2
-  * debian/control, debian/series, 
+  * debian/control, debian/series,
     debian/patches/backport-iscsitarget-choice.patch,
     debian/nova_sudoers:
     + Change the default from iscsitarget to tgt.
-  * debian/control, debian/series, 
+  * debian/control, debian/series,
     debian/patches/use-netcat-instead-of-socat.patch,
     debian/nova_sudoers:
      + Change from socat to netcat.
   * debian/patches/block-migration-needs-copy-backingfile.patch:
     Fix block migration by needing to copy backing_file.
-  
+
   [Monty Taylor]
   * Install a new paste config to enable deprecated auth.,
 
@@ -744,11 +746,11 @@ nova (2011.3-0ubuntu1) oneiric; urgency=low
 nova (2011.3~rc~20110920.r1192-0ubuntu2) oneiric; urgency=low
 
   * debian/nova_sudoers:
-    + Fix typo in nova_sudoers. 
+    + Fix typo in nova_sudoers.
     + Tabs vs Spaces.
   * debian/nova.conf:
     + Use force_dhcp_release.
-  
+
  -- Chuck Short <zulcss@ubuntu.com>  Tue, 20 Sep 2011 15:44:39 -0400
 
 nova (2011.3~rc~20110920.r1192-0ubuntu1) oneiric; urgency=low
@@ -757,8 +759,8 @@ nova (2011.3~rc~20110920.r1192-0ubuntu1) oneiric; urgency=low
   * New Upstream release.
 
   [ Monty Taylor ]
-  * Add branching logic for building on lucid. 
- 
+  * Add branching logic for building on lucid.
+
   [Vish Ishaya]
   * Add dnsmas-utils to nova-network dependencies
   * Add dhcp_release to sudoers.
@@ -768,7 +770,7 @@ nova (2011.3~rc~20110920.r1192-0ubuntu1) oneiric; urgency=low
 nova (2011.3~rc~20110916.r1173-0ubuntu1) oneiric; urgency=low
 
   [ Chuck Short ]
-  * New uptream version. 
+  * New uptream version.
   * debian/rules: Dont fail tests.
 
   [ Monty Taylor ]
@@ -779,7 +781,7 @@ nova (2011.3~rc~20110916.r1173-0ubuntu1) oneiric; urgency=low
 
 nova (2011.3~rc~20110909.r1155-0ubuntu1) oneiric; urgency=low
 
-  * New upstream version. 
+  * New upstream version.
 
  -- Chuck Short <zulcss@ubuntu.com>  Fri, 09 Sep 2011 15:09:02 -0400
 
@@ -909,7 +911,7 @@ nova (2011.3~bzr1108-0ubuntu1) oneiric; urgency=low
 
 nova (2011.2-0ubuntu1) natty; urgency=low
 
-  * New upstream release. 
+  * New upstream release.
 
  -- Chuck Short <zulcss@ubuntu.com>  Fri, 15 Apr 2011 07:14:43 -0400
 
@@ -961,7 +963,7 @@ nova (2011.2~bzr925-0ubuntu1) natty; urgency=low
 
 nova (2011.2~bzr828-0ubuntu1) natty; urgency=low
 
-  * New upstream version. 
+  * New upstream version.
   * debian/control: Add python-lockfile as a build dependency.
 
  -- Chuck Short <zulcss@ubuntu.com>  Fri, 18 Mar 2011 09:28:17 -0400
@@ -1029,7 +1031,7 @@ nova (2011.2~bzr663-0ubuntu1) natty; urgency=low
 
 nova (2011.1-0ubuntu2) natty; urgency=low
 
-  * Dont fail unittest because of buildd problems. 
+  * Dont fail unittest because of buildd problems.
 
  -- Chuck Short <zulcss@ubuntu.com>  Thu, 03 Feb 2011 07:26:54 -0500
 
@@ -1037,7 +1039,7 @@ nova (2011.1-0ubuntu1) natty; urgency=low
 
   * New upstream release.
   * Add recommends to python-mysqldb (LP: #708511)
-  * Add dependency of iscsitarget to nova-volume and a sugestion to use 
+  * Add dependency of iscsitarget to nova-volume and a sugestion to use
     sheepdog (LP: #708141)
   * Suggest radvd for those who want to try ipv6.
 
@@ -1045,7 +1047,7 @@ nova (2011.1-0ubuntu1) natty; urgency=low
 
 nova (2011.1~bzr638-0ubuntu1) natty; urgency=low
 
-  * New upstream snapshot. 
+  * New upstream snapshot.
 
  -- Chuck Short <zulcss@ubuntu.com>  Fri, 28 Jan 2011 13:41:00 -0500
 
