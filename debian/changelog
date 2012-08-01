@@ -18,8 +18,6 @@ nova (20120709~f3~20120709.14742-0ubuntu1) UNRELEASED; urgency=low
   [ Adam Gandelman ]
   * debian/{nova-api.install, nova-api-metadata.install}: Install
     api-metadata.filters. (LP: #1002111)
-  * TEST-signal_handler_fix-gerrit_l0878adf.patch: TESTING patch from
-    https://review.openstack.org/#/c/10675/1, DO NOT INCLUDE IN UPLOAD!
 
  -- Adam Gandelman <adamg@canonical.com>  Wed, 25 Jul 2012 15:43:50 -0700
 
