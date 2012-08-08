@@ -139,7 +139,7 @@ Description: OpenStack Compute - common files
 
 Package: nova-compute
 Architecture: all
-Depends: lsb-base (>= 3.0.6),  nova-common (= ${binary:Version}), qemu-utils, kpartx, curl, parted, vlan, 
+Depends: lsb-base (>= 3.0.6),  nova-common (= ${binary:Version}), qemu-utils, kpartx, curl, parted, vlan,
  ebtables, gawk, iptables, open-iscsi, nova-compute-kvm | nova-compute-hypervisor,
  ${python:Depends}, ${misc:Depends}
 Description: OpenStack Compute - compute node
@@ -317,7 +317,7 @@ Description: OpenStack Compute plugin for the Xen Cloud Platform
 
 Package: nova-xcp-network
 Architecture: all
-Depends: xcp-xapi, lsb-base (>= 3.0.6), ${python:Depends}, ${misc:Depends}, nova-xcp-plugins (= ${binary:Version}), 
+Depends: xcp-xapi, lsb-base (>= 3.0.6), ${python:Depends}, ${misc:Depends}, nova-xcp-plugins (= ${binary:Version}),
  openvswitch-switch, ebtables, arptables, iproute
 Description: OpenStack Compute network plugin for the Xen Cloud Platform
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
@@ -342,7 +342,7 @@ Description: OpenStack Compute network plugin for the Xen Cloud Platform
 Package: nova-cert
 Architecture: all
 Depends: ${ostack-lsb-base}, nova-common (= ${binary:Version}), ${python:Depends}, ${misc:Depends}
-Description: OpenStack Compute - certificate management 
+Description: OpenStack Compute - certificate management
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
  and private cloud providers regardless of size, by being simple to implement
@@ -464,7 +464,8 @@ Description: OpenStack Compute - API frontend
 
 Package: nova-network
 Architecture: all
-Depends: ${ostack-lsb-base}, netcat, vlan, bridge-utils, dnsmasq-base, iputils-arping, dnsmasq-utils, nova-common (= ${binary:Version}), ${python:Depends}, ${misc:Depends}
+Depends: ${ostack-lsb-base}, netcat, vlan, bridge-utils, dnsmasq-base, iputils-arping, dnsmasq-utils, iptables,
+ nova-common (= ${binary:Version}), ${python:Depends}, ${misc:Depends}
 Suggests: radvd
 Description: OpenStack Compute - Network manager
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
@@ -560,7 +561,7 @@ Architecture: all
 Section: doc
 Depends: ${misc:Depends}
 Recommends: libjs-jquery
-Description: OpenStack Compute - documentation 
+Description: OpenStack Compute - documentation
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
  and private cloud providers regardless of size, by being simple to implement

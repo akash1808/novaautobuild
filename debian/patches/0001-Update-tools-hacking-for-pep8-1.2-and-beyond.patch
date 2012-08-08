@@ -14,9 +14,9 @@ Change-Id: Icd776edd1d7b9987833167dcf04015109ffc7c17
 
 Index: nova-2012.2/tools/hacking.py
 ===================================================================
---- nova-2012.2.orig/tools/hacking.py	2012-07-27 20:18:02.000000000 -0700
-+++ nova-2012.2/tools/hacking.py	2012-07-27 20:19:40.550491608 -0700
-@@ -90,7 +90,7 @@
+--- nova-2012.2.orig/tools/hacking.py	2012-08-06 12:23:06.000000000 -0700
++++ nova-2012.2/tools/hacking.py	2012-08-06 12:23:40.621307381 -0700
+@@ -137,7 +137,7 @@
      N201
      """
      if logical_line.startswith("except:"):
@@ -25,7 +25,7 @@ Index: nova-2012.2/tools/hacking.py
  
  
  def nova_except_format_assert(logical_line):
-@@ -101,7 +101,7 @@
+@@ -148,7 +148,7 @@
      N202
      """
      if logical_line.startswith("self.assertRaises(Exception"):
@@ -34,7 +34,7 @@ Index: nova-2012.2/tools/hacking.py
  
  
  def nova_one_import_per_line(logical_line):
-@@ -119,7 +119,7 @@
+@@ -166,7 +166,7 @@
      if (pos > -1 and (parts[0] == "import" or
                        parts[0] == "from" and parts[2] == "import") and
          not is_import_exception(parts[1])):
@@ -43,7 +43,7 @@ Index: nova-2012.2/tools/hacking.py
  
  _missingImport = set([])
  
-@@ -193,7 +193,9 @@
+@@ -240,7 +240,9 @@
              (len(split_line) == 2 or
              (len(split_line) == 4 and split_line[2] == "as"))):
          mod = split_line[1]
@@ -54,7 +54,7 @@ Index: nova-2012.2/tools/hacking.py
  
      # TODO(jogo) handle "from x import *"
  
-@@ -350,7 +352,7 @@
+@@ -397,7 +399,7 @@
          map(gen.send, tokens)
          gen.close()
      except LocalizationError as e:
@@ -65,8 +65,8 @@ Index: nova-2012.2/tools/hacking.py
  
 Index: nova-2012.2/tools/test-requires
 ===================================================================
---- nova-2012.2.orig/tools/test-requires	2012-07-27 20:18:02.000000000 -0700
-+++ nova-2012.2/tools/test-requires	2012-07-27 20:19:40.550491608 -0700
+--- nova-2012.2.orig/tools/test-requires	2012-08-06 12:23:06.000000000 -0700
++++ nova-2012.2/tools/test-requires	2012-08-06 12:23:40.621307381 -0700
 @@ -5,5 +5,5 @@
  mox==0.5.3
  nose
@@ -76,15 +76,17 @@ Index: nova-2012.2/tools/test-requires
  sphinx>=1.1.2
 Index: nova-2012.2/tox.ini
 ===================================================================
---- nova-2012.2.orig/tox.ini	2012-07-27 20:18:02.000000000 -0700
-+++ nova-2012.2/tox.ini	2012-07-27 20:19:40.550491608 -0700
-@@ -17,7 +17,8 @@
+--- nova-2012.2.orig/tox.ini	2012-08-06 12:23:06.000000000 -0700
++++ nova-2012.2/tox.ini	2012-08-06 12:24:27.929305640 -0700
+@@ -17,9 +17,9 @@
  downloadcache = ~/cache/pip
  
  [testenv:pep8]
--commands = python tools/hacking.py --ignore=N4 --repeat --show-source --exclude=.venv,.tox,dist,doc,openstack,*egg .
+-deps=pep8==1.0.1
 +deps = pep8==1.2
-+commands = python tools/hacking.py --ignore=N4,E12 --repeat --show-source --exclude=.venv,.tox,dist,doc,openstack,*egg .
+ commands =
+-  python tools/hacking.py --ignore=N4 --repeat --show-source \
++  python tools/hacking.py --ignore=N4,E12 --repeat --show-source \
+     --exclude=.venv,.tox,dist,doc,*openstack/common*,*lib/python*,*egg .
  
  [testenv:cover]
- setenv = NOSE_WITH_COVERAGE=1

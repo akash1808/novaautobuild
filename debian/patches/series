@@ -3,4 +3,3 @@ path-to-the-xenhost.conf-fixup.patch
 fix-ubuntu-tests.patch
 fix-docs-build-without-network.patch
 0001-Update-tools-hacking-for-pep8-1.2-and-beyond.patch
-TEST-remove_logging_in_sig_handlers.patch
