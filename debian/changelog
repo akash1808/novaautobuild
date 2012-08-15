@@ -1,6 +1,7 @@
-nova (20120709~f3~20120709.14742-0ubuntu1) UNRELEASED; urgency=low
+nova (2012.2~f3~20120815.15590-0ubuntu1) UNRELEASED; urgency=low
 
   [ Chuck Short ]
+  * New upstream version.
   * debian/rules: Re-enable testsuite.
   * debian/control:
     - Add python-quantumclient as a build depends.
