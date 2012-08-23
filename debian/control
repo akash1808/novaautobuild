@@ -46,8 +46,7 @@ Build-Depends-Indep:
  python-iso8601,
  python-kombu,
  python-quantumclient,
- python-glanceclient,
- pep8
+ python-glanceclient
 Build-Conflicts: python-cjson
 Standards-Version: 3.9.3
 Homepage: http://launchpad.net/nova
