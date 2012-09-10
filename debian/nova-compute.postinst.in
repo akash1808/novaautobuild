@@ -5,6 +5,7 @@ if [ "$1" = "configure" ]; then
     then
         adduser nova %LIBVIRTGRP%
     fi
+    chown root:root /etc/nova/rootwrap.d/compute.filters
 fi
 
 #DEBHELPER#
