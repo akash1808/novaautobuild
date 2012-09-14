@@ -66,6 +66,9 @@ if [ "$1" = "configure" ]; then
     chmod 0640 /etc/nova/api-paste.ini
     chmod 0750 /etc/nova
     chmod 0750 /var/log/nova
+    chown root:root /etc/nova/rootwrap.conf
+    chown root:root /etc/nova/rootwrap.d
+    chmod 0755 /etc/nova/rootwrap.d
 
     if ! grep -q sql_connection /etc/nova/nova.conf
     then
