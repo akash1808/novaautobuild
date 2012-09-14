@@ -4,4 +4,7 @@
     postrotate
     restart nova-objectstore
     endscript
+    compress
+    delaycompress
+    notifempty 
 }

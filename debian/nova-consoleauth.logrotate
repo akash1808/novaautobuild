@@ -2,4 +2,7 @@
     daily
     copytruncate
     missingok
+    compress
+    delaycompress
+    notifempty
 }
