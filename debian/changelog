@@ -11,6 +11,9 @@ nova (2012.2~rc1~20120907.15996-0ubuntu2) UNRELEASED; urgency=low
     #1049915)
   * debian/control: Suggest ceph-common for nova-volume.
 
+  [Vishvananda Ishaya]
+  * Split up vncproxy and xvpvncproxy.
+
  -- Adam Gandelman <adamg@canonical.com>  Mon, 10 Sep 2012 11:59:25 -0700
 
 nova (2012.2~rc1~20120907.15996-0ubuntu1) quantal; urgency=low
