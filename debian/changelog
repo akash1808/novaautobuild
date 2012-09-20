@@ -1,4 +1,4 @@
-nova (2012.2~rc1-0ubuntu1) UNRELEASED; urgency=low
+nova (2012.2~rc1-0ubuntu1) quantal; urgency=low
 
   [ Adam Gandelman ]
   * Ensure /etc/nova/rootwrap.d/ is only writable by root, ensure
@@ -16,7 +16,7 @@ nova (2012.2~rc1-0ubuntu1) UNRELEASED; urgency=low
   [Vishvananda Ishaya]
   * Split up vncproxy and xvpvncproxy.
 
- -- Adam Gandelman <adamg@canonical.com>  Mon, 10 Sep 2012 11:59:25 -0700
+ -- Chuck Short <zulcss@ubuntu.com>  Thu, 20 Sep 2012 07:45:50 -0500
 
 nova (2012.2~rc1~20120907.15996-0ubuntu1) quantal; urgency=low
 
