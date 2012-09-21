@@ -1,12 +1,13 @@
-nova (2012.2~rc1-0ubuntu3) UNRELEASED; urgency=low
+nova (2012.2~rc1-0ubuntu4) UNRELEASED; urgency=low
 
   [ Chuck Short ]
   * debian/pydist-overrides: dont try to install babel.
 
   [ Adam Gandelman ]
   * debian/control: Add python-cinderclient to python-nova Depends.
+  * wrap-and-sort.
 
- -- Adam Gandelman <adamg@canonical.com>  Fri, 21 Sep 2012 12:33:24 -0700
+ -- Adam Gandelman <adamg@canonical.com>  Fri, 21 Sep 2012 12:38:27 -0700
 
 nova (2012.2~rc1-0ubuntu1) quantal; urgency=low
 
