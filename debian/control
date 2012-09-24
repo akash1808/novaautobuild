@@ -6,96 +6,92 @@ XSBC-Original-Maintainer: Openstack Maintainers <openstack@lists.launchpad.net>
 Uploaders: Soren Hansen <soren@ubuntu.com>, Thomas Goirand <zigo@debian.org>
 Build-Depends: debhelper (>= 7.0.50),
  python-all (>= 2.6),
- python-all-dev (>= 2.6.6-3~) | python-support,
-Build-Depends-Indep:
- openssh-client,
+ python-all-dev (>= 2.6.6-3~) | python-support
+Build-Depends-Indep: openssh-client,
  openssl,
- python-setuptools,
- python-setuptools-git,
- python-sphinx (>> 1.0),
- python-distutils-extra,
- python-gflags,
- python-mox,
- python-carrot,
- python-boto,
  python-amqplib,
- openssh-client,
- python-sqlalchemy-ext | python-sqlalchemy (<< 0.6.3-2),
- python-eventlet,
- python-routes,
- python-webob,
+ python-boto,
+ python-carrot,
  python-cheetah,
- python-nose,
- python-paste,
- python-pastedeploy (>= 1.5.0),
- python-tempita,
- python-migrate,
- python-netaddr,
- python-glance,
- python-paramiko,
- python-novaclient,
- python-lockfile,
- python-simplejson,
- python-lxml,
- python-unittest2,
- python-daemon,
- python-suds,
- python-xattr,
- python-feedparser,
+ python-cinderclient,
  python-crypto,
+ python-daemon,
+ python-distutils-extra,
+ python-eventlet,
+ python-feedparser,
+ python-gflags,
+ python-glance,
+ python-glanceclient,
  python-iso8601,
  python-kombu,
+ python-lockfile,
+ python-lxml,
+ python-migrate,
+ python-mox,
+ python-netaddr,
+ python-nose,
+ python-novaclient,
+ python-paramiko,
+ python-paste,
+ python-pastedeploy (>= 1.5.0),
  python-quantumclient,
- python-glanceclient,
- python-cinderclient
+ python-routes,
+ python-setuptools,
+ python-setuptools-git,
+ python-simplejson,
+ python-sphinx (>> 1.0),
+ python-sqlalchemy-ext | python-sqlalchemy (<< 0.6.3-2),
+ python-suds,
+ python-tempita,
+ python-unittest2,
+ python-webob,
+ python-xattr
 Build-Conflicts: python-cjson
 Standards-Version: 3.9.3
 Homepage: http://launchpad.net/nova
 Vcs-Browser: http://bazaar.launchpad.net/~ubuntu-server-dev/nova/essex/debian/files
 Vcs-Bzr: http://bazaar.launchpad.net/~ubuntu-server-dev/nova/essex
 
-
 Package: python-nova
 Architecture: all
 Section: python
-Depends: ${python:Depends},
- openssh-client,
+Depends: openssh-client,
  openssl,
  python-boto,
- python-m2crypto,
- python-pycurl,
- python-daemon,
  python-carrot,
- python-lockfile,
- python-gflags,
- python-libxml2,
- python-ldap,
- python-sqlalchemy-ext | python-sqlalchemy (<< 0.6.3-2),
- python-eventlet,
- python-routes,
- python-webob,
  python-cheetah,
- python-netaddr,
- python-paste,
- python-pastedeploy,
- python-tempita,
- python-migrate,
- python-netaddr,
+ python-cinderclient,
+ python-daemon,
+ python-eventlet,
+ python-feedparser,
+ python-gflags,
  python-glance,
  python-glanceclient,
- python-novaclient,
- python-simplejson,
- python-lxml,
- python-feedparser,
- python-xattr,
- python-daemon,
- python-suds,
  python-iso8601,
  python-keystone,
  python-kombu,
+ python-ldap,
+ python-libxml2,
+ python-lockfile,
+ python-lxml,
+ python-m2crypto,
+ python-migrate,
+ python-netaddr,
+ python-novaclient,
+ python-paste,
+ python-pastedeploy,
+ python-pycurl,
+ python-routes,
+ python-simplejson,
+ python-sqlalchemy-ext | python-sqlalchemy (<< 0.6.3-2),
+ python-suds,
+ python-tempita,
+ python-webob,
+ python-xattr,
  sudo,
- ${misc:Depends}
-Suggests: python-suds (>= 0.4.0),
+ ${misc:Depends},
+ ${python:Depends}
+Suggests: python-suds (>= 0.4.0)
 Conflicts: python-cjson
 XB-Python-Version: ${python:Versions}
 Recommends: python-mysqldb
@@ -119,9 +115,13 @@ Description: OpenStack Compute Python libraries
 
 Package: nova-common
 Architecture: all
-Depends: python-amqplib, python-nova (= ${binary:Version}), ${python:Depends}, ${misc:Depends}, adduser
+Depends: adduser,
+ python-amqplib,
+ python-nova (= ${binary:Version}),
+ ${misc:Depends},
+ ${python:Depends}
 Provides: ${python:Provides}
-Recommends: python-keystone, python-glanceclient
+Recommends: python-glanceclient, python-keystone
 Description: OpenStack Compute - common files
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
@@ -141,9 +141,20 @@ Description: OpenStack Compute - common files
 
 Package: nova-compute
 Architecture: all
-Depends: lsb-base (>= 3.0.6),  nova-common (= ${binary:Version}), qemu-utils, kpartx, curl, parted, vlan,
- ebtables, gawk, iptables, open-iscsi, nova-compute-kvm | nova-compute-hypervisor,
- ${python:Depends}, ${misc:Depends}
+Depends: curl,
+ ebtables,
+ gawk,
+ iptables,
+ kpartx,
+ lsb-base (>= 3.0.6),
+ nova-common (= ${binary:Version}),
+ nova-compute-kvm | nova-compute-hypervisor,
+ open-iscsi,
+ parted,
+ qemu-utils,
+ vlan,
+ ${misc:Depends},
+ ${python:Depends}
 Description: OpenStack Compute - compute node
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
@@ -164,7 +175,10 @@ Description: OpenStack Compute - compute node
 
 Package: nova-compute-lxc
 Architecture: all
-Depends: nova-compute (= ${binary:Version}), python-libvirt, libvirt-bin, ${misc:Depends}
+Depends: libvirt-bin,
+ nova-compute (= ${binary:Version}),
+ python-libvirt,
+ ${misc:Depends}
 Provides: nova-compute-hypervisor
 Conflicts: nova-compute-hypervisor
 Description: OpenStack Compute - compute node (LXC)
@@ -186,7 +200,11 @@ Description: OpenStack Compute - compute node (LXC)
 
 Package: nova-compute-uml
 Architecture: all
-Depends: nova-compute (= ${binary:Version}), python-libvirt, libvirt-bin, user-mode-linux, ${misc:Depends}
+Depends: libvirt-bin,
+ nova-compute (= ${binary:Version}),
+ python-libvirt,
+ user-mode-linux,
+ ${misc:Depends}
 Provides: nova-compute-hypervisor
 Conflicts: nova-compute-hypervisor
 Description: OpenStack Compute - compute node (UserModeLinux)
@@ -208,8 +226,11 @@ Description: OpenStack Compute - compute node (UserModeLinux)
 
 Package: nova-compute-xen
 Architecture: all
-Depends: nova-compute (= ${binary:Version}), python-libvirt, libvirt-bin, xen-hypervisor-4.1-amd64 | xen-hypervisor-4.1-i386,
-  ${misc:Depends}
+Depends: libvirt-bin,
+ nova-compute (= ${binary:Version}),
+ python-libvirt,
+ xen-hypervisor-4.1-amd64 | xen-hypervisor-4.1-i386,
+ ${misc:Depends}
 Provides: nova-compute-hypervisor
 Conflicts: nova-compute-hypervisor
 Description: OpenStack Compute - compute node (Xen)
@@ -231,7 +252,11 @@ Description: OpenStack Compute - compute node (Xen)
 
 Package: nova-compute-qemu
 Architecture: all
-Depends: nova-compute (= ${binary:Version}), python-libvirt, libvirt-bin, qemu, ${misc:Depends}
+Depends: libvirt-bin,
+ nova-compute (= ${binary:Version}),
+ python-libvirt,
+ qemu,
+ ${misc:Depends}
 Provides: nova-compute-hypervisor
 Conflicts: nova-compute-hypervisor
 Description: OpenStack Compute - compute node (QEmu)
@@ -253,7 +278,11 @@ Description: OpenStack Compute - compute node (QEmu)
 
 Package: nova-compute-kvm
 Architecture: all
-Depends: nova-compute (= ${binary:Version}), python-libvirt, libvirt-bin, kvm, ${misc:Depends}
+Depends: kvm,
+ libvirt-bin,
+ nova-compute (= ${binary:Version}),
+ python-libvirt,
+ ${misc:Depends}
 Provides: nova-compute-hypervisor
 Conflicts: nova-compute-hypervisor
 Description: OpenStack Compute - compute node (KVM)
@@ -297,7 +326,7 @@ Description: OpenStack Compute - compute node (XCP)
 
 Package: nova-xcp-plugins
 Architecture: all
-Depends: xcp-xapi, ${python:Depends}, ${misc:Depends}
+Depends: xcp-xapi, ${misc:Depends}, ${python:Depends}
 Description: OpenStack Compute plugin for the Xen Cloud Platform
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
@@ -319,8 +348,15 @@ Description: OpenStack Compute plugin for the Xen Cloud Platform
 
 Package: nova-xcp-network
 Architecture: all
-Depends: xcp-xapi, lsb-base (>= 3.0.6), ${python:Depends}, ${misc:Depends}, nova-xcp-plugins (= ${binary:Version}),
- openvswitch-switch, ebtables, arptables, iproute
+Depends: arptables,
+ ebtables,
+ iproute,
+ lsb-base (>= 3.0.6),
+ nova-xcp-plugins (= ${binary:Version}),
+ openvswitch-switch,
+ xcp-xapi,
+ ${misc:Depends},
+ ${python:Depends}
 Description: OpenStack Compute network plugin for the Xen Cloud Platform
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
@@ -340,10 +376,12 @@ Description: OpenStack Compute network plugin for the Xen Cloud Platform
  master Xen API server (see the xcp-xapi package), so that nova can remotely
  configure the network of your XCP servers.
 
-
 Package: nova-cert
 Architecture: all
-Depends: ${ostack-lsb-base}, nova-common (= ${binary:Version}), ${python:Depends}, ${misc:Depends}
+Depends: nova-common (= ${binary:Version}),
+ ${misc:Depends},
+ ${ostack-lsb-base},
+ ${python:Depends}
 Description: OpenStack Compute - certificate management
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
@@ -363,7 +401,10 @@ Description: OpenStack Compute - certificate management
 
 Package: nova-scheduler
 Architecture: all
-Depends: ${ostack-lsb-base}, nova-common (= ${binary:Version}), ${python:Depends}, ${misc:Depends}
+Depends: nova-common (= ${binary:Version}),
+ ${misc:Depends},
+ ${ostack-lsb-base},
+ ${python:Depends}
 Description: OpenStack Compute - virtual machine scheduler
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
@@ -383,8 +424,13 @@ Description: OpenStack Compute - virtual machine scheduler
 
 Package: nova-volume
 Architecture: all
-Depends: ${ostack-lsb-base}, nova-common (= ${binary:Version}), lvm2, tgt, ${python:Depends}, ${misc:Depends}
-Suggests: sheepdog, ceph-common
+Depends: lvm2,
+ nova-common (= ${binary:Version}),
+ tgt,
+ ${misc:Depends},
+ ${ostack-lsb-base},
+ ${python:Depends}
+Suggests: ceph-common, sheepdog
 Description: OpenStack Compute - storage
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
@@ -404,7 +450,10 @@ Description: OpenStack Compute - storage
 
 Package: nova-ajax-console-proxy
 Architecture: all
-Depends: ${ostack-lsb-base}, nova-common (= ${binary:Version}), ${python:Depends}, ${misc:Depends}
+Depends: nova-common (= ${binary:Version}),
+ ${misc:Depends},
+ ${ostack-lsb-base},
+ ${python:Depends}
 Description: OpenStack Compute - AJAX console proxy - transitional package
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
@@ -424,7 +473,10 @@ Description: OpenStack Compute - AJAX console proxy - transitional package
 
 Package: nova-novncproxy
 Architecture: all
-Depends: ${ostack-lsb-base}, nova-common (= ${binary:Version}), ${python:Depends}, ${misc:Depends}
+Depends: nova-common (= ${binary:Version}),
+ ${misc:Depends},
+ ${ostack-lsb-base},
+ ${python:Depends}
 Suggests: novnc
 Description: OpenStack Compute - NoVNC proxy
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
@@ -446,7 +498,10 @@ Description: OpenStack Compute - NoVNC proxy
 
 Package: nova-xvpvncproxy
 Architecture: all
-Depends: ${ostack-lsb-base}, nova-common (= ${binary:Version}), ${python:Depends}, ${misc:Depends}
+Depends: nova-common (= ${binary:Version}),
+ ${misc:Depends},
+ ${ostack-lsb-base},
+ ${python:Depends}
 Description: OpenStack Compute - XVP VNC proxy
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
@@ -467,7 +522,10 @@ Description: OpenStack Compute - XVP VNC proxy
 
 Package: nova-api
 Architecture: all
-Depends: ${ostack-lsb-base}, nova-common (= ${binary:Version}), ${python:Depends}, ${misc:Depends}
+Depends: nova-common (= ${binary:Version}),
+ ${misc:Depends},
+ ${ostack-lsb-base},
+ ${python:Depends}
 Description: OpenStack Compute - API frontend
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
@@ -487,8 +545,17 @@ Description: OpenStack Compute - API frontend
 
 Package: nova-network
 Architecture: all
-Depends: ${ostack-lsb-base}, netcat, vlan, bridge-utils, dnsmasq-base, iputils-arping, dnsmasq-utils, iptables,
- nova-common (= ${binary:Version}), ${python:Depends}, ${misc:Depends}
+Depends: bridge-utils,
+ dnsmasq-base,
+ dnsmasq-utils,
+ iptables,
+ iputils-arping,
+ netcat,
+ nova-common (= ${binary:Version}),
+ vlan,
+ ${misc:Depends},
+ ${ostack-lsb-base},
+ ${python:Depends}
 Suggests: radvd
 Description: OpenStack Compute - Network manager
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
@@ -513,7 +580,10 @@ Description: OpenStack Compute - Network manager
 
 Package: nova-objectstore
 Architecture: all
-Depends: ${ostack-lsb-base}, nova-common (= ${binary:Version}), ${python:Depends}, ${misc:Depends}
+Depends: nova-common (= ${binary:Version}),
+ ${misc:Depends},
+ ${ostack-lsb-base},
+ ${python:Depends}
 Description: OpenStack Compute - object store
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
@@ -534,7 +604,10 @@ Description: OpenStack Compute - object store
 
 Package: nova-console
 Architecture: all
-Depends: ${ostack-lsb-base}, nova-common (= ${binary:Version}), ${python:Depends}, ${misc:Depends}
+Depends: nova-common (= ${binary:Version}),
+ ${misc:Depends},
+ ${ostack-lsb-base},
+ ${python:Depends}
 Recommends: nova-consoleauth (>=  2012.1~rc1-0ubuntu2)
 Description: OpenStack Compute - Console
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
@@ -557,7 +630,10 @@ Description: OpenStack Compute - Console
 
 Package: nova-consoleauth
 Architecture: all
-Depends: ${ostack-lsb-base}, nova-common (= ${binary:Version}), ${python:Depends}, ${misc:Depends}
+Depends: nova-common (= ${binary:Version}),
+ ${misc:Depends},
+ ${ostack-lsb-base},
+ ${python:Depends}
 Breaks: nova-console (<< 2012.1~rc1-0ubuntu2)
 Replaces: nova-console (<< 2012.1~rc1-0ubuntu2)
 Description: OpenStack Compute - Console Authenticator
@@ -603,7 +679,10 @@ Description: OpenStack Compute - documentation
 
 Package: nova-api-metadata
 Architecture: all
-Depends: ${ostack-lsb-base}, nova-common (= ${binary:Version}), ${python:Depends}, ${misc:Depends}
+Depends: nova-common (= ${binary:Version}),
+ ${misc:Depends},
+ ${ostack-lsb-base},
+ ${python:Depends}
 Breaks: nova-api
 Description: OpenStack Compute - metadata API frontend
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
@@ -619,7 +698,10 @@ Description: OpenStack Compute - metadata API frontend
 
 Package: nova-api-os-compute
 Architecture: all
-Depends: ${ostack-lsb-base}, nova-common (= ${binary:Version}), ${python:Depends}, ${misc:Depends}
+Depends: nova-common (= ${binary:Version}),
+ ${misc:Depends},
+ ${ostack-lsb-base},
+ ${python:Depends}
 Breaks: nova-api
 Description: OpenStack Compute - OpenStack Compute API frontend
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
@@ -635,7 +717,10 @@ Description: OpenStack Compute - OpenStack Compute API frontend
 
 Package: nova-api-os-volume
 Architecture: all
-Depends: ${ostack-lsb-base}, nova-common (= ${binary:Version}), ${python:Depends}, ${misc:Depends}
+Depends: nova-common (= ${binary:Version}),
+ ${misc:Depends},
+ ${ostack-lsb-base},
+ ${python:Depends}
 Breaks: nova-api
 Description: OpenStack Compute - OpenStack Volume API frontend
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
@@ -651,7 +736,10 @@ Description: OpenStack Compute - OpenStack Volume API frontend
 
 Package: nova-api-ec2
 Architecture: all
-Depends: ${ostack-lsb-base}, nova-common (= ${binary:Version}), ${python:Depends}, ${misc:Depends}
+Depends: nova-common (= ${binary:Version}),
+ ${misc:Depends},
+ ${ostack-lsb-base},
+ ${python:Depends}
 Breaks: nova-api
 Description: OpenStack Compute - EC2 API frontend
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
