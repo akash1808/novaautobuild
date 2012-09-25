@@ -1,7 +1,4 @@
-nova (2012.2~rc1-0ubuntu4) UNRELEASED; urgency=low
-
-  [ Chuck Short ]
-  * debian/pydist-overrides: dont try to install babel.
+nova (2012.2~rc2-0ubuntu1) UNRELEASED; urgency=low
 
   [ Adam Gandelman ]
   * debian/control: Add python-cinderclient to python-nova Depends.
@@ -10,6 +7,9 @@ nova (2012.2~rc1-0ubuntu4) UNRELEASED; urgency=low
   [ Chuck Short ]
   * debian/nova-common.postinst: Change root_helper to rootwrap_config
     when upgrading from precise
+  * debian/pydist-overrides: dont try to install babel.
+  * New upstream version.
+  * debian/rules: FTBFS if testsuite fails.
 
  -- Adam Gandelman <adamg@canonical.com>  Fri, 21 Sep 2012 12:38:27 -0700
 
