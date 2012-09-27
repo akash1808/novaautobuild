@@ -1,4 +1,4 @@
-nova (2012.2-0ubuntu1) UNRELEASED; urgency=low
+nova (2012.2-0ubuntu1) quantal; urgency=low
 
   [ Adam Gandelman ]
   * debian/control: Depend on python-sqlalchemy >= 0.7.8-1.
@@ -9,7 +9,7 @@ nova (2012.2-0ubuntu1) UNRELEASED; urgency=low
   * debian/nova-volume.postinst, nova-common.dirs: Configure nova-volumes
     to use tgtd properly.
 
- -- Adam Gandelman <adamg@canonical.com>  Wed, 26 Sep 2012 13:13:19 -0700
+ -- Chuck Short <zulcss@ubuntu.com>  Thu, 27 Sep 2012 12:36:04 -0500
 
 nova (2012.2~rc3-0ubuntu1) quantal; urgency=low
 
