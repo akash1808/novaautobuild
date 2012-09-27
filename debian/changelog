@@ -6,6 +6,8 @@ nova (2012.2-0ubuntu1) UNRELEASED; urgency=low
   [ Chuck Short ]
   * New upstream release.
   * debian/control: Dont conflict with novnc. (LP: #1055505)
+  * debian/nova-volume.postinst, nova-common.dirs: Configure nova-volumes
+    to use tgtd properly.
 
  -- Adam Gandelman <adamg@canonical.com>  Wed, 26 Sep 2012 13:13:19 -0700
 
