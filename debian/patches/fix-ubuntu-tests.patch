@@ -1,7 +1,11 @@
-diff -Naurp nova-2012.2.orig/nova/tests/test_api.py nova-2012.2/nova/tests/test_api.py
---- nova-2012.2.orig/nova/tests/test_api.py	2012-09-25 19:48:35.000000000 -0500
-+++ nova-2012.2/nova/tests/test_api.py	2012-09-28 07:48:04.019824719 -0500
-@@ -436,7 +436,7 @@ class ApiEc2TestCase(test.TestCase):
+Description: Fix tests in ubuntu.
+Author: Chuck Short <zulcss@ubuntu.com>
+Forwarded: no
+Index: nova/nova/tests/test_api.py
+===================================================================
+--- nova.orig/nova/tests/test_api.py	2012-07-10 22:23:21.213706436 -0700
++++ nova/nova/tests/test_api.py	2012-07-10 22:25:20.345711582 -0700
+@@ -432,7 +432,7 @@
                  raise self.failureException, 'EC2ResponseError not raised'
  
          # Invalid CIDR address
@@ -10,56 +14,3 @@ diff -Naurp nova-2012.2.orig/nova/tests/test_api.py nova-2012.2/nova/tests/test_
          # Missing ports
          _assert('Not enough parameters', 'tcp', '0.0.0.0/0')
          # from port cannot be greater than to port
-diff -Naurp nova-2012.2.orig/nova/tests/test_nfs.py nova-2012.2/nova/tests/test_nfs.py
---- nova-2012.2.orig/nova/tests/test_nfs.py	2012-09-25 19:48:35.000000000 -0500
-+++ nova-2012.2/nova/tests/test_nfs.py	2012-09-28 07:47:41.407824183 -0500
-@@ -20,6 +20,7 @@ import __builtin__
- import errno
- import os
- 
-+import nose
- import mox as mox_lib
- from mox import IgnoreArg
- from mox import IsA
-@@ -109,8 +110,11 @@ class NfsDriverTestCase(test.TestCase):
-         volume['provider_location'] = self.TEST_NFS_EXPORT1
-         volume['name'] = 'volume-123'
- 
--        self.assertEqual('/mnt/test/12118957640568004265/volume-123',
--                         drv.local_path(volume))
-+        try:
-+            self.assertEqual('/mnt/test/12118957640568004265/volume-123',
-+                             drv.local_path(volume))
-+        except:
-+            raise nose.exc.SkipTest('fails on ubuntu buildds')
- 
-     def test_mount_nfs_should_mount_correctly(self):
-         """_mount_nfs common case usage"""
-@@ -212,8 +216,11 @@ class NfsDriverTestCase(test.TestCase):
-         """_get_hash_str should calculation correct value"""
-         drv = self._driver
- 
--        self.assertEqual('12118957640568004265',
--                         drv._get_hash_str(self.TEST_NFS_EXPORT1))
-+        try:
-+            self.assertEqual('12118957640568004265',
-+                             drv._get_hash_str(self.TEST_NFS_EXPORT1))
-+        except:
-+            raise nose.exc.SkipTest('fails on ubuntu buildds')
- 
-     def test_get_mount_point_for_share(self):
-         """_get_mount_point_for_share should calculate correct value"""
-@@ -221,8 +228,11 @@ class NfsDriverTestCase(test.TestCase):
- 
-         nfs.FLAGS.nfs_mount_point_base = self.TEST_MNT_POINT_BASE
- 
--        self.assertEqual('/mnt/test/12118957640568004265',
--                         drv._get_mount_point_for_share(self.TEST_NFS_EXPORT1))
-+        try:
-+            self.assertEqual('/mnt/test/12118957640568004265',
-+                             drv._get_mount_point_for_share(self.TEST_NFS_EXPORT1))
-+        except:
-+            raise nose.exc.SkipTest('fails on ubuntu buildds')
- 
-     def test_get_available_capacity_with_df(self):
-         """_get_available_capacity should calculate correct value"""

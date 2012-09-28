@@ -1,6 +1,10 @@
 nova (2012.2-0ubuntu2) quantal; urgency=low
 
-  * debian/patches/fix-ubuntu-tests.patch: Refreshed to fix a FTBFS.
+  * debian/patches/ubuntu-fix-32-64-bit-iss.patch: Backport
+    ba8cca2b59bb2904635520ad12f6d9a73f10242c, python's builtin
+    builtin hash returns different values on 32-bit and 64-bit architectures, 
+    so it's safer to use a well-defined hash like MD5. This fixes a FTBFS
+    in Ubuntu's buildds.
 
  -- Chuck Short <zulcss@ubuntu.com>  Fri, 28 Sep 2012 07:49:45 -0500
 
