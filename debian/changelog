@@ -1,3 +1,10 @@
+nova (2012.2-0ubuntu3) UNRELEASED; urgency=low
+
+  * nova-xvpvncproxy, nova-novncproxy: Add missing .install, .logrotate,
+    .postrm, manpages and upstart jobs (LP: #1060336)
+
+ -- Adam Gandelman <adamg@canonical.com>  Tue, 02 Oct 2012 10:20:43 -0700
+
 nova (2012.2-0ubuntu2) quantal; urgency=low
 
   * debian/patches/ubuntu-fix-32-64-bit-iss.patch: Backport
