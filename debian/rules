@@ -62,7 +62,7 @@ override_dh_install:
 
 override_dh_fixperms:
 	dh_fixperms -Xnova_sudoers
-	dh_fixperms -Xnova_tgt
+	dh_fixperms -Xnova_tgt.conf
 	rm -f $(CURDIR)/debian/python-nova/usr/share/pyshared/nova/CA/.gitignore
 	rm -f $(CURDIR)/debian/python-nova/usr/share/pyshared/nova/CA/projects/.gitignore
 	rm -f $(CURDIR)/debian/python-nova/usr/share/pyshared/nova/CA/reqs/.gitignore
