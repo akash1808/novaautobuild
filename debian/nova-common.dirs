@@ -8,7 +8,6 @@ var/lib/nova/CA/private
 var/lib/nova/CA/reqs
 var/lib/nova/images
 var/lib/nova/instances
-var/lib/nova/volumes
 var/lib/nova/keys
 var/lib/nova/networks
 var/lib/nova/tmp
