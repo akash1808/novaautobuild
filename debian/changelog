@@ -8,7 +8,7 @@ nova (2012.2-0ubuntu5) UNRELEASED; urgency=low
     added to python-nova's runtime dependencies. (LP: #1059907) 
 
   [ Chuck Short ]
-  * debian/patches/ubuntu/rbd-security.patch: Support override of ceph rbd
+  * debian/patches/rbd-security.patch: Support override of ceph rbd
     user and secret in nova-compute. (LP: #1065883)
   * debian/patches/ubuntu/fix-libvirt-firewall-slowdown.patch: Fix
     refreshing of security groups in libvirt not to block on RPC calls.
