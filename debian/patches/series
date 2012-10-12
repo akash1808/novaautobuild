@@ -3,5 +3,7 @@ path-to-the-xenhost.conf-fixup.patch
 fix-ubuntu-tests.patch
 fix-docs-build-without-network.patch
 avoid_setuptools_git_dependency.patch
+# Patches below can be removed when a SRU happens.
 ubuntu/ubuntu-fix-32-64-bit-iss.patch
 ubuntu/ubuntu-fix-ec2-instance-id-mappings.patch
+ubuntu/rbd-security.patch
