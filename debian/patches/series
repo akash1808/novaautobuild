@@ -7,3 +7,4 @@ avoid_setuptools_git_dependency.patch
 ubuntu/ubuntu-fix-32-64-bit-iss.patch
 ubuntu/ubuntu-fix-ec2-instance-id-mappings.patch
 ubuntu/rbd-security.patch
+ubuntu/fix-libvirt-firewall-slowdown.patch
