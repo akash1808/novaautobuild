@@ -430,7 +430,7 @@ Depends: lvm2,
  ${misc:Depends},
  ${ostack-lsb-base},
  ${python:Depends}
-Suggests: python-ceph, sheepdog
+Suggests: ceph-common, sheepdog
 Description: OpenStack Compute - storage
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
