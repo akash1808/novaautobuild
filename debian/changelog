@@ -1,4 +1,4 @@
-nova (2012.2-0ubuntu5) UNRELEASED; urgency=low
+nova (2012.2-0ubuntu5) quantal; urgency=low
 
   [ Adam Gandelman ]
   * Move management of /var/lib/nova/volumes from nova-common to
@@ -16,7 +16,7 @@ nova (2012.2-0ubuntu5) UNRELEASED; urgency=low
   * debian/patches/ubuntu/fix-ec2-volume-id-mappings.patch: Read deleted
     snapshot and volume id mappings. (LP: #1065785)
 
- -- Adam Gandelman <adamg@canonical.com>  Wed, 10 Oct 2012 18:22:21 -0700
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 12 Oct 2012 12:35:01 -0500
 
 nova (2012.2-0ubuntu4) quantal; urgency=low
 
