@@ -1,6 +1,19 @@
-Description: ceph rbd username and secret should be configured in nova-compute, not passed from nova-volume/cinder.
-Author: The James Page  <jamespage@ubuntu.com>
+Description: Support specification of ceph rbd security in nova-compute
+ This patch adds optional support for specifying the following flags
+ for nova-compute:
+ .
+    rbd_user: username to connect to ceph with
+    rbd_secret_uuid: UUID of libvirt secret containing the ceph
+                     private key
+ .
+ These flags override the same flags specified in nova-volume (which are
+ passed to nova-compute in the netdisk_properties object) so that
+ security credentials in nova-compute can be managed independently of
+ those in nova-volume.
+Author: James Page <james.page@ubuntu.com>
 Forwarded: no
+Bug: https://bugs.launchpad.net/nova/+bug/1065883
+
 diff -Naurp nova-2012.2.orig/nova/virt/libvirt/volume.py nova-2012.2/nova/virt/libvirt/volume.py
 --- nova-2012.2.orig/nova/virt/libvirt/volume.py	2012-09-25 19:48:35.000000000 -0500
 +++ nova-2012.2/nova/virt/libvirt/volume.py	2012-10-12 08:10:39.744988599 -0500
