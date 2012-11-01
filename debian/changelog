@@ -1,7 +1,7 @@
 nova (2012.2-0ubuntu6) UNRELEASED; urgency=low
 
   * debian/control: Ensure novaclient is upgraded with nova,
-    require python-keystoneclient >= 1:2.9.0-0ubuntu1. (LP: #1073289)
+    require python-keystoneclient >= 1:2.9.0. (LP: #1073289)
 
  -- Adam Gandelman <adamg@canonical.com>  Wed, 31 Oct 2012 13:49:10 +0100
 
