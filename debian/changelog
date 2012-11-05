@@ -1,10 +1,15 @@
 nova (2012.2-0ubuntu6) UNRELEASED; urgency=low
 
+  [ Adam Gandelman ]
   * debian/control: Ensure novaclient is upgraded with nova,
     require python-keystoneclient >= 1:2.9.0. (LP: #1073289)
   * debian/patches/{ubuntu/*, rbd-security.patch}: Dropped, applied
     upstream.
   * debian/control: Add python-testtools to Build-Depends.
+
+  [ Chuck Short ]
+  * debian/patches/fix-libvirt-tests.patch: Fix libvirt tests with lxml
+    3.0.1
 
  -- Adam Gandelman <adamg@canonical.com>  Wed, 31 Oct 2012 13:49:10 +0100
 

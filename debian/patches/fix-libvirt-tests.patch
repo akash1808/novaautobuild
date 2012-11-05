@@ -1,0 +1,62 @@
+From 3fa7511a0a6a880fca53769c3bc522bf679e03df Mon Sep 17 00:00:00 2001
+From: Chuck Short <chuck.short@canonical.com>
+Date: Mon, 5 Nov 2012 10:16:31 -0600
+Subject: [PATCH 2/2] Accept python-lxml 3.0.1 for tests
+
+Tests were failing when using lxml 3.0.1. Accept
+3.0.1 as a pip version and fix the apporiate tests.
+
+Change-Id: I84d53e69c61f684123eb6d2bc5541b5c02ddacc9
+Signed-off-by: Chuck Short <chuck.short@canonical.com>
+---
+ nova/tests/test_libvirt_config.py |    6 +++---
+ tools/pip-requires                |    2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/nova/tests/test_libvirt_config.py b/nova/tests/test_libvirt_config.py
+index a00d5b5..b0da9f9 100644
+--- a/nova/tests/test_libvirt_config.py
++++ b/nova/tests/test_libvirt_config.py
+@@ -366,7 +366,7 @@ class LibvirtConfigGuestDiskTest(LibvirtConfigBaseTest):
+         self.assertXmlEqual(xml, """
+             <disk type="network" device="disk">
+               <driver name="qemu" type="qcow2"/>
+-              <source protocol="iscsi" name="foo.bar.com"/>
++              <source name="foo.bar.com" protocol="iscsi"/>
+               <target bus="ide" dev="/dev/hda"/>
+             </disk>""")
+ 
+@@ -387,7 +387,7 @@ class LibvirtConfigGuestDiskTest(LibvirtConfigBaseTest):
+         self.assertXmlEqual(xml, """
+             <disk type="network" device="disk">
+               <driver name="qemu" type="raw"/>
+-              <source protocol="rbd" name="pool/image"/>
++              <source name="pool/image" protocol="rbd"/>
+               <auth username="foo">
+                 <secret type="ceph"
+                 uuid="b38a3f43-4be2-4046-897f-b67c2f5e0147"/>
+@@ -530,7 +530,7 @@ class LibvirtConfigGuestInterfaceTest(LibvirtConfigBaseTest):
+             <interface type="direct">
+               <mac address="DE:AD:BE:EF:CA:FE"/>
+               <model type="virtio"/>
+-              <source mode="private" dev="eth0"/>
++              <source dev="eth0" mode="private"/>
+               <virtualport type="802.1Qbh"/>
+             </interface>""")
+ 
+diff --git a/tools/pip-requires b/tools/pip-requires
+index 922f1a2..13aa77c 100644
+--- a/tools/pip-requires
++++ b/tools/pip-requires
+@@ -5,7 +5,7 @@ anyjson>=0.2.4
+ boto==2.1.1
+ eventlet>=0.9.17
+ kombu==1.0.4
+-lxml>=2.3,<=2.3.5
++lxml>=2.3,<=3.0.1
+ routes==1.12.3
+ WebOb==1.0.8
+ greenlet>=0.3.1
+-- 
+1.7.10.4
+
