@@ -1,4 +1,4 @@
-nova (2012.2-0ubuntu6) UNRELEASED; urgency=low
+nova (2013.1~g1~20121105.16827-0ubuntu6) UNRELEASED; urgency=low
 
   [ Adam Gandelman ]
   * debian/control: Ensure novaclient is upgraded with nova,
@@ -8,6 +8,7 @@ nova (2012.2-0ubuntu6) UNRELEASED; urgency=low
   * debian/control: Add python-testtools to Build-Depends.
 
   [ Chuck Short ]
+  * New upstream version.
   * debian/patches/fix-libvirt-tests.patch: Fix libvirt tests with lxml
     3.0.1
 
