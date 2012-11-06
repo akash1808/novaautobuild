@@ -425,12 +425,7 @@ Description: OpenStack Compute - virtual machine scheduler
 
 Package: nova-volume
 Architecture: all
-Depends: lvm2,
- nova-common (= ${binary:Version}),
- tgt,
- ${misc:Depends},
- ${ostack-lsb-base},
- ${python:Depends}
+Depends: cinder-volume, cinder-api, cinder-scheduler
 Suggests: ceph-common, sheepdog
 Description: OpenStack Compute - storage
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
