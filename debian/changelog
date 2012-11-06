@@ -11,6 +11,7 @@ nova (2013.1~g1~20121105.16827-0ubuntu6) UNRELEASED; urgency=low
   * New upstream version.
   * debian/patches/fix-libvirt-tests.patch: Fix libvirt tests with lxml
     3.0.1
+  * Remove nova-volume since it doesnt exist anymore.
 
  -- Adam Gandelman <adamg@canonical.com>  Wed, 31 Oct 2012 13:49:10 +0100
 
