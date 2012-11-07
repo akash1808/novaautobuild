@@ -9,9 +9,10 @@ nova (2013.1~g1~20121107.16910-0ubuntu6) UNRELEASED; urgency=low
 
   [ Chuck Short ]
   * New upstream version.
-  * debian/patches/fix-libvirt-tests.patch: Fix libvirt tests with lxml
-    3.0.1
+  * Refreshed debian/patches/avoid_setuptools_git_dependency.patch.
+  * debian/rules: FTBFS if missing binaries.
   * Remove nova-volume since it doesnt exist anymore, transition to cinder-*.
+  * debian/rules: install apport hook in the right place.
 
  -- Adam Gandelman <adamg@canonical.com>  Wed, 31 Oct 2012 13:49:10 +0100
 
