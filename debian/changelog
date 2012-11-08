@@ -11,6 +11,8 @@ nova (2013.1~g1~20121107.16910-0ubuntu6) UNRELEASED; urgency=low
   * New upstream version.
   * Refreshed debian/patches/avoid_setuptools_git_dependency.patch.
   * debian/rules: FTBFS if missing binaries.
+  * debian/nova-scheudler.install: Add missing rabbit-queues and
+    nova-rpc-zmq-receiver.
   * Remove nova-volume since it doesnt exist anymore, transition to cinder-*.
   * debian/rules: install apport hook in the right place.
 
