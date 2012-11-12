@@ -153,6 +153,7 @@ Depends: curl,
  open-iscsi,
  parted,
  qemu-utils,
+ genisoimage,
  vlan,
  ${misc:Depends},
  ${python:Depends}

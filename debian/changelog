@@ -16,6 +16,7 @@ nova (2013.1~g1~20121107.16910-0ubuntu6) UNRELEASED; urgency=low
   * Remove nova-volume since it doesnt exist anymore, transition to cinder-*.
   * debian/rules: install apport hook in the right place.
   * debian/patches/ubuntu-show-tests.patch: Display test failures.
+  * debian/control: Add depends on genisoimage
 
  -- Adam Gandelman <adamg@canonical.com>  Wed, 31 Oct 2012 13:49:10 +0100
 
