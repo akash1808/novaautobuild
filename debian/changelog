@@ -19,6 +19,7 @@ nova (2013.1~g1~20121107.16910-0ubuntu6) UNRELEASED; urgency=low
   * debian/control: Add depends on genisoimage
   * debian/control: Suggest guestmount.
   * debian/control: Suggest websockify. (LP: #1076442)
+  * debian/nova.conf: Disable nova-volume service.
 
  -- Adam Gandelman <adamg@canonical.com>  Wed, 31 Oct 2012 13:49:10 +0100
 
