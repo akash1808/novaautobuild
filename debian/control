@@ -475,7 +475,7 @@ Depends: nova-common (= ${binary:Version}),
  ${misc:Depends},
  ${ostack-lsb-base},
  ${python:Depends}
-Suggests: novnc
+Suggests: novnc, websocikfy
 Description: OpenStack Compute - NoVNC proxy
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
