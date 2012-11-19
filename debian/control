@@ -232,7 +232,7 @@ Architecture: all
 Depends: libvirt-bin,
  nova-compute (= ${binary:Version}),
  python-libvirt,
- xen-hypervisor-4.1-amd64 | xen-hypervisor-4.1-i386,
+ xen-system-amd64 | xen-system-i386,
  ${misc:Depends}
 Provides: nova-compute-hypervisor
 Conflicts: nova-compute-hypervisor
