@@ -5,4 +5,3 @@ fix-docs-build-without-network.patch
 avoid_setuptools_git_dependency.patch
 fix-libvirt-tests.patch
 ubuntu-show-tests.patch
-setup-add-missing-conductor.patch
