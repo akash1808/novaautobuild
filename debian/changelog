@@ -27,6 +27,7 @@ nova (2013.1~g1~20121120.17206-0ubuntu1) UNRELEASED; urgency=low
     debian/nova-conductor.upstart.in: Add nova-conductor service.
   * debian/patches/setup-add-missing-conductor.patch: Add missing
     binary.
+  * debian/control: Add python-fixtures as a build deps.
 
  -- Adam Gandelman <adamg@canonical.com>  Wed, 31 Oct 2012 13:49:10 +0100
 
