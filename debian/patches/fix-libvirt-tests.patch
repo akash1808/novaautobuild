@@ -45,19 +45,4 @@ index c285d46..dd44725 100644
                <target dev="tap12345678"/>
                <virtualport type="802.1Qbh"/>
              </interface>""")
-diff --git a/tools/pip-requires b/tools/pip-requires
-index a214d7b..9fc9fa6 100644
---- a/tools/pip-requires
-+++ b/tools/pip-requires
-@@ -5,7 +5,7 @@ anyjson>=0.2.4
- boto==2.1.1
- eventlet>=0.9.17
- kombu==1.0.4
--lxml>=2.3,<=2.3.5
-+lxml==3.0.1
- routes==1.12.3
- WebOb==1.0.8
- greenlet>=0.3.1
--- 
-1.8.0
 
