@@ -1,4 +1,4 @@
-nova (2013.1~g1~20121120.17206-0ubuntu1) UNRELEASED; urgency=low
+nova (2013.1~g2~20121122.17268-0ubuntu1) UNRELEASED; urgency=low
 
   [ Adam Gandelman ]
   * debian/control: Ensure novaclient is upgraded with nova,
