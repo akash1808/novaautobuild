@@ -1,17 +1,24 @@
-From 3fa7511a0a6a880fca53769c3bc522bf679e03df Mon Sep 17 00:00:00 2001
+From 4b3fff879118fc72d0cb5840705adc5731c283ed Mon Sep 17 00:00:00 2001
 From: Chuck Short <chuck.short@canonical.com>
-Date: Mon, 5 Nov 2012 10:16:31 -0600
-Subject: [PATCH 2/2] Accept python-lxml 3.0.1 for tests
+Date: Wed, 21 Nov 2012 13:22:10 -0600
+Subject: [PATCH] Pin lxml to 3.0.1
 
-Tests were failing when using lxml 3.0.1. Accept
-3.0.1 as a pip version and fix the apporiate tests.
+Bump lxml to 3.0.1. This is the most recent version available
+and what it is installed by default on Ubuntu 13.04. Most modern
+distributions will be updating to this version sooner or later.
 
-Change-Id: I84d53e69c61f684123eb6d2bc5541b5c02ddacc9
+Change-Id: I5afdd12b79776a78b714eb605886c17a4becd295
 Signed-off-by: Chuck Short <chuck.short@canonical.com>
-diff -Naurp nova-2013.1.orig/nova/tests/test_libvirt_config.py nova-2013.1/nova/tests/test_libvirt_config.py
---- nova-2013.1.orig/nova/tests/test_libvirt_config.py	2012-11-18 20:12:07.000000000 -0600
-+++ nova-2013.1/nova/tests/test_libvirt_config.py	2012-11-18 20:24:43.738269795 -0600
-@@ -366,7 +366,7 @@ class LibvirtConfigGuestDiskTest(Libvirt
+---
+ nova/tests/test_libvirt_config.py | 6 +++---
+ tools/pip-requires                | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/nova/tests/test_libvirt_config.py b/nova/tests/test_libvirt_config.py
+index c285d46..dd44725 100644
+--- a/nova/tests/test_libvirt_config.py
++++ b/nova/tests/test_libvirt_config.py
+@@ -366,7 +366,7 @@ class LibvirtConfigGuestDiskTest(LibvirtConfigBaseTest):
          self.assertXmlEqual(xml, """
              <disk type="network" device="disk">
                <driver name="qemu" type="qcow2"/>
@@ -20,7 +27,16 @@ diff -Naurp nova-2013.1.orig/nova/tests/test_libvirt_config.py nova-2013.1/nova/
                <target bus="ide" dev="/dev/hda"/>
              </disk>""")
  
-@@ -535,7 +535,7 @@ class LibvirtConfigGuestInterfaceTest(Li
+@@ -387,7 +387,7 @@ class LibvirtConfigGuestDiskTest(LibvirtConfigBaseTest):
+         self.assertXmlEqual(xml, """
+             <disk type="network" device="disk">
+               <driver name="qemu" type="raw"/>
+-              <source protocol="rbd" name="pool/image"/>
++              <source name="pool/image" protocol="rbd"/>
+               <auth username="foo">
+                 <secret type="ceph"
+                 uuid="b38a3f43-4be2-4046-897f-b67c2f5e0147"/>
+@@ -535,7 +535,7 @@ class LibvirtConfigGuestInterfaceTest(LibvirtConfigBaseTest):
              <interface type="direct">
                <mac address="DE:AD:BE:EF:CA:FE"/>
                <model type="virtio"/>
@@ -29,15 +45,19 @@ diff -Naurp nova-2013.1.orig/nova/tests/test_libvirt_config.py nova-2013.1/nova/
                <target dev="tap12345678"/>
                <virtualport type="802.1Qbh"/>
              </interface>""")
-diff -Naurp nova-2013.1.orig/tools/pip-requires nova-2013.1/tools/pip-requires
---- nova-2013.1.orig/tools/pip-requires	2012-11-18 20:12:07.000000000 -0600
-+++ nova-2013.1/tools/pip-requires	2012-11-18 20:24:58.498269804 -0600
+diff --git a/tools/pip-requires b/tools/pip-requires
+index a214d7b..9fc9fa6 100644
+--- a/tools/pip-requires
++++ b/tools/pip-requires
 @@ -5,7 +5,7 @@ anyjson>=0.2.4
  boto==2.1.1
  eventlet>=0.9.17
  kombu==1.0.4
 -lxml>=2.3,<=2.3.5
-+lxml>=2.3,<=3.0.1
++lxml==3.0.1
  routes==1.12.3
  WebOb==1.0.8
  greenlet>=0.3.1
+-- 
+1.8.0
+
