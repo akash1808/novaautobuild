@@ -1,4 +1,4 @@
-nova (2013.1~g2~20121122.17268-0ubuntu1) UNRELEASED; urgency=low
+nova (2013.1~g1-0ubuntu1) raring; urgency=low
 
   [ Adam Gandelman ]
   * debian/control: Ensure novaclient is upgraded with nova,
@@ -27,7 +27,7 @@ nova (2013.1~g2~20121122.17268-0ubuntu1) UNRELEASED; urgency=low
     debian/nova-conductor.upstart.in: Add nova-conductor service.
   * debian/control: Add python-fixtures as a build deps.
 
- -- Adam Gandelman <adamg@canonical.com>  Wed, 31 Oct 2012 13:49:10 +0100
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 23 Nov 2012 09:32:05 -0600
 
 nova (2012.2-0ubuntu5) quantal; urgency=low
 
