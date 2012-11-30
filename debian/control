@@ -157,7 +157,8 @@ Depends: curl,
  genisoimage,
  vlan,
  ${misc:Depends},
- ${python:Depends}
+ ${python:Depends},
+ adduser
 Suggests: guestmount
 Description: OpenStack Compute - compute node
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
@@ -472,6 +473,8 @@ Description: OpenStack Compute - storage
 
 Package: nova-ajax-console-proxy
 Architecture: all
+Section: oldlibs
+Priority: extra
 Depends: nova-common (= ${binary:Version}),
  ${misc:Depends},
  ${ostack-lsb-base},
@@ -705,7 +708,7 @@ Depends: nova-common (= ${binary:Version}),
  ${misc:Depends},
  ${ostack-lsb-base},
  ${python:Depends}
-Breaks: nova-api
+Breaks: nova-api (<< 2012.1~rc1-0ubuntu2)
 Description: OpenStack Compute - metadata API frontend
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
@@ -724,7 +727,7 @@ Depends: nova-common (= ${binary:Version}),
  ${misc:Depends},
  ${ostack-lsb-base},
  ${python:Depends}
-Breaks: nova-api
+Breaks: nova-api (<< 2012.1~rc1-0ubuntu2)
 Description: OpenStack Compute - OpenStack Compute API frontend
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
@@ -743,7 +746,7 @@ Depends: nova-common (= ${binary:Version}),
  ${misc:Depends},
  ${ostack-lsb-base},
  ${python:Depends}
-Breaks: nova-api
+Breaks: nova-api (<< 2012.1~rc1-0ubuntu2)
 Description: OpenStack Compute - OpenStack Volume API frontend
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
@@ -762,7 +765,7 @@ Depends: nova-common (= ${binary:Version}),
  ${misc:Depends},
  ${ostack-lsb-base},
  ${python:Depends}
-Breaks: nova-api
+Breaks: nova-api (<< 2012.1~rc1-0ubuntu2)
 Description: OpenStack Compute - EC2 API frontend
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
