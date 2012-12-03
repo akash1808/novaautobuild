@@ -35,6 +35,17 @@ nova (2013.1~g1-0ubuntu1) raring; urgency=low
     debian/nova-conductor.upstart.in: Add nova-conductor service.
   * debian/control: Add python-fixtures as a build deps.
 
+  [ Yolanda Robla ]
+  * debian/nova-common.docs: Installing changelogs from rules
+  * debian/rules: Replacing perms in /etc/nova/logging.conf for 0644
+  * debian/nova-compute-xcp.lintian-overrides: skip empty binary package warn
+  * debian/control: adduser dependency on nova-compute
+  * debian/control: added section oldlibs and priority extra on
+    nova-ajax-console-proxy
+  * debian/control: adding version number in nova-api breaks
+  * debian/nova-api-ec2.postrm
+  * nova-xvpvncproxy.postrm: removing because of duplicates
+
  -- Chuck Short <zulcss@ubuntu.com>  Fri, 23 Nov 2012 09:32:05 -0600
 
 nova (2012.2-0ubuntu5) quantal; urgency=low

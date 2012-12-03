@@ -51,7 +51,7 @@ override_dh_install:
 	dh_install --fail-missing -Xbin/nova-all
 	chmod 440 $(CURDIR)/debian/nova-common/etc/sudoers.d/nova_sudoers
 	install -D -m 644 debian/source_nova.py debian/php5-common/usr/share/apport/package-hooks/source_nova.py
-	install -D -m 0655 $(CURDIR)/etc/nova/logging_sample.conf $(CURDIR)/debian/nova-common/etc/nova/logging.conf
+	install -D -m 0644 $(CURDIR)/etc/nova/logging_sample.conf $(CURDIR)/debian/nova-common/etc/nova/logging.conf
 	for hypervisor in qemu kvm xen uml lxc; do \
 		install -D -m 0600 $(CURDIR)/debian/nova-compute-$${hypervisor}.conf $(CURDIR)/debian/nova-compute-$${hypervisor}/etc/nova/nova-compute.conf; \
 	done
@@ -85,3 +85,6 @@ override_dh_installlogrotate:
 	dh_installlogrotate
 	dh_installlogrotate --name=nova-manage
 	dh_installlogrotate --name=nova-dhcpbridge
+
+override_dh_installchangelogs:
+	dh_installchangelogs -k ChangeLog
