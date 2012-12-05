@@ -1,8 +1,12 @@
 nova (2013.1~g2~20121129.17379-0ubuntu1) UNRELEASED; urgency=low
 
+  [ Chuck Short ]
   * New upstream release. 
   * debian/patches/ubuntu-show-tests.patch: Dropped no longer needed.
   * debian/rules: Run nosetests running in verbose.
+
+  [ Yolanda Robla ]
+  * debian/*.upstart: running with exec start-stop-daemon
 
  -- Chuck Short <zulcss@ubuntu.com>  Thu, 29 Nov 2012 10:56:31 -0600
 
