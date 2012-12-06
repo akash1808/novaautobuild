@@ -41,7 +41,7 @@ Build-Depends-Indep: openssh-client,
  python-setuptools-git,
  python-simplejson,
  python-sphinx (>> 1.0),
- python-sqlalchemy-ext ( >= 0.7.8-1) | python-sqlalchemy (<< 0.6.3-2),
+ python-sqlalchemy-ext ( >= 0.7.8-1~) | python-sqlalchemy (<< 0.6.3-2),
  python-suds,
  python-tempita,
  python-testtools,
@@ -85,7 +85,7 @@ Depends: openssh-client,
  python-pycurl,
  python-routes,
  python-simplejson,
- python-sqlalchemy-ext ( >= 0.7.8-1) | python-sqlalchemy (<< 0.6.3-2),
+ python-sqlalchemy-ext ( >= 0.7.8-1~) | python-sqlalchemy (<< 0.6.3-2),
  python-suds,
  python-tempita,
  python-webob,
@@ -452,8 +452,7 @@ Description: OpenStack Compute - virtual machine scheduler
 
 Package: nova-volume
 Architecture: all
-Depends: cinder-volume, cinder-api, cinder-scheduler
-Suggests: ceph-common, sheepdog
+Depends: cinder-volume, cinder-api, cinder-scheduler, ${misc:Depends}
 Description: OpenStack Compute - storage
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
@@ -469,7 +468,7 @@ Description: OpenStack Compute - storage
  (SQLite, MySQL, and PostgreSQL, for instance), different types of user
  databases (LDAP or SQL), etc.
  .
- This is the package you will install on your storage nodes.
+ This is a dummy transitional package that can be removed after upgrade.
 
 Package: nova-ajax-console-proxy
 Architecture: all
