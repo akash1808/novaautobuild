@@ -7,6 +7,8 @@ nova (2013.1~g2~20121129.17379-0ubuntu1) UNRELEASED; urgency=low
 
   [ Yolanda Robla ]
   * debian/*.upstart: running with exec start-stop-daemon
+  * debian/rules: removing override of dh_installinit for discriminating 
+    between Debian and Ubuntu
 
  -- Chuck Short <zulcss@ubuntu.com>  Thu, 29 Nov 2012 10:56:31 -0600
 
