@@ -1,4 +1,4 @@
-nova (2013.1~g2~20121129.17379-0ubuntu2) UNRELEASED; urgency=low
+nova (2013.1~g2~20121129.17379-0ubuntu1) UNRELEASED; urgency=low
 
   [ Chuck Short ]
   * New upstream release.
@@ -6,18 +6,23 @@ nova (2013.1~g2~20121129.17379-0ubuntu2) UNRELEASED; urgency=low
   * debian/rules: Run nosetests running in verbose.
   * debian/nova-xcp-plugins.install: Fix xcp-plugins empty packages
 
- -- Chuck Short <zulcss@ubuntu.com>  Thu, 29 Nov 2012 10:56:31 -0600
-
   [ Adam Gandelman ]
   * debian/*.manpages: Install Sphinx-generated manpages instead of
     our own.
 
- -- Adam Gandelman <adamg@ubuntu.com>  Wed, 05 Dec 2012 11:37:03 -0800
-
   [ Yolanda Robla ]
-  * debian/*.upstart: running with exec start-stop-daemon
-  * debian/rules: removing override of dh_installinit for discriminating 
-    between Debian and Ubuntu
+  * debian/*.upstart: Use start-stop-daemon instead of su for chuid
+    (LP: #1086833).
+  * debian/rules: Remove override of dh_installinit for discriminating
+    between Debian and Ubuntu.
+
+  [ James Page ]
+  * d/control: Add ~ to python-sqlalchemy-ext versioned dependencies to
+    make backporting easier.
+  * d/control: Updated nova-volume description and depdendencies to
+    mark it as a transitional package.
+
+ -- Adam Gandelman <adamg@ubuntu.com>  Wed, 05 Dec 2012 11:37:03 -0800
 
 nova (2013.1~g1-0ubuntu1) raring; urgency=low
 
