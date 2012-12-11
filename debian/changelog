@@ -15,13 +15,28 @@ nova (2013.1~g2~20121211.17539-0ubuntu1) UNRELEASED; urgency=low
     (LP: #1086833).
   * debian/rules: Remove override of dh_installinit for discriminating
     between Debian and Ubuntu.
+  * debian/nova-common.docs: Installing changelogs from rules
+  * debian/rules: Replacing perms in /etc/nova/logging.conf for 0644
+  * debian/control: adduser dependency on nova-compute.
+  * debian/control: added section oldlibs and priority extra on
+    nova-ajax-console-proxy.
+  * debian/nova-xvpvncproxy.postrm: removing because of duplicates.
 
   [ James Page ]
   * d/control: Add ~ to python-sqlalchemy-ext versioned dependencies to
     make backporting easier.
   * d/control: Updated nova-volume description and depdendencies to
-    mark it as a transitional package.
+    mark it as a transitional package, moved to oldlibs/extra.
   * d/p/fix-libvirt-tests.patch: Dropped; accepted upstream.
+  * d/control: Added python-stevedore to BD's.
+  * d/*.postrm: Dropped postrm's that just run update-rc.d; this is not
+    required when deploying upstart configurations only.
+  * d/nova-scheduler.manpages: Add man page for nova-rpc-zmq-receiver.
+  * d/rules: Install upstream changelog with a policy compliant name.
+  * d/control: Mark nova-compute-xcp as virtual package.
+  * d/control: nova-api-os-volume; Depend on cinder-api and mark as
+    transitional package.
+  * d/nova-api-os-volume.lintian-overrides: Dropped - no longer required.
 
  -- Adam Gandelman <adamg@ubuntu.com>  Wed, 05 Dec 2012 11:37:03 -0800
 
@@ -53,17 +68,6 @@ nova (2013.1~g1-0ubuntu1) raring; urgency=low
     debian/nova-conductor.manpages, debian/nova-conductor.postrm
     debian/nova-conductor.upstart.in: Add nova-conductor service.
   * debian/control: Add python-fixtures as a build deps.
-
-  [ Yolanda Robla ]
-  * debian/nova-common.docs: Installing changelogs from rules
-  * debian/rules: Replacing perms in /etc/nova/logging.conf for 0644
-  * debian/nova-compute-xcp.lintian-overrides: skip empty binary package warn
-  * debian/control: adduser dependency on nova-compute
-  * debian/control: added section oldlibs and priority extra on
-    nova-ajax-console-proxy
-  * debian/control: adding version number in nova-api breaks
-  * debian/nova-api-ec2.postrm
-  * nova-xvpvncproxy.postrm: removing because of duplicates
 
  -- Chuck Short <zulcss@ubuntu.com>  Fri, 23 Nov 2012 09:32:05 -0600
 

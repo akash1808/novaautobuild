@@ -1,7 +1,0 @@
-#!/bin/sh -e
-
-if [ "$1" = purge ]; then
-	update-rc.d nova-api-ec2 remove
-fi
-
-#DEBHELPER#
