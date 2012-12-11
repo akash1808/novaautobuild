@@ -1,4 +1,4 @@
-nova (2013.1~g2~20121129.17379-0ubuntu1) UNRELEASED; urgency=low
+nova (2013.1~g2~20121211.17539-0ubuntu1) UNRELEASED; urgency=low
 
   [ Chuck Short ]
   * New upstream release.
@@ -21,6 +21,7 @@ nova (2013.1~g2~20121129.17379-0ubuntu1) UNRELEASED; urgency=low
     make backporting easier.
   * d/control: Updated nova-volume description and depdendencies to
     mark it as a transitional package.
+  * d/p/fix-libvirt-tests.patch: Dropped; accepted upstream.
 
  -- Adam Gandelman <adamg@ubuntu.com>  Wed, 05 Dec 2012 11:37:03 -0800
 
