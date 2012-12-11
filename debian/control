@@ -40,6 +40,7 @@ Build-Depends-Indep: openssh-client,
  python-setuptools,
  python-setuptools-git,
  python-simplejson,
+ python-stevedore,
  python-sphinx (>> 1.0),
  python-sqlalchemy-ext ( >= 0.7.8-1~) | python-sqlalchemy (<< 0.6.3-2),
  python-suds,
@@ -327,7 +328,7 @@ Description: OpenStack Compute - compute node (XCP)
  (SQLite, MySQL, and PostgreSQL, for instance), different types of user
  databases (LDAP or SQL), etc.
  .
- Install this package on your compute nodes if you're using xcp
+ Install this dependency package on your compute nodes if you're using xcp
 
 Package: nova-xcp-plugins
 Architecture: all
@@ -451,6 +452,8 @@ Description: OpenStack Compute - virtual machine scheduler
  This is the Nova scheduler.
 
 Package: nova-volume
+Section: oldlibs
+Priority: extra
 Architecture: all
 Depends: cinder-volume, cinder-api, cinder-scheduler, ${misc:Depends}
 Description: OpenStack Compute - storage
@@ -707,7 +710,7 @@ Depends: nova-common (= ${binary:Version}),
  ${misc:Depends},
  ${ostack-lsb-base},
  ${python:Depends}
-Breaks: nova-api (<< 2012.1~rc1-0ubuntu2)
+Breaks: nova-api
 Description: OpenStack Compute - metadata API frontend
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
@@ -726,7 +729,7 @@ Depends: nova-common (= ${binary:Version}),
  ${misc:Depends},
  ${ostack-lsb-base},
  ${python:Depends}
-Breaks: nova-api (<< 2012.1~rc1-0ubuntu2)
+Breaks: nova-api
 Description: OpenStack Compute - OpenStack Compute API frontend
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
@@ -740,12 +743,10 @@ Description: OpenStack Compute - OpenStack Compute API frontend
  This package provides the OpenStack Compute API frontend.
 
 Package: nova-api-os-volume
+Section: oldlibs
+Priority: extra
 Architecture: all
-Depends: nova-common (= ${binary:Version}),
- ${misc:Depends},
- ${ostack-lsb-base},
- ${python:Depends}
-Breaks: nova-api (<< 2012.1~rc1-0ubuntu2)
+Depends: cinder-api, ${misc:Depends}
 Description: OpenStack Compute - OpenStack Volume API frontend
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
@@ -756,7 +757,7 @@ Description: OpenStack Compute - OpenStack Volume API frontend
  addition to its "native" API (the OpenStack API), it also supports the Amazon
  EC2 API.
  .
- This package provides the OpenStack Volume API frontend.
+ This is a dummy transitional package that can be removed after upgrade.
 
 Package: nova-api-ec2
 Architecture: all
@@ -764,7 +765,7 @@ Depends: nova-common (= ${binary:Version}),
  ${misc:Depends},
  ${ostack-lsb-base},
  ${python:Depends}
-Breaks: nova-api (<< 2012.1~rc1-0ubuntu2)
+Breaks: nova-api
 Description: OpenStack Compute - EC2 API frontend
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
