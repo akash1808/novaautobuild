@@ -9,6 +9,8 @@ nova (2013.1~g2~20121211.17539-0ubuntu1) UNRELEASED; urgency=low
   [ Adam Gandelman ]
   * debian/*.manpages: Install Sphinx-generated manpages instead of
     our own.
+  * debian/nova-compute-*.conf: Specify the newly required compute_driver
+    flag in addition to libvirt_type.
 
   [ Yolanda Robla ]
   * debian/*.upstart: Use start-stop-daemon instead of su for chuid
