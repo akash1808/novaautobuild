@@ -30,7 +30,6 @@ Build-Depends-Indep: openssh-client,
  python-migrate,
  python-mox,
  python-netaddr,
- python-nose,
  python-novaclient (>= 1:2.9.0),
  python-paramiko,
  python-paste,
@@ -48,7 +47,8 @@ Build-Depends-Indep: openssh-client,
  python-testtools,
  python-unittest2,
  python-webob,
- python-xattr
+ python-xattr,
+ testrepository
 Build-Conflicts: python-cjson
 Standards-Version: 3.9.3
 Homepage: http://launchpad.net/nova
