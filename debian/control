@@ -18,7 +18,7 @@ Build-Depends-Indep: openssh-client,
  python-daemon,
  python-distutils-extra,
  python-eventlet,
- python-fixtures,
+ python-fixtures (>= 0.3.12),
  python-feedparser,
  python-gflags,
  python-glance,
@@ -44,12 +44,12 @@ Build-Depends-Indep: openssh-client,
  python-sqlalchemy-ext ( >= 0.7.8-1~) | python-sqlalchemy (<< 0.6.3-2),
  python-suds,
  python-tempita,
- python-testtools,
+ python-testtools (>= 0.9.22),
  python-unittest2,
  python-webob,
  python-xattr,
  pep8,
- testrepository
+ testrepository ( >= 0.0.8)
 Build-Conflicts: python-cjson
 Standards-Version: 3.9.3
 Homepage: http://launchpad.net/nova
