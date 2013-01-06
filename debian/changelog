@@ -1,10 +1,11 @@
-nova (2013.1~g2~20130102.17843-0ubuntu1) UNRELEASED; urgency=low
+nova (2013.1~g2~20130105.17998-0ubuntu1) UNRELEASED; urgency=low
 
   [ Chuck Short ]
   * New upstream release.
   * debian/patches/ubuntu-show-tests.patch: Dropped no longer needed.
   * debian/nova-xcp-plugins.install: Fix xcp-plugins empty packages
   * debian/control: Drop python-nose in favor or testrepository
+  * debian/control: Add python-coverage as a build dep.
   * debian/rules, debian/control: Run pep8 tests.
 
   [ Adam Gandelman ]
