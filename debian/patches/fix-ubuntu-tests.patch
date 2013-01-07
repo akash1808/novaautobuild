@@ -47,7 +47,7 @@ diff -Naurp nova-2013.1.orig/nova/tests/test_imagebackend.py nova-2013.1/nova/te
          os.path.exists(self.TEMPLATE_DIR).AndReturn(True)
 diff -Naurp nova-2013.1.orig/tools/hacking.py nova-2013.1/tools/hacking.py
 --- nova-2013.1.orig/tools/hacking.py	2013-01-05 15:07:30.000000000 -0600
-+++ nova-2013.1/tools/hacking.py	2013-01-07 08:53:05.826958727 -0600
++++ nova-2013.1/tools/hacking.py	2013-01-07 09:05:01.590959074 -0600
 @@ -465,7 +465,7 @@ if __name__ == "__main__":
      #include nova path
      sys.path.append(os.getcwd())
@@ -57,3 +57,11 @@ diff -Naurp nova-2013.1.orig/tools/hacking.py nova-2013.1/tools/hacking.py
      #NOVA error codes start with an N
      pep8.ERRORCODE_REGEX = re.compile(r'[EWN]\d{3}')
      add_nova()
+@@ -475,7 +475,6 @@ if __name__ == "__main__":
+     pep8.StyleGuide.input_dir = input_dir
+     try:
+         pep8._main()
+-        sys.exit(once_error)
+     finally:
+         if len(_missingImport) > 0:
+             print >> sys.stderr, ("%i imports missing in this test environment"
