@@ -1,18 +1,6 @@
-From 2579c10a5372d62d979830f76a6bad280edd856d Mon Sep 17 00:00:00 2001
-From: Chuck Short <chuck.short@canonical.com>
-Date: Sun, 6 Jan 2013 11:40:49 -0600
-Subject: [PATCH] fix ubuntu tests Signed-off-by: Chuck Short
- <chuck.short@canonical.com>
-
----
- nova/tests/test_api.py          | 2 +-
- nova/tests/test_imagebackend.py | 4 ++++
- 2 files changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/nova/tests/test_api.py b/nova/tests/test_api.py
-index 163afda..9200974 100644
---- a/nova/tests/test_api.py
-+++ b/nova/tests/test_api.py
+diff -Naurp nova-2013.1.orig/nova/tests/test_api.py nova-2013.1/nova/tests/test_api.py
+--- nova-2013.1.orig/nova/tests/test_api.py	2013-01-05 15:07:29.000000000 -0600
++++ nova-2013.1/nova/tests/test_api.py	2013-01-07 08:52:56.638958723 -0600
 @@ -435,7 +435,7 @@ class ApiEc2TestCase(test.TestCase):
                  raise self.failureException, 'EC2ResponseError not raised'
  
@@ -22,10 +10,9 @@ index 163afda..9200974 100644
          # Missing ports
          _assert('Not enough parameters', 'tcp', '0.0.0.0/0')
          # from port cannot be greater than to port
-diff --git a/nova/tests/test_imagebackend.py b/nova/tests/test_imagebackend.py
-index 82b5eb4..b0b4dc5 100644
---- a/nova/tests/test_imagebackend.py
-+++ b/nova/tests/test_imagebackend.py
+diff -Naurp nova-2013.1.orig/nova/tests/test_imagebackend.py nova-2013.1/nova/tests/test_imagebackend.py
+--- nova-2013.1.orig/nova/tests/test_imagebackend.py	2013-01-05 15:07:29.000000000 -0600
++++ nova-2013.1/nova/tests/test_imagebackend.py	2013-01-07 08:52:56.638958723 -0600
 @@ -53,6 +53,7 @@ class _ImageTestCase(object):
              fake_libvirt_utils))
  
@@ -58,6 +45,15 @@ index 82b5eb4..b0b4dc5 100644
          self.mox.StubOutWithMock(os.path, 'exists')
          os.path.exists(self.PATH).AndReturn(False)
          os.path.exists(self.TEMPLATE_DIR).AndReturn(True)
--- 
-1.8.0
-
+diff -Naurp nova-2013.1.orig/tools/hacking.py nova-2013.1/tools/hacking.py
+--- nova-2013.1.orig/tools/hacking.py	2013-01-05 15:07:30.000000000 -0600
++++ nova-2013.1/tools/hacking.py	2013-01-07 08:53:05.826958727 -0600
+@@ -465,7 +465,7 @@ if __name__ == "__main__":
+     #include nova path
+     sys.path.append(os.getcwd())
+     #Run once tests (not per line)
+-    once_error = once_git_check_commit_title()
++    #once_error = once_git_check_commit_title()
+     #NOVA error codes start with an N
+     pep8.ERRORCODE_REGEX = re.compile(r'[EWN]\d{3}')
+     add_nova()
