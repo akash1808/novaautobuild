@@ -7,6 +7,9 @@ nova (2013.1~g2~20130105.17998-0ubuntu1) UNRELEASED; urgency=low
   * debian/control: Drop python-nose in favor or testrepository
   * debian/control: Add python-coverage as a build dep.
   * debian/rules, debian/control: Run pep8 tests.
+  * debian/*.init: Remove they are not needed and take up space
+  * debian/control, debian/nova-cells.{install, logroate, upstart}: Add
+    cells support.
 
   [ Adam Gandelman ]
   * debian/*.manpages: Install Sphinx-generated manpages instead of
@@ -41,9 +44,6 @@ nova (2013.1~g2~20130105.17998-0ubuntu1) UNRELEASED; urgency=low
   * d/control: nova-api-os-volume; Depend on cinder-api and mark as
     transitional package.
   * d/nova-api-os-volume.lintian-overrides: Dropped - no longer required.
-
-  [ Chuck Short ]
-  * debian/*.init: Remove they are not needed and take up space
 
  -- Adam Gandelman <adamg@ubuntu.com>  Wed, 05 Dec 2012 11:37:03 -0800
 
