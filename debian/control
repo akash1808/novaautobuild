@@ -806,4 +806,4 @@ Description: Openstack Compute - cells
  (SQLite, MySQL, and PostgreSQL, for instance), different types of user
  databases (LDAP or SQL), etc.
  .
- This is the Nova cells component
+ This is the Nova cells component.

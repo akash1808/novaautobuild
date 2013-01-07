@@ -8,7 +8,7 @@ nova (2013.1~g2~20130105.17998-0ubuntu1) UNRELEASED; urgency=low
   * debian/control: Add python-coverage as a build dep.
   * debian/rules, debian/control: Run pep8 tests.
   * debian/*.init: Remove they are not needed and take up space
-  * debian/control, debian/nova-cells.{install, logroate, upstart}: Add
+  * debian/control, debian/nova-cells.{install, logrotate, upstart}: Add
     cells support.
 
   [ Adam Gandelman ]
