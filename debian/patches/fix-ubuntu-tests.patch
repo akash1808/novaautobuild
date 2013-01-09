@@ -1,4 +1,4 @@
-From 3194bf712be6574a6f5eda40a48fed383675667e Mon Sep 17 00:00:00 2001
+From 61460961d597e73bfd378158593f861e3b198d5a Mon Sep 17 00:00:00 2001
 From: Chuck Short <chuck.short@canonical.com>
 Date: Wed, 9 Jan 2013 09:46:02 -0600
 Subject: [PATCH] Fi ubuntu tests
@@ -6,11 +6,11 @@ Subject: [PATCH] Fi ubuntu tests
 Signed-off-by: Chuck Short <chuck.short@canonical.com>
 ---
  nova/tests/test_api.py          | 2 +-
- nova/tests/test_image_utils.py  | 1 +
+ nova/tests/test_image_utils.py  | 2 ++
  nova/tests/test_imagebackend.py | 4 ++++
  nova/tests/test_libvirt.py      | 1 +
  tools/hacking.py                | 3 +--
- 5 files changed, 8 insertions(+), 3 deletions(-)
+ 5 files changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/nova/tests/test_api.py b/nova/tests/test_api.py
 index 0835df5..cb08b86 100644
@@ -26,7 +26,7 @@ index 0835df5..cb08b86 100644
          _assert('Not enough parameters', 'tcp', '0.0.0.0/0')
          # from port cannot be greater than to port
 diff --git a/nova/tests/test_image_utils.py b/nova/tests/test_image_utils.py
-index a9768f8..1bd7037 100644
+index a9768f8..85c9b84 100644
 --- a/nova/tests/test_image_utils.py
 +++ b/nova/tests/test_image_utils.py
 @@ -54,6 +54,7 @@ disk size: 96K
@@ -36,6 +36,14 @@ index a9768f8..1bd7037 100644
 +        self.skipTest('skipped by ubuntu buildds')
          path = '/myhome/disk.config'
          template_output = """image: %(path)s
+ file format: raw
+@@ -115,6 +116,7 @@ disk size: 96K
+             self.mox.UnsetStubs()
+ 
+     def test_qemu_info_canon(self):
++        self.skipTest('skipped on ubuntu')
+         path = "disk.config"
+         example_output = """image: disk.config
  file format: raw
 diff --git a/nova/tests/test_imagebackend.py b/nova/tests/test_imagebackend.py
 index 82b5eb4..b0b4dc5 100644
