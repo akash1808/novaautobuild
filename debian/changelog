@@ -16,6 +16,8 @@ nova (2013.1~g2~20130105.17998-0ubuntu1) UNRELEASED; urgency=low
     our own.
   * debian/nova-compute-*.conf: Specify the newly required compute_driver
     flag in addition to libvirt_type.
+  * debian/control:  Specify required python-webob and python-stevedore
+    versions.
 
   [ Yolanda Robla ]
   * debian/*.upstart: Use start-stop-daemon instead of su for chuid
