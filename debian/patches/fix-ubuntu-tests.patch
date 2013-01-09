@@ -1,21 +1,6 @@
-From 61460961d597e73bfd378158593f861e3b198d5a Mon Sep 17 00:00:00 2001
-From: Chuck Short <chuck.short@canonical.com>
-Date: Wed, 9 Jan 2013 09:46:02 -0600
-Subject: [PATCH] Fi ubuntu tests
-
-Signed-off-by: Chuck Short <chuck.short@canonical.com>
----
- nova/tests/test_api.py          | 2 +-
- nova/tests/test_image_utils.py  | 2 ++
- nova/tests/test_imagebackend.py | 4 ++++
- nova/tests/test_libvirt.py      | 1 +
- tools/hacking.py                | 3 +--
- 5 files changed, 9 insertions(+), 3 deletions(-)
-
-diff --git a/nova/tests/test_api.py b/nova/tests/test_api.py
-index 0835df5..cb08b86 100644
---- a/nova/tests/test_api.py
-+++ b/nova/tests/test_api.py
+diff -Naupr nova-2013.1.orig/nova/tests/test_api.py nova-2013.1/nova/tests/test_api.py
+--- nova-2013.1.orig/nova/tests/test_api.py	2013-01-05 15:07:29.000000000 -0600
++++ nova-2013.1/nova/tests/test_api.py	2013-01-09 12:33:21.147845587 -0600
 @@ -435,7 +435,7 @@ class ApiEc2TestCase(test.TestCase):
                  raise self.failureException, 'EC2ResponseError not raised'
  
@@ -25,30 +10,9 @@ index 0835df5..cb08b86 100644
          # Missing ports
          _assert('Not enough parameters', 'tcp', '0.0.0.0/0')
          # from port cannot be greater than to port
-diff --git a/nova/tests/test_image_utils.py b/nova/tests/test_image_utils.py
-index a9768f8..85c9b84 100644
---- a/nova/tests/test_image_utils.py
-+++ b/nova/tests/test_image_utils.py
-@@ -54,6 +54,7 @@ disk size: 96K
-             self.mox.UnsetStubs()
- 
-     def test_disk_backing(self):
-+        self.skipTest('skipped by ubuntu buildds')
-         path = '/myhome/disk.config'
-         template_output = """image: %(path)s
- file format: raw
-@@ -115,6 +116,7 @@ disk size: 96K
-             self.mox.UnsetStubs()
- 
-     def test_qemu_info_canon(self):
-+        self.skipTest('skipped on ubuntu')
-         path = "disk.config"
-         example_output = """image: disk.config
- file format: raw
-diff --git a/nova/tests/test_imagebackend.py b/nova/tests/test_imagebackend.py
-index 82b5eb4..b0b4dc5 100644
---- a/nova/tests/test_imagebackend.py
-+++ b/nova/tests/test_imagebackend.py
+diff -Naupr nova-2013.1.orig/nova/tests/test_imagebackend.py nova-2013.1/nova/tests/test_imagebackend.py
+--- nova-2013.1.orig/nova/tests/test_imagebackend.py	2013-01-05 15:07:29.000000000 -0600
++++ nova-2013.1/nova/tests/test_imagebackend.py	2013-01-09 12:33:21.147845587 -0600
 @@ -53,6 +53,7 @@ class _ImageTestCase(object):
              fake_libvirt_utils))
  
@@ -81,23 +45,40 @@ index 82b5eb4..b0b4dc5 100644
          self.mox.StubOutWithMock(os.path, 'exists')
          os.path.exists(self.PATH).AndReturn(False)
          os.path.exists(self.TEMPLATE_DIR).AndReturn(True)
-diff --git a/nova/tests/test_libvirt.py b/nova/tests/test_libvirt.py
-index ab3f87a..26b4a2c 100644
---- a/nova/tests/test_libvirt.py
-+++ b/nova/tests/test_libvirt.py
-@@ -4103,6 +4103,7 @@ class LibvirtUtilsTestCase(test.TestCase):
+diff -Naupr nova-2013.1.orig/nova/tests/test_image_utils.py nova-2013.1/nova/tests/test_image_utils.py
+--- nova-2013.1.orig/nova/tests/test_image_utils.py	2013-01-05 15:07:29.000000000 -0600
++++ nova-2013.1/nova/tests/test_image_utils.py	2013-01-09 12:33:21.147845587 -0600
+@@ -50,6 +50,7 @@ disk size: 96K
+             self.mox.UnsetStubs()
+ 
+     def test_disk_backing(self):
++        self.skipTest('skipped by ubuntu buildds')
+         path = '/myhome/disk.config'
+         template_output = """image: %(path)s
+ file format: raw
+@@ -105,6 +106,7 @@ disk size: 96K
+             self.mox.UnsetStubs()
+ 
+     def test_qemu_info_canon(self):
++        self.skipTest('skipped on ubuntu')
+         path = "disk.config"
+         example_output = """image: disk.config
+ file format: raw
+diff -Naupr nova-2013.1.orig/nova/tests/test_libvirt.py nova-2013.1/nova/tests/test_libvirt.py
+--- nova-2013.1.orig/nova/tests/test_libvirt.py	2013-01-05 15:07:29.000000000 -0600
++++ nova-2013.1/nova/tests/test_libvirt.py	2013-01-09 12:34:36.207845623 -0600
+@@ -3909,6 +3909,7 @@ class LibvirtUtilsTestCase(test.TestCase
                  self.assertEquals(result, expected_result)
  
      def test_get_disk_size(self):
 +        self.skipTest('fails on ubuntu buildds')
-         self.mox.StubOutWithMock(os.path, 'exists')
          self.mox.StubOutWithMock(utils, 'execute')
-         os.path.exists('/some/path').AndReturn(True)
-diff --git a/tools/hacking.py b/tools/hacking.py
-index a860aa3..ec24daa 100755
---- a/tools/hacking.py
-+++ b/tools/hacking.py
-@@ -470,7 +470,7 @@ if __name__ == "__main__":
+         utils.execute('env', 'LC_ALL=C', 'LANG=C', 'qemu-img', 'info',
+                       '/some/path').AndReturn(('''image: 00000001
+diff -Naupr nova-2013.1.orig/tools/hacking.py nova-2013.1/tools/hacking.py
+--- nova-2013.1.orig/tools/hacking.py	2013-01-05 15:07:30.000000000 -0600
++++ nova-2013.1/tools/hacking.py	2013-01-09 12:33:21.155845587 -0600
+@@ -465,7 +465,7 @@ if __name__ == "__main__":
      #include nova path
      sys.path.append(os.getcwd())
      #Run once tests (not per line)
@@ -106,7 +87,7 @@ index a860aa3..ec24daa 100755
      #NOVA error codes start with an N
      pep8.ERRORCODE_REGEX = re.compile(r'[EWN]\d{3}')
      add_nova()
-@@ -480,7 +480,6 @@ if __name__ == "__main__":
+@@ -475,7 +475,6 @@ if __name__ == "__main__":
      pep8.StyleGuide.input_dir = input_dir
      try:
          pep8._main()
@@ -114,6 +95,3 @@ index a860aa3..ec24daa 100755
      finally:
          if len(_missingImport) > 0:
              print >> sys.stderr, ("%i imports missing in this test environment"
--- 
-1.8.0
-
