@@ -41,7 +41,8 @@ get-vcs-source:
 		 -O ../nova_$(version_prefix).orig.tar.gz
 
 override_dh_install:
-	dh_install --fail-missing -Xbin/nova-all
+	dh_install --fail-missing -Xbin/nova-all \
+		 -Xusr/bin/nova-baremetal-deploy-helper -Xusr/bin/nova-baremetal-manage
 	chmod 440 $(CURDIR)/debian/nova-common/etc/sudoers.d/nova_sudoers
 	install -D -m 644 debian/source_nova.py debian/php5-common/usr/share/apport/package-hooks/source_nova.py
 	install -D -m 0644 $(CURDIR)/etc/nova/logging_sample.conf $(CURDIR)/debian/nova-common/etc/nova/logging.conf

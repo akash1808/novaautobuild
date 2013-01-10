@@ -10,6 +10,8 @@ nova (2013.1~g2~20130105.17998-0ubuntu1) UNRELEASED; urgency=low
   * debian/*.init: Remove they are not needed and take up space
   * debian/control, debian/nova-cells.{install, logrotate, upstart}: Add
     cells support.
+  * debian/rules: Ignore usr/bin/nova-baremetal-deploy-helper
+    and usr/bin/nova-baremetal-deploy-helper
 
   [ Adam Gandelman ]
   * debian/*.manpages: Install Sphinx-generated manpages instead of
