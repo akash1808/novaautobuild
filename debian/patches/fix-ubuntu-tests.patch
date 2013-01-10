@@ -1,6 +1,6 @@
 diff -Naurp nova-2013.1.orig/nova/tests/test_api.py nova-2013.1/nova/tests/test_api.py
---- nova-2013.1.orig/nova/tests/test_api.py	2013-01-05 15:07:29.000000000 -0600
-+++ nova-2013.1/nova/tests/test_api.py	2013-01-09 12:33:21.147845587 -0600
+--- nova-2013.1.orig/nova/tests/test_api.py	2013-01-10 07:19:28.000000000 -0600
++++ nova-2013.1/nova/tests/test_api.py	2013-01-10 10:14:46.410153527 -0600
 @@ -435,7 +435,7 @@ class ApiEc2TestCase(test.TestCase):
                  raise self.failureException, 'EC2ResponseError not raised'
  
@@ -11,8 +11,8 @@ diff -Naurp nova-2013.1.orig/nova/tests/test_api.py nova-2013.1/nova/tests/test_
          _assert('Not enough parameters', 'tcp', '0.0.0.0/0')
          # from port cannot be greater than to port
 diff -Naurp nova-2013.1.orig/nova/tests/test_imagebackend.py nova-2013.1/nova/tests/test_imagebackend.py
---- nova-2013.1.orig/nova/tests/test_imagebackend.py	2013-01-05 15:07:29.000000000 -0600
-+++ nova-2013.1/nova/tests/test_imagebackend.py	2013-01-09 12:47:13.659845990 -0600
+--- nova-2013.1.orig/nova/tests/test_imagebackend.py	2013-01-10 07:19:28.000000000 -0600
++++ nova-2013.1/nova/tests/test_imagebackend.py	2013-01-10 10:14:46.410153527 -0600
 @@ -53,6 +53,7 @@ class _ImageTestCase(object):
              fake_libvirt_utils))
  
@@ -54,9 +54,9 @@ diff -Naurp nova-2013.1.orig/nova/tests/test_imagebackend.py nova-2013.1/nova/te
          fn(target=self.TEMPLATE_PATH)
          self.mox.StubOutWithMock(os.path, 'exists')
 diff -Naurp nova-2013.1.orig/nova/tests/test_image_utils.py nova-2013.1/nova/tests/test_image_utils.py
---- nova-2013.1.orig/nova/tests/test_image_utils.py	2013-01-05 15:07:29.000000000 -0600
-+++ nova-2013.1/nova/tests/test_image_utils.py	2013-01-09 12:33:21.147845587 -0600
-@@ -50,6 +50,7 @@ disk size: 96K
+--- nova-2013.1.orig/nova/tests/test_image_utils.py	2013-01-10 07:19:28.000000000 -0600
++++ nova-2013.1/nova/tests/test_image_utils.py	2013-01-10 10:14:46.410153527 -0600
+@@ -54,6 +54,7 @@ disk size: 96K
              self.mox.UnsetStubs()
  
      def test_disk_backing(self):
@@ -64,7 +64,7 @@ diff -Naurp nova-2013.1.orig/nova/tests/test_image_utils.py nova-2013.1/nova/tes
          path = '/myhome/disk.config'
          template_output = """image: %(path)s
  file format: raw
-@@ -105,6 +106,7 @@ disk size: 96K
+@@ -115,6 +116,7 @@ disk size: 96K
              self.mox.UnsetStubs()
  
      def test_qemu_info_canon(self):
@@ -73,20 +73,20 @@ diff -Naurp nova-2013.1.orig/nova/tests/test_image_utils.py nova-2013.1/nova/tes
          example_output = """image: disk.config
  file format: raw
 diff -Naurp nova-2013.1.orig/nova/tests/test_libvirt.py nova-2013.1/nova/tests/test_libvirt.py
---- nova-2013.1.orig/nova/tests/test_libvirt.py	2013-01-05 15:07:29.000000000 -0600
-+++ nova-2013.1/nova/tests/test_libvirt.py	2013-01-09 12:34:36.207845623 -0600
-@@ -3909,6 +3909,7 @@ class LibvirtUtilsTestCase(test.TestCase
+--- nova-2013.1.orig/nova/tests/test_libvirt.py	2013-01-10 07:19:28.000000000 -0600
++++ nova-2013.1/nova/tests/test_libvirt.py	2013-01-10 10:16:15.102151498 -0600
+@@ -4103,6 +4103,7 @@ class LibvirtUtilsTestCase(test.TestCase
                  self.assertEquals(result, expected_result)
  
      def test_get_disk_size(self):
 +        self.skipTest('fails on ubuntu buildds')
+         self.mox.StubOutWithMock(os.path, 'exists')
          self.mox.StubOutWithMock(utils, 'execute')
-         utils.execute('env', 'LC_ALL=C', 'LANG=C', 'qemu-img', 'info',
-                       '/some/path').AndReturn(('''image: 00000001
+         os.path.exists('/some/path').AndReturn(True)
 diff -Naurp nova-2013.1.orig/tools/hacking.py nova-2013.1/tools/hacking.py
---- nova-2013.1.orig/tools/hacking.py	2013-01-05 15:07:30.000000000 -0600
-+++ nova-2013.1/tools/hacking.py	2013-01-09 12:33:21.155845587 -0600
-@@ -465,7 +465,7 @@ if __name__ == "__main__":
+--- nova-2013.1.orig/tools/hacking.py	2013-01-10 07:19:28.000000000 -0600
++++ nova-2013.1/tools/hacking.py	2013-01-10 10:14:46.418153527 -0600
+@@ -470,7 +470,7 @@ if __name__ == "__main__":
      #include nova path
      sys.path.append(os.getcwd())
      #Run once tests (not per line)
@@ -95,7 +95,7 @@ diff -Naurp nova-2013.1.orig/tools/hacking.py nova-2013.1/tools/hacking.py
      #NOVA error codes start with an N
      pep8.ERRORCODE_REGEX = re.compile(r'[EWN]\d{3}')
      add_nova()
-@@ -475,7 +475,6 @@ if __name__ == "__main__":
+@@ -480,7 +480,6 @@ if __name__ == "__main__":
      pep8.StyleGuide.input_dir = input_dir
      try:
          pep8._main()
