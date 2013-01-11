@@ -13,6 +13,7 @@ nova (2013.1~g2~20130105.17998-0ubuntu1) UNRELEASED; urgency=low
   * debian/patches/fix-ubuntu-tests.patch: temporarily disable failing tests.
   * debian/control, debian/nova-baremetal.{install, logrotate, upstart}: Add
     nova baremetal support.
+  * debian/control: Remove python-support.
 
   [ Adam Gandelman ]
   * debian/*.manpages: Install Sphinx-generated manpages instead of
