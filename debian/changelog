@@ -1,4 +1,4 @@
-nova (2013.1~g2~20130105.17998-0ubuntu1) UNRELEASED; urgency=low
+nova (2013.1~g2-0ubuntu1) raring; urgency=low
 
   [ Chuck Short ]
   * New upstream release.
@@ -51,7 +51,7 @@ nova (2013.1~g2~20130105.17998-0ubuntu1) UNRELEASED; urgency=low
     transitional package.
   * d/nova-api-os-volume.lintian-overrides: Dropped - no longer required.
 
- -- Adam Gandelman <adamg@ubuntu.com>  Wed, 05 Dec 2012 11:37:03 -0800
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 11 Jan 2013 13:06:56 -0600
 
 nova (2013.1~g1-0ubuntu1) raring; urgency=low
 
