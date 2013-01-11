@@ -1,6 +1,6 @@
 diff -Naurp nova-2013.1.orig/nova/tests/test_api.py nova-2013.1/nova/tests/test_api.py
 --- nova-2013.1.orig/nova/tests/test_api.py	2013-01-10 07:19:28.000000000 -0600
-+++ nova-2013.1/nova/tests/test_api.py	2013-01-10 10:14:46.410153527 -0600
++++ nova-2013.1/nova/tests/test_api.py	2013-01-10 19:40:22.853377321 -0600
 @@ -435,7 +435,7 @@ class ApiEc2TestCase(test.TestCase):
                  raise self.failureException, 'EC2ResponseError not raised'
  
@@ -10,48 +10,9 @@ diff -Naurp nova-2013.1.orig/nova/tests/test_api.py nova-2013.1/nova/tests/test_
          # Missing ports
          _assert('Not enough parameters', 'tcp', '0.0.0.0/0')
          # from port cannot be greater than to port
-diff -Naurp nova-2013.1.orig/nova/tests/test_cinder.py nova-2013.1/nova/tests/test_cinder.py
---- nova-2013.1.orig/nova/tests/test_cinder.py	2013-01-10 07:19:28.000000000 -0600
-+++ nova-2013.1/nova/tests/test_cinder.py	2013-01-10 11:59:03.342010416 -0600
-@@ -151,6 +151,7 @@ class CinderTestCase(test.TestCase):
-         self.fake_client_factory.assert_called(*args, **kwargs)
- 
-     def test_context_with_catalog(self):
-+        self.skipTest('fails on buildds')
-         volume = self.api.get(self.context, '1234')
-         self.assert_called('GET', '/volumes/1234')
-         self.assertEquals(
-@@ -158,6 +159,7 @@ class CinderTestCase(test.TestCase):
-             'http://localhost:8776/v1/project_id')
- 
-     def test_cinder_endpoint_template(self):
-+        self.skipTest('fails on buildds')
-         self.flags(
-             cinder_endpoint_template='http://other_host:8776/v1/%(project_id)s'
-         )
-@@ -168,16 +170,19 @@ class CinderTestCase(test.TestCase):
-             'http://other_host:8776/v1/project_id')
- 
-     def test_get_non_existing_volume(self):
-+        self.skipTest('fails on buildds')
-         self.assertRaises(exception.VolumeNotFound, self.api.get, self.context,
-                           'nonexisting')
- 
-     def test_volume_with_image_metadata(self):
-+        self.skipTest('fails on buildds')
-         volume = self.api.get(self.context, '5678')
-         self.assert_called('GET', '/volumes/5678')
-         self.assertTrue('volume_image_metadata' in volume)
-         self.assertEqual(volume['volume_image_metadata'], _image_metadata)
- 
-     def test_cinder_http_retries(self):
-+        self.skipTest('buildds fails')
-         retries = 42
-         self.flags(cinder_http_retries=retries)
-         volume = self.api.get(self.context, '1234')
 diff -Naurp nova-2013.1.orig/nova/tests/test_imagebackend.py nova-2013.1/nova/tests/test_imagebackend.py
 --- nova-2013.1.orig/nova/tests/test_imagebackend.py	2013-01-10 07:19:28.000000000 -0600
-+++ nova-2013.1/nova/tests/test_imagebackend.py	2013-01-10 10:14:46.410153527 -0600
++++ nova-2013.1/nova/tests/test_imagebackend.py	2013-01-10 19:40:22.857377321 -0600
 @@ -53,6 +53,7 @@ class _ImageTestCase(object):
              fake_libvirt_utils))
  
@@ -94,7 +55,7 @@ diff -Naurp nova-2013.1.orig/nova/tests/test_imagebackend.py nova-2013.1/nova/te
          self.mox.StubOutWithMock(os.path, 'exists')
 diff -Naurp nova-2013.1.orig/nova/tests/test_image_utils.py nova-2013.1/nova/tests/test_image_utils.py
 --- nova-2013.1.orig/nova/tests/test_image_utils.py	2013-01-10 07:19:28.000000000 -0600
-+++ nova-2013.1/nova/tests/test_image_utils.py	2013-01-10 10:14:46.410153527 -0600
++++ nova-2013.1/nova/tests/test_image_utils.py	2013-01-10 19:40:22.861377321 -0600
 @@ -54,6 +54,7 @@ disk size: 96K
              self.mox.UnsetStubs()
  
@@ -113,7 +74,7 @@ diff -Naurp nova-2013.1.orig/nova/tests/test_image_utils.py nova-2013.1/nova/tes
  file format: raw
 diff -Naurp nova-2013.1.orig/nova/tests/test_libvirt.py nova-2013.1/nova/tests/test_libvirt.py
 --- nova-2013.1.orig/nova/tests/test_libvirt.py	2013-01-10 07:19:28.000000000 -0600
-+++ nova-2013.1/nova/tests/test_libvirt.py	2013-01-10 11:33:55.898044895 -0600
++++ nova-2013.1/nova/tests/test_libvirt.py	2013-01-10 19:40:22.865377321 -0600
 @@ -2435,6 +2435,7 @@ class LibvirtConnTestCase(test.TestCase)
          db.instance_destroy(self.context, instance_ref['uuid'])
  
@@ -140,7 +101,7 @@ diff -Naurp nova-2013.1.orig/nova/tests/test_libvirt.py nova-2013.1/nova/tests/t
          os.path.exists('/some/path').AndReturn(True)
 diff -Naurp nova-2013.1.orig/nova/tests/test_libvirt_utils.py nova-2013.1/nova/tests/test_libvirt_utils.py
 --- nova-2013.1.orig/nova/tests/test_libvirt_utils.py	2013-01-10 07:19:28.000000000 -0600
-+++ nova-2013.1/nova/tests/test_libvirt_utils.py	2013-01-10 11:58:17.326011469 -0600
++++ nova-2013.1/nova/tests/test_libvirt_utils.py	2013-01-10 19:40:22.869377321 -0600
 @@ -24,6 +24,7 @@ from nova.virt.libvirt import utils as l
  
  class LibvirtUtilsTestCase(test.TestCase):
@@ -151,7 +112,7 @@ diff -Naurp nova-2013.1.orig/nova/tests/test_libvirt_utils.py nova-2013.1/nova/t
  file format: raw
 diff -Naurp nova-2013.1.orig/tools/hacking.py nova-2013.1/tools/hacking.py
 --- nova-2013.1.orig/tools/hacking.py	2013-01-10 07:19:28.000000000 -0600
-+++ nova-2013.1/tools/hacking.py	2013-01-10 10:14:46.418153527 -0600
++++ nova-2013.1/tools/hacking.py	2013-01-10 19:40:22.873377321 -0600
 @@ -470,7 +470,7 @@ if __name__ == "__main__":
      #include nova path
      sys.path.append(os.getcwd())
