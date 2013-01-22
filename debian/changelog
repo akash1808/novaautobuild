@@ -2,6 +2,7 @@ nova (2013.1~g2-0ubuntu3) UNRELEASED; urgency=low
 
   * New usptream release. 
   * debian/patches/debian/patches/fix-ubuntu-tests.patch: Refreshed.
+  * debian/nova-baremetal.logrotate: Fix logfile path.
 
  -- Chuck Short <zulcss@ubuntu.com>  Tue, 22 Jan 2013 09:14:43 -0600
 
