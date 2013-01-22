@@ -286,7 +286,7 @@ Description: OpenStack Compute - compute node (QEmu)
 
 Package: nova-compute-kvm
 Architecture: all
-Depends: kvm,
+Depends: qemu-system (>= 1.3.0) | kvm,
  libvirt-bin,
  nova-compute (= ${binary:Version}),
  python-libvirt,

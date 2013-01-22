@@ -1,3 +1,9 @@
+nova (2013.1~g2-0ubuntu2) raring; urgency=low
+
+  * Make nova-compute-kvm prefer qemu-system over kvm for the new qemu.
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Sat, 19 Jan 2013 07:00:56 -0700
+
 nova (2013.1~g2-0ubuntu1) raring; urgency=low
 
   [ Chuck Short ]
