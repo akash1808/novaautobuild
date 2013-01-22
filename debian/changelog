@@ -3,6 +3,9 @@ nova (2013.1~g2-0ubuntu3) UNRELEASED; urgency=low
   * New usptream release. 
   * debian/patches/debian/patches/fix-ubuntu-tests.patch: Refreshed.
   * debian/nova-baremetal.logrotate: Fix logfile path.
+  * debian/control, debian/nova-spiceproxy.{install, logrotate, upstart}:
+    Add spice html5 proxy support.
+  * debian/nova-novncproxy.upstart: Start on runlevel [2345]
 
  -- Chuck Short <zulcss@ubuntu.com>  Tue, 22 Jan 2013 09:14:43 -0600
 
