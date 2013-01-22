@@ -1,3 +1,10 @@
+nova (2013.1~g2-0ubuntu3) UNRELEASED; urgency=low
+
+  * New usptream release. 
+  * debian/patches/debian/patches/fix-ubuntu-tests.patch: Refreshed.
+
+ -- Chuck Short <zulcss@ubuntu.com>  Tue, 22 Jan 2013 09:14:43 -0600
+
 nova (2013.1~g2-0ubuntu2) raring; urgency=low
 
   * Make nova-compute-kvm prefer qemu-system over kvm for the new qemu.
