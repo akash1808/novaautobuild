@@ -1,31 +1,7 @@
-diff -Naurp nova-2013.1.orig/nova/tests/test_api.py nova-2013.1/nova/tests/test_api.py
---- nova-2013.1.orig/nova/tests/test_api.py	2013-01-25 05:53:44.000000000 -0600
-+++ nova-2013.1/nova/tests/test_api.py	2013-01-25 14:21:21.514255459 -0600
-@@ -26,9 +26,9 @@ from boto.ec2 import regioninfo
- from boto import exception as boto_exc
- # newer versions of boto use their own wrapper on top of httplib.HTTPResponse
- try:
--    import boto.connection as httplib
-+    from boto.connection import HTTPResponse
- except ImportError:
--    import httplib
-+    from httplib import HTTPResponse
- import fixtures
- import webob
- 
-@@ -79,7 +79,7 @@ class FakeHttplibConnection(object):
-         # guess that's a function the web server usually provides.
-         resp = "HTTP/1.0 %s" % resp
-         self.sock = FakeHttplibSocket(resp)
--        self.http_response = httplib.HTTPResponse(self.sock)
-+        self.http_response = HTTPResponse(self.sock)
-         # NOTE(vish): boto is accessing private variables for some reason
-         self._HTTPConnection__response = self.http_response
-         self.http_response.begin()
-diff -Naurp nova-2013.1.orig/tools/hacking.py nova-2013.1/tools/hacking.py
---- nova-2013.1.orig/tools/hacking.py	2013-01-25 05:53:45.000000000 -0600
-+++ nova-2013.1/tools/hacking.py	2013-01-25 14:21:11.742255454 -0600
-@@ -571,7 +571,7 @@ if __name__ == "__main__":
+diff -Naurp nova-2013.1.a4257.g4df4762.orig/tools/hacking.py nova-2013.1.a4257.g4df4762/tools/hacking.py
+--- nova-2013.1.a4257.g4df4762.orig/tools/hacking.py	2013-02-12 07:33:18.000000000 -0600
++++ nova-2013.1.a4257.g4df4762/tools/hacking.py	2013-02-12 07:51:45.212644383 -0600
+@@ -589,7 +589,7 @@ if __name__ == "__main__":
      #include nova path
      sys.path.append(os.getcwd())
      #Run once tests (not per line)
