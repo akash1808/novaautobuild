@@ -10,13 +10,12 @@ nova (2013.1~g2-0ubuntu3) UNRELEASED; urgency=low
   * debian/rules: Call testr directly since run_tests.sh -N gives weird return
     value when tests pass.
   * debian/pyddist-overrides: Add websockify.
+  * debian/nova-common.postinst: Removed config file conversion, since
+    the option is no longer available. (LP: #1110567)
+  * debian/control: Add python-pyasn1 as a dependency.
 
   [ Adam Gandelman ]
   * debian/control: Fix typo (websocikfy -> websockify).
-
-  [ Chuck Short ]
-  * debian/nova-common.postinst: Removed config file conversion, since
-    the option is no longer available. (LP: #1110567)
 
  -- Adam Gandelman <adamg@ubuntu.com>  Wed, 23 Jan 2013 14:23:22 -0800
 
