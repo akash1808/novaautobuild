@@ -14,6 +14,8 @@ nova (2013.1.a4539.g032308c-0ubuntu1) UNRELEASED; urgency=low
     the option is no longer available. (LP: #1110567)
   * debian/control: Add python-pyasn1 as a dependency.
   * debian/control: Add python-oslo-config as a dependency.
+  * debian/control: Suggest sysfsutils, sg3-utils, multipath-tools for fibre
+    channel support.
 
   [ Adam Gandelman ]
   * debian/control: Fix typo (websocikfy -> websockify).
