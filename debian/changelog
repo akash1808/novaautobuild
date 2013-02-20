@@ -1,4 +1,4 @@
-nova (2013.1~g2-0ubuntu3) UNRELEASED; urgency=low
+nova (2013.1.a4539.g032308c-0ubuntu1) UNRELEASED; urgency=low
 
   [ Chuck Short ]
   * New usptream release. 
@@ -13,6 +13,7 @@ nova (2013.1~g2-0ubuntu3) UNRELEASED; urgency=low
   * debian/nova-common.postinst: Removed config file conversion, since
     the option is no longer available. (LP: #1110567)
   * debian/control: Add python-pyasn1 as a dependency.
+  * debian/control: Add python-oslo-config as a dependency.
 
   [ Adam Gandelman ]
   * debian/control: Fix typo (websocikfy -> websockify).
