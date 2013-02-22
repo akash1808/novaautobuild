@@ -1,4 +1,4 @@
-nova (2013.1.a4539.g032308c-0ubuntu1) UNRELEASED; urgency=low
+nova (2013.1.g3-0ubuntu1) raring; urgency=low
 
   [ Chuck Short ]
   * New usptream release. 
@@ -20,7 +20,7 @@ nova (2013.1.a4539.g032308c-0ubuntu1) UNRELEASED; urgency=low
   [ Adam Gandelman ]
   * debian/control: Fix typo (websocikfy -> websockify).
 
- -- Adam Gandelman <adamg@ubuntu.com>  Wed, 23 Jan 2013 14:23:22 -0800
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 22 Feb 2013 09:27:29 -0600
 
 nova (2013.1~g2-0ubuntu3) raring; urgency=low
 
@@ -30,7 +30,7 @@ nova (2013.1~g2-0ubuntu3) raring; urgency=low
       validate we can access the volumes
     - CVE-2013-0208
 
- -- Jamie Strandboge <jamie@ubuntu.com>  Thu, 24 Jan 2013 08:23:44 -060
+ -- Jamie Strandboge <jamie@ubuntu.com>  Thu, 24 Jan 2013 08:23:44 -0600
 
 nova (2013.1~g2-0ubuntu2) raring; urgency=low
 
@@ -131,7 +131,7 @@ nova (2012.2-0ubuntu5) quantal; urgency=low
     nova-volume.  Ensure it has proper permissions. (LP: #1065320)
   * debian/patches/avoid_setuptools_git_dependency.patch:  Remove
     setuptools_git from tools/pip-requires to avoid it being automatically
-    added to python-nova's runtime dependencies. (LP: #1059907) 
+    added to python-nova's runtime dependencies. (LP: #1059907)
 
   [ Chuck Short ]
   * debian/patches/rbd-security.patch: Support override of ceph rbd
