@@ -1,22 +1,11 @@
-diff -Naurp nova-2013.1.a4539.g032308c.orig/setup.py nova-2013.1.a4539.g032308c/setup.py
---- nova-2013.1.a4539.g032308c.orig/setup.py	2013-02-20 09:26:49.000000000 -0600
-+++ nova-2013.1.a4539.g032308c/setup.py	2013-02-20 09:34:57.313915950 -0600
-@@ -46,7 +46,6 @@ setuptools.setup(
-       dependency_links=depend_links,
-       include_package_data=True,
-       test_suite='nose.collector',
--      setup_requires=['setuptools_git>=0.4'],
-       scripts=['bin/nova-all',
-                'bin/nova-api',
-                'bin/nova-api-ec2',
-diff -Naurp nova-2013.1.a4539.g032308c.orig/tools/pip-requires nova-2013.1.a4539.g032308c/tools/pip-requires
---- nova-2013.1.a4539.g032308c.orig/tools/pip-requires	2013-02-20 09:26:49.000000000 -0600
-+++ nova-2013.1.a4539.g032308c/tools/pip-requires	2013-02-20 09:35:08.525916217 -0600
+diff -Naurp nova-2013.1.a4723.ge807e19.orig/tools/pip-requires nova-2013.1.a4723.ge807e19/tools/pip-requires
+--- nova-2013.1.a4723.ge807e19.orig/tools/pip-requires	2013-02-28 08:59:17.000000000 -0600
++++ nova-2013.1.a4723.ge807e19/tools/pip-requires	2013-02-28 09:01:41.143142227 -0600
 @@ -20,7 +20,6 @@ pyasn1
  Babel>=0.9.6
  iso8601>=0.1.4
  httplib2
 -setuptools_git>=0.4
  python-cinderclient>=1.0.1
- python-quantumclient>=2.1
+ python-quantumclient>=2.1.2
  python-glanceclient>=0.5.0,<2
