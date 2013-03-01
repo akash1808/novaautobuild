@@ -1,5 +1,6 @@
 nova (2013.1.a4723.ge807e19-0ubuntu1) UNRELEASED; urgency=low
 
+  [ Chuck Short ]
   * New upstream release.
   * debian/patches/avoid_setuptools_git_dependency.patch: Refreshed.
   * debian/control: Clean up dependencies:
@@ -10,6 +11,10 @@ nova (2013.1.a4723.ge807e19-0ubuntu1) UNRELEASED; urgency=low
     - Dropped python-simplejson no longer needed.
     - Dropped python-tempita no longer needed.
     - Dropped python-xattr no longer needed.
+
+  [ James Page ]
+  * d/watch: Update uversionmangle to deal with upstream versioning
+    changes, remove tarballs.openstack.org. 
 
  -- Chuck Short <zulcss@ubuntu.com>  Thu, 28 Feb 2013 09:00:15 -0600
 
