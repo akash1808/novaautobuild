@@ -1,7 +1,8 @@
-diff -Naurp nova-2013.1.a4257.g4df4762.orig/tools/hacking.py nova-2013.1.a4257.g4df4762/tools/hacking.py
---- nova-2013.1.a4257.g4df4762.orig/tools/hacking.py	2013-02-12 07:33:18.000000000 -0600
-+++ nova-2013.1.a4257.g4df4762/tools/hacking.py	2013-02-12 07:51:45.212644383 -0600
-@@ -589,7 +589,7 @@ if __name__ == "__main__":
+Index: nova/tools/hacking.py
+===================================================================
+--- nova.orig/tools/hacking.py	2013-03-13 17:47:30.280806436 -0700
++++ nova/tools/hacking.py	2013-03-13 17:47:36.364806745 -0700
+@@ -646,7 +646,7 @@
      #include nova path
      sys.path.append(os.getcwd())
      #Run once tests (not per line)
