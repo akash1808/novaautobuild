@@ -1,4 +1,4 @@
-nova (1:2013.1~rc1-0ubuntu1) UNRELEASED; urgency=low
+nova (1:2013.1~rc1-0ubuntu1) raring; urgency=low
 
   [ Chuck Short ]
   * New upstream release.
@@ -17,7 +17,7 @@ nova (1:2013.1~rc1-0ubuntu1) UNRELEASED; urgency=low
   * d/watch: Update uversionmangle to deal with upstream versioning
     changes, remove tarballs.openstack.org. 
 
- -- Chuck Short <zulcss@ubuntu.com>  Thu, 28 Feb 2013 09:00:15 -0600
+ -- Chuck Short <zulcss@ubuntu.com>  Wed, 20 Mar 2013 12:59:22 -0500
 
 nova (2013.1.g3-0ubuntu1) raring; urgency=low
 
