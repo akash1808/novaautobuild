@@ -500,10 +500,11 @@ Description: OpenStack Compute - AJAX console proxy - transitional package
 Package: nova-novncproxy
 Architecture: all
 Depends: nova-common (= ${binary:Version}),
+ novnc,
+ websockify,
  ${misc:Depends},
  ${ostack-lsb-base},
  ${python:Depends}
-Suggests: novnc, websockify
 Description: OpenStack Compute - NoVNC proxy
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
