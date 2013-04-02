@@ -7,7 +7,7 @@ nova (1:2013.1~rc2-0ubuntu1) raring; urgency=low
   [ Chuck Short ]
   *  New upstream release.
 
- -- Chuck Short <zulcss@ubuntu.com>  Tue, 02 Apr 2013 08:29:40 -0500
+ -- Chuck Short <zulcss@ubuntu.com>  Tue, 02 Apr 2013 08:44:39 -0500
 
 nova (1:2013.1~rc1-0ubuntu1) raring; urgency=low
 
