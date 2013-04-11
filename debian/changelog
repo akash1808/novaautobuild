@@ -1,6 +1,7 @@
 nova (1:2013.1-0ubuntu2) UNRELEASED; urgency=low
 
   * debian/nova-cells.upstart: Fix typo in upstart job. (LP: #1163218) 
+  * debian/control: Add iptables dependency.
 
  -- Chuck Short <zulcss@ubuntu.com>  Thu, 11 Apr 2013 07:49:44 -0500
 

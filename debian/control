@@ -576,7 +576,8 @@ Architecture: all
 Depends: nova-common (= ${binary:Version}),
  ${misc:Depends},
  ${ostack-lsb-base},
- ${python:Depends}
+ ${python:Depends},
+ iptables
 Description: OpenStack Compute - API frontend
  OpenStack is a reliable cloud infrastructure. Its mission is to produce
  the ubiquitous cloud computing platform that will meet the needs of public
