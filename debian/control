@@ -46,7 +46,6 @@ Build-Depends-Indep: openssh-client,
  python-testtools (>= 0.9.22),
  python-unittest2,
  python-webob (>= 1.2.3),
- pep8,
  sqlite3,
  testrepository ( >= 0.0.8)
 Build-Conflicts: python-cjson
