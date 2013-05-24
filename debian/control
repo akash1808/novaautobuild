@@ -123,7 +123,6 @@ Architecture: all
 Depends: adduser,
  python-amqplib,
  python-nova (= ${binary:Version}),
- websockify,
  ${misc:Depends},
  ${python:Depends}
 Provides: ${python:Provides}
@@ -505,6 +504,7 @@ Package: nova-novncproxy
 Architecture: all
 Depends: nova-common (= ${binary:Version}),
  novnc,
+ websockify,
  ${misc:Depends},
  ${ostack-lsb-base},
  ${python:Depends}

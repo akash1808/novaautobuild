@@ -9,7 +9,8 @@ nova (1:2013.2.a732.g7063896-0ubuntu4) UNRELEASED; urgency=low
   * debian/patches/fix-ubuntu-tests.patch: Dropped no longer needed.
 
   [ Adam Gandelman ]
-  * Move websockify depends to nova-common.
+  * debian/patches/avoid_requirements_websockify.patch: Remove websockify
+    to Avoid making it a dependency of every nova package.
   * debian/control: Add python-babel.
   * debian/control: Set min. version 0.7.6 on python-netaddr dependency.
 
