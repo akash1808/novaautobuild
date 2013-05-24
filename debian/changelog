@@ -1,4 +1,4 @@
-nova (1:2013.2.a732.g7063896-0ubuntu3) UNRELEASED; urgency=low
+nova (1:2013.2.a732.g7063896-0ubuntu4) UNRELEASED; urgency=low
 
   [ Chuck Short ]
   * New upstream version.
@@ -11,8 +11,9 @@ nova (1:2013.2.a732.g7063896-0ubuntu3) UNRELEASED; urgency=low
   [ Adam Gandelman ]
   * Move websockify depends to nova-common.
   * debian/control: Add python-babel.
+  * debian/control: Set min. version 0.7.6 on python-netaddr dependency.
 
- -- Adam Gandelman <adamg@ubuntu.com>  Thu, 23 May 2013 19:24:53 -0700
+ -- Adam Gandelman <adamg@ubuntu.com>  Thu, 23 May 2013 19:25:55 -0700
 
 nova (1:2013.1-0ubuntu2) raring; urgency=low
 
