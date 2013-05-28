@@ -1,3 +1,4 @@
 # Ubuntu specific patches below here. Note these can be dropped eventually.
+avoid_requirements_websockify.patch
 path-to-the-xenhost.conf-fixup.patch
 fix-docs-build-without-network.patch
