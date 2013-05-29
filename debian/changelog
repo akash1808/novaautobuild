@@ -1,4 +1,4 @@
-nova (1:2013.2.a732.g7063896-0ubuntu4) UNRELEASED; urgency=low
+nova (1:2013.2.a732.g7063896-0ubuntu5) UNRELEASED; urgency=low
 
   [ Chuck Short ]
   * New upstream version.
@@ -11,10 +11,12 @@ nova (1:2013.2.a732.g7063896-0ubuntu4) UNRELEASED; urgency=low
   [ Adam Gandelman ]
   * debian/patches/avoid_requirements_websockify.patch: Remove websockify
     to avoid making it a dependency of every nova package.
+  * debian/patches/avoid_requirements_cheetah.patch: Temporarily remove
+    Cheetah until cheetah's dependencies have been MIR'd.
   * debian/control: Add python-babel.
   * debian/control: Set min. version 0.7.6 on python-netaddr dependency.
 
- -- Adam Gandelman <adamg@ubuntu.com>  Thu, 23 May 2013 19:25:55 -0700
+ -- Adam Gandelman <adamg@ubuntu.com>  Wed, 29 May 2013 12:14:56 -0700
 
 nova (1:2013.1-0ubuntu2) raring; urgency=low
 
