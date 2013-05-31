@@ -1,4 +1,4 @@
-nova (1:2013.2.a732.g7063896-0ubuntu5) UNRELEASED; urgency=low
+nova (1:2013.2~b1-0ubuntu1) saucy; urgency=low
 
   [ Chuck Short ]
   * New upstream version.
@@ -16,7 +16,7 @@ nova (1:2013.2.a732.g7063896-0ubuntu5) UNRELEASED; urgency=low
   * debian/control: Add python-babel.
   * debian/control: Set min. version 0.7.6 on python-netaddr dependency.
 
- -- Adam Gandelman <adamg@ubuntu.com>  Wed, 29 May 2013 12:14:56 -0700
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 31 May 2013 07:44:38 -0500
 
 nova (1:2013.1-0ubuntu2) raring; urgency=low
 
