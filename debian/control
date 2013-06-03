@@ -54,6 +54,7 @@ Standards-Version: 3.9.3
 Homepage: http://launchpad.net/nova
 Vcs-Browser: http://bazaar.launchpad.net/~ubuntu-server-dev/nova/essex/debian/files
 Vcs-Bzr: http://bazaar.launchpad.net/~ubuntu-server-dev/nova/essex
+XS-Testsuite: autopkgtest
 
 Package: python-nova
 Architecture: all
