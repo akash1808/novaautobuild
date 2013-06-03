@@ -3,3 +3,4 @@ avoid_requirements_websockify.patch
 avoid_requirements_cheetah.patch
 path-to-the-xenhost.conf-fixup.patch
 fix-docs-build-without-network.patch
+fix-setup-version-dependency.patch

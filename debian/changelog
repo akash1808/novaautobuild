@@ -1,3 +1,11 @@
+nova (1:2013.2.a973.g0afcc05-0ubuntu1) UNRELEASED; urgency=low
+
+  * New upstream release.
+  * debian/patches/fix-setup-version-dependency.patch: Hard
+    code dependencies for pbr and d2to1. 
+
+ -- Chuck Short <zulcss@ubuntu.com>  Mon, 03 Jun 2013 08:52:36 -0500
+
 nova (1:2013.2~b1-0ubuntu1) saucy; urgency=low
 
   [ Chuck Short ]
