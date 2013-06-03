@@ -1,3 +1,9 @@
+nova (1:2013.2~b1-0ubuntu2) UNRELEASED; urgency=low
+
+  * debian/tests: added autopkgtests
+
+ -- Yolanda Robla <yolanda.robla@canonical.com>  Mon, 03 Jun 2013 16:10:12 +0200
+
 nova (1:2013.2~b1-0ubuntu1) saucy; urgency=low
 
   [ Chuck Short ]
@@ -16,10 +22,7 @@ nova (1:2013.2~b1-0ubuntu1) saucy; urgency=low
   * debian/control: Add python-babel.
   * debian/control: Set min. version 0.7.6 on python-netaddr dependency.
 
-  [ Yolanda Robla ]
-  * debian/tests: added autopkg tests
-
- -- Yolanda Robla <yolanda.robla@canonical.com>  Mon, 03 Jun 2013 15:41:00 +0100
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 31 May 2013 07:44:38 -0500
 
 nova (1:2013.1-0ubuntu2) raring; urgency=low
 
