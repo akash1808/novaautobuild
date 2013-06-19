@@ -1,12 +1,13 @@
-nova (1:2013.2.a1271.gd147af2-0ubuntu1) UNRELEASED; urgency=low
-
-  [Chuck Short]
-  * New upstream release.
+nova (1:2013.2~b1-0ubuntu1) saucy; urgency=low
 
   [Yolanda Robla]
   * debian/tests: added autopkgtests
 
- -- Chuck Short <zulcss@ubuntu.com>  Mon, 03 Jun 2013 08:52:36 -0500
+  [ Adam Gandelman ]
+  * debian/control: Set version requirements python-pbr (>= 0.5.11),
+    python-d2to1 (>= 0.2.10).
+
+ -- Chuck Short <zulcss@ubuntu.com>  Wed, 19 Jun 2013 12:53:27 -0500
 
 nova (1:2013.2~b1-0ubuntu1) saucy; urgency=low
 
