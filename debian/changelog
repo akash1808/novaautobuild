@@ -1,4 +1,4 @@
-nova (1:2013.2~b1-0ubuntu1) saucy; urgency=low
+nova (1:2013.2~b1-0ubuntu2) saucy; urgency=low
 
   [Yolanda Robla]
   * debian/tests: added autopkgtests
@@ -7,7 +7,7 @@ nova (1:2013.2~b1-0ubuntu1) saucy; urgency=low
   * debian/control: Set version requirements python-pbr (>= 0.5.11),
     python-d2to1 (>= 0.2.10).
 
- -- Chuck Short <zulcss@ubuntu.com>  Wed, 19 Jun 2013 12:53:27 -0500
+ -- Chuck Short <zulcss@ubuntu.com>  Wed, 19 Jun 2013 13:00:11 -0500
 
 nova (1:2013.2~b1-0ubuntu1) saucy; urgency=low
 
