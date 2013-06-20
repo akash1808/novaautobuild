@@ -7,13 +7,13 @@ being listed in requirements.txt and requiring it as a runtime
 dependency.
 
 
-Index: nova/requirements.txt
+Index: nova-src/requirements.txt
 ===================================================================
---- nova.orig/requirements.txt	2013-05-29 12:12:38.552151494 -0700
-+++ nova/requirements.txt	2013-05-29 12:12:53.416152203 -0700
+--- nova-src.orig/requirements.txt	2013-06-19 18:03:08.469447733 -0700
++++ nova-src/requirements.txt	2013-06-19 18:03:08.465447733 -0700
 @@ -1,7 +1,6 @@
  d2to1>=0.2.10,<0.3
- pbr>=0.5,<0.6
+ pbr>=0.5.16,<0.6
  SQLAlchemy>=0.7.8,<0.7.99
 -Cheetah>=2.4.4
  amqplib>=0.6.1

@@ -6,13 +6,13 @@ The only component that requires websockify is the nova-novncproxy
 package, which pulls it in as a dependency.  Leaving it in requirements.txt
 would turn it into a dependency of python-nova or nova-common.
 
-Index: nova/requirements.txt
+Index: nova-src/requirements.txt
 ===================================================================
---- nova.orig/requirements.txt	2013-05-23 19:44:34.183145856 -0700
-+++ nova/requirements.txt	2013-05-23 19:44:43.327145520 -0700
+--- nova-src.orig/requirements.txt	2013-06-19 18:01:01.989441702 -0700
++++ nova-src/requirements.txt	2013-06-19 18:03:05.761447604 -0700
 @@ -29,5 +29,4 @@
  python-keystoneclient>=0.2.0
  six
- stevedore>=0.7
+ stevedore>=0.9
 -websockify<0.4
- oslo.config>=1.1.0
+ http://tarballs.openstack.org/oslo.config/oslo.config-1.2.0a2.tar.gz#egg=oslo.config-1.2.0a2
