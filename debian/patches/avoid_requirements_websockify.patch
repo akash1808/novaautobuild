@@ -8,11 +8,11 @@ would turn it into a dependency of python-nova or nova-common.
 
 Index: nova-src/requirements.txt
 ===================================================================
---- nova-src.orig/requirements.txt	2013-06-19 18:01:01.989441702 -0700
-+++ nova-src/requirements.txt	2013-06-19 18:03:05.761447604 -0700
-@@ -29,5 +29,4 @@
+--- nova-src.orig/requirements.txt	2013-06-24 11:53:42.323693941 -0700
++++ nova-src/requirements.txt	2013-06-24 11:55:11.815690004 -0700
+@@ -28,5 +28,4 @@
  python-keystoneclient>=0.2.0
  six
  stevedore>=0.9
 -websockify<0.4
- http://tarballs.openstack.org/oslo.config/oslo.config-1.2.0a2.tar.gz#egg=oslo.config-1.2.0a2
+ oslo.config>=1.1.0
