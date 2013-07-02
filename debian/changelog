@@ -3,6 +3,7 @@ nova (1:2013.2~b1-0ubuntu3) UNRELEASED; urgency=low
   * debian/control:
     - Set version requirement python-pyparsing (>= 1.5.6).
     - Add websockify to nova-spiceproxy Depends.
+  * Add nova-xvpvncproxy upstart (LP: #1197163)
 
  -- Adam Gandelman <adamg@ubuntu.com>  Tue, 02 Jul 2013 11:12:26 -0700
 
