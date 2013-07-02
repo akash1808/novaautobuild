@@ -556,6 +556,7 @@ Description: OpenStack Compute - XVP VNC proxy
 Package: nova-spiceproxy
 Architecture: all
 Depends: nova-common (= ${binary:Version}),
+ websockify,
  ${misc:Depends},
  ${ostack-lsb-base},
  ${python:Depends}
