@@ -557,6 +557,7 @@ Package: nova-spiceproxy
 Architecture: all
 Depends: nova-common (= ${binary:Version}),
  websockify,
+ spice-html5,
  ${misc:Depends},
  ${ostack-lsb-base},
  ${python:Depends}
