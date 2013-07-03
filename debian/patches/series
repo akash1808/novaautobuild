@@ -3,3 +3,5 @@ avoid_requirements_websockify.patch
 avoid_requirements_cheetah.patch
 path-to-the-xenhost.conf-fixup.patch
 fix-docs-build-without-network.patch
+drop_c
+requirements_drop_requests_vers_cap.patch

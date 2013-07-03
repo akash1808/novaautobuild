@@ -1,3 +1,11 @@
+nova (1:2013.2~b1-0ubuntu3) UNRELEASED; urgency=low
+
+  * d/patches/requirements_drop_requests_vers_cap.patch: Remove
+    upper version limit  on requests dependency, which was capped upstream
+    to fix centos-related gating issues.
+
+ -- Adam Gandelman <adamg@ubuntu.com>  Tue, 02 Jul 2013 17:39:27 -0700
+
 nova (1:2013.2~b1-0ubuntu2) saucy; urgency=low
 
   [Yolanda Robla]
