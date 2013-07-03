@@ -1,3 +1,15 @@
+Author: Adam Gandelman <adamg@ubuntu.com>
+Date: Tue Jul  2 17:42:44 PDT 2013
+Subject: Remove upper limit on requests dependency.
+
+Upstream capped the requests version due to various reasons related
+to a centos failing python 2.6 gating job.  We package and ship
+python-requests 1.2.3 in 13.10.
+
+For context of upstream change, see:
+
+https://bugs.launchpad.net/nova/+bug/1182271
+
 Index: nova-git/requirements.txt
 ===================================================================
 --- nova-git.orig/requirements.txt	2013-07-02 17:37:32.291186196 -0700
