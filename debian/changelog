@@ -1,4 +1,4 @@
-nova (1:2013.2~b1-0ubuntu2) UNRELEASED; urgency=low
+nova (1:2013.2~b1-0ubuntu4) UNRELEASED; urgency=low
 
   [ Adam Gandelman ]
   * d/patches/requirements_drop_requests_vers_cap.patch: Remove
@@ -14,6 +14,12 @@ nova (1:2013.2~b1-0ubuntu2) UNRELEASED; urgency=low
   * d/control: Update VCS fields for new branch locations. 
 
  -- Adam Gandelman <adamg@ubuntu.com>  Tue, 02 Jul 2013 17:39:27 -0700
+
+nova (1:2013.2~b1-0ubuntu3) saucy; urgency=low
+
+  * Depend on python-oslo.config instead of python-oslo-config.
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Sat, 06 Jul 2013 15:36:40 -0600
 
 nova (1:2013.2~b1-0ubuntu2) saucy; urgency=low
 
