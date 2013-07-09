@@ -1,5 +1,6 @@
 nova (1:2013.2~b1-0ubuntu2) UNRELEASED; urgency=low
 
+  [ Adam Gandelman ]
   * d/patches/requirements_drop_requests_vers_cap.patch: Remove
     upper version limit  on requests dependency, which was capped upstream
     to fix centos-related gating issues.
@@ -8,6 +9,9 @@ nova (1:2013.2~b1-0ubuntu2) UNRELEASED; urgency=low
     - Add websockify to nova-spiceproxy Depends.
     - Add spice-html5 to nova-spiceproxy Depends (LP: #1197119)
   * Add nova-xvpvncproxy upstart (LP: #1197163)
+
+  [ James Page ]
+  * d/control: Update VCS fields for new branch locations. 
 
  -- Adam Gandelman <adamg@ubuntu.com>  Tue, 02 Jul 2013 17:39:27 -0700
 
