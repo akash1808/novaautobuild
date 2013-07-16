@@ -1,15 +1,15 @@
-diff -Naurp nova-2013.2.a2028.gd612ed9.orig/requirements.txt nova-2013.2.a2028.gd612ed9/requirements.txt
---- nova-2013.2.a2028.gd612ed9.orig/requirements.txt	2013-07-16 09:36:27.193793953 -0400
-+++ nova-2013.2.a2028.gd612ed9/requirements.txt	2013-07-16 10:03:41.741832923 -0400
+diff -Naurp nova-2013.2.a2069.gf8d3ff8.orig/requirements.txt nova-2013.2.a2069.gf8d3ff8/requirements.txt
+--- nova-2013.2.a2069.gf8d3ff8.orig/requirements.txt	2013-07-16 18:37:14.000000000 -0400
++++ nova-2013.2.a2069.gf8d3ff8/requirements.txt	2013-07-16 18:44:25.322577828 -0400
 @@ -1,6 +1,6 @@
  d2to1>=0.2.10,<0.3
  pbr>=0.5.16,<0.6
 -SQLAlchemy>=0.7.8,<0.7.99
 +SQLAlchemy>=0.7.8,<=0.8.99
+ Cheetah>=2.4.4
  amqplib>=0.6.1
  anyjson>=0.2.4
- argparse
-@@ -20,13 +20,12 @@ paramiko
+@@ -21,14 +21,13 @@ paramiko
  pyasn1
  Babel>=0.9.6
  iso8601>=0.1.4
@@ -22,5 +22,6 @@ diff -Naurp nova-2013.2.a2028.gd612ed9.orig/requirements.txt nova-2013.2.a2028.g
  six
  stevedore>=0.9
 -websockify<0.4
- oslo.config>=1.1.0
  pyparsing>=1.5.7,<2.0 # order-dependent python-quantumclient req, bug 1191866
+ 
+ -f http://tarballs.openstack.org/oslo.config/oslo.config-1.2.0a3.tar.gz#egg=oslo.config-1.2.0a3
