@@ -1,4 +1,4 @@
-nova (1:2013.2.a1953.g16ed451-0ubuntu1) UNRELEASED; urgency=low
+nova (1:2013.2.a2028.gd612ed9-0ubuntu1) UNRELEASED; urgency=low
 
   [ Adam Gandelman ]
   * d/patches/requirements_drop_requests_vers_cap.patch: Remove
@@ -14,10 +14,13 @@ nova (1:2013.2.a1953.g16ed451-0ubuntu1) UNRELEASED; urgency=low
   * d/control: Update VCS fields for new branch locations. 
 
   [ Chuck Short ]
-  * New upstream release
+  * New upstream release.
   * debian/patches/fix-requirements.patch: Combined several 
     patches into one.
   * debian/control: Replace python-quantumclient with python-neutronclient.
+  * debian/patches/fix-sqlalchemy-0.7.9-usage.patch: Temporary patch to address a FTBFS
+    with sqlalchemy 0.7.9.
+  * debian/patches/avoid-failing-test.patch: Skip failing test on buildds.
 
  -- Adam Gandelman <adamg@ubuntu.com>  Tue, 02 Jul 2013 17:39:27 -0700
 

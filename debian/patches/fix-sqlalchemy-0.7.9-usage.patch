@@ -1,0 +1,133 @@
+Description: Fix tests failing with sqlalachemy 0.7.9
+Author: Chuck Short <zulcss@ubuntu.com>
+Fowarded: No
+diff -Naurp nova-2013.2.a2028.gd612ed9.orig/nova/db/sqlalchemy/migrate_repo/versions/186_new_bdm_format.py nova-2013.2.a2028.gd612ed9/nova/db/sqlalchemy/migrate_repo/versions/186_new_bdm_format.py
+--- nova-2013.2.a2028.gd612ed9.orig/nova/db/sqlalchemy/migrate_repo/versions/186_new_bdm_format.py	2013-07-16 09:01:23.000000000 -0400
++++ nova-2013.2.a2028.gd612ed9/nova/db/sqlalchemy/migrate_repo/versions/186_new_bdm_format.py	2013-07-16 10:49:47.661898868 -0400
+@@ -249,12 +249,9 @@ def _downgrade_bdm_v2(meta, bdm_table):
+             (bdm_table.c.source_type == 'blank')
+         ).order_by(bdm_table.c.id.asc())
+ 
+-        blanks = [
+-            dict(zip(('id', 'source', 'format'), row))
+-            for row in bdm_q.execute().fetchall()
+-        ]
++        blanks = [dict(row) for row in bdm_q.execute().fetchall()]
+ 
+-        swap = [dev for dev in blanks if dev['format'] == 'swap']
++        swap = [dev for dev in blanks if dev['guest_format'] == 'swap']
+         assert len(swap) < 2
+         ephemerals = [dev for dev in blanks if dev not in swap]
+ 
+diff -Naurp nova-2013.2.a2028.gd612ed9.orig/nova/db/sqlalchemy/types.py nova-2013.2.a2028.gd612ed9/nova/db/sqlalchemy/types.py
+--- nova-2013.2.a2028.gd612ed9.orig/nova/db/sqlalchemy/types.py	2013-07-16 09:01:23.000000000 -0400
++++ nova-2013.2.a2028.gd612ed9/nova/db/sqlalchemy/types.py	2013-07-16 10:49:40.465898696 -0400
+@@ -25,7 +25,14 @@ from nova import utils
+ 
+ class IPAddress(types.TypeDecorator):
+     """An SQLAlchemy type representing an IP-address."""
+-    impl = types.String(39).with_variant(postgresql.INET(), 'postgresql')
++
++    impl = types.String
++
++    def load_dialect_impl(self, dialect):
++        if dialect.name == 'postgresql':
++            return dialect.type_descriptor(postgresql.INET())
++        else:
++            return dialect.type_descriptor(types.String(39))
+ 
+     def process_bind_param(self, value, dialect):
+         """Process/Formats the value before insert it into the db."""
+@@ -40,7 +47,14 @@ class IPAddress(types.TypeDecorator):
+ 
+ class CIDR(types.TypeDecorator):
+     """An SQLAlchemy type representing a CIDR definition."""
+-    impl = types.String(43).with_variant(postgresql.INET(), 'postgresql')
++
++    impl = types.String
++
++    def load_dialect_impl(self, dialect):
++        if dialect.name == 'postgresql':
++            return dialect.type_descriptor(postgresql.INET())
++        else:
++            return dialect.type_descriptor(types.String(43))
+ 
+     def process_bind_param(self, value, dialect):
+         """Process/Formats the value before insert it into the db."""
+diff -Naurp nova-2013.2.a2028.gd612ed9.orig/nova/tests/db/test_migrations.py nova-2013.2.a2028.gd612ed9/nova/tests/db/test_migrations.py
+--- nova-2013.2.a2028.gd612ed9.orig/nova/tests/db/test_migrations.py	2013-07-16 09:01:23.000000000 -0400
++++ nova-2013.2.a2028.gd612ed9/nova/tests/db/test_migrations.py	2013-07-16 10:49:47.661898868 -0400
+@@ -46,6 +46,7 @@ import commands
+ import ConfigParser
+ import datetime
+ import glob
++import operator
+ import os
+ import urlparse
+ import uuid
+@@ -64,6 +65,7 @@ from nova.openstack.common import log as
+ from nova.openstack.common import timeutils
+ from nova.openstack.common import uuidutils
+ from nova import test
++from nova.tests import matchers
+ from nova import utils
+ import nova.virt.baremetal.db.sqlalchemy.migrate_repo
+ 
+@@ -1466,7 +1468,7 @@ class TestNovaMigrations(BaseMigrationTe
+         self._unique_constraint_check_migrate_185(engine)
+ 
+     def _pre_upgrade_186(self, engine):
+-        fake_instances = [
++        self.mig186_fake_instances = [
+             dict(uuid='mig186_uuid-1', image_ref='fake_image_1',
+                  root_device_name='/dev/vda'),
+             dict(uuid='mig186_uuid-2', image_ref='',
+@@ -1475,7 +1477,7 @@ class TestNovaMigrations(BaseMigrationTe
+                  root_device_name='/dev/vda'),
+         ]
+ 
+-        fake_bdms = [
++        self.mig186_fake_bdms = [
+             # Instance 1 - image, volume and swap
+             dict(instance_uuid='mig186_uuid-1', device_name='/dev/vdc',
+                  volume_id='fake_volume_1'),
+@@ -1497,11 +1499,11 @@ class TestNovaMigrations(BaseMigrationTe
+ 
+         instances = db_utils.get_table(engine, 'instances')
+         block_device = db_utils.get_table(engine, 'block_device_mapping')
+-        engine.execute(instances.insert(), fake_instances)
+-        for fake_bdm in fake_bdms:
++        engine.execute(instances.insert(), self.mig186_fake_instances)
++        for fake_bdm in self.mig186_fake_bdms:
+             engine.execute(block_device.insert(), fake_bdm)
+ 
+-        return fake_instances, fake_bdms
++        return self.mig186_fake_instances, self.mig186_fake_bdms
+ 
+     def _check_186(self, engine, data):
+         block_device = db_utils.get_table(engine, 'block_device_mapping')
+@@ -1587,6 +1589,24 @@ class TestNovaMigrations(BaseMigrationTe
+         self.assertEqual(bdm_3s[3].image_id, 'fake_image_2')
+         self.assertEqual(bdm_3s[3].boot_index, 0)
+ 
++    def _post_downgrade_186(self, engine):
++        block_device = db_utils.get_table(engine, 'block_device_mapping')
++
++        q = block_device.select().where(
++            sqlalchemy.or_(
++                block_device.c.instance_uuid == 'mig186_uuid-1',
++                block_device.c.instance_uuid == 'mig186_uuid-2',
++                block_device.c.instance_uuid == 'mig186_uuid-3'))\
++            .order_by(block_device.c.device_name.asc())
++
++        expected_bdms = sorted(self.mig186_fake_bdms,
++                               key=operator.itemgetter('device_name'))
++        got_bdms = [bdm for bdm in q.execute()]
++
++        self.assertEquals(len(expected_bdms), len(got_bdms))
++        for expected, got in zip(expected_bdms, got_bdms):
++            self.assertThat(expected, matchers.IsSubDictOf(dict(got)))
++
+     # addition of the vm instance groups
+     def _check_no_group_instance_tables(self, engine):
+         self.assertRaises(sqlalchemy.exc.NoSuchTableError,
