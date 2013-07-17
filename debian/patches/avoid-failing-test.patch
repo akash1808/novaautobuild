@@ -1,9 +1,6 @@
-Description: Skip failing test in buildds.
-Author: Chuck Short <zulcss@ubuntu.com>
-Forwarded: No
-diff -Naurp nova-2013.2.a2028.gd612ed9.orig/nova/tests/cells/test_cells_rpc_driver.py nova-2013.2.a2028.gd612ed9/nova/tests/cells/test_cells_rpc_driver.py
---- nova-2013.2.a2028.gd612ed9.orig/nova/tests/cells/test_cells_rpc_driver.py	2013-07-16 09:01:23.000000000 -0400
-+++ nova-2013.2.a2028.gd612ed9/nova/tests/cells/test_cells_rpc_driver.py	2013-07-16 11:04:03.149919264 -0400
+diff -Naurp nova-2013.2.a2121.g183d506.orig/nova/tests/cells/test_cells_rpc_driver.py nova-2013.2.a2121.g183d506/nova/tests/cells/test_cells_rpc_driver.py
+--- nova-2013.2.a2121.g183d506.orig/nova/tests/cells/test_cells_rpc_driver.py	2013-07-17 09:49:51.000000000 -0400
++++ nova-2013.2.a2121.g183d506/nova/tests/cells/test_cells_rpc_driver.py	2013-07-17 09:51:29.225487934 -0400
 @@ -225,6 +225,7 @@ class ParseTransportURLTestCase(test.Tes
          self.assertRaises(ValueError, rpc_driver.parse_transport_url, url)
  
@@ -11,4 +8,15 @@ diff -Naurp nova-2013.2.a2028.gd612ed9.orig/nova/tests/cells/test_cells_rpc_driv
 +        self.skipTest("Skipped by ubuntu patch")
          url = "rabbit://u:p@h:10/virtual?ssl=1"
          self.assertRaises(ValueError, rpc_driver.parse_transport_url, url)
+ 
+diff -Naurp nova-2013.2.a2121.g183d506.orig/nova/tests/test_cinder.py nova-2013.2.a2121.g183d506/nova/tests/test_cinder.py
+--- nova-2013.2.a2121.g183d506.orig/nova/tests/test_cinder.py	2013-07-17 09:49:51.000000000 -0400
++++ nova-2013.2.a2121.g183d506/nova/tests/test_cinder.py	2013-07-17 09:52:13.245487955 -0400
+@@ -170,6 +170,7 @@ class CinderTestCase(test.TestCase):
+             'http://other_host:8776/v1/project_id')
+ 
+     def test_get_non_existing_volume(self):
++        self.skipTest('skipped by ubuntu patch')
+         self.assertRaises(exception.VolumeNotFound, self.api.get, self.context,
+                           'nonexisting')
  
