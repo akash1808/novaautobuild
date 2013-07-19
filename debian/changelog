@@ -1,3 +1,9 @@
+nova (1:2013.2~b2-0ubuntu2) saucy; urgency=low
+
+  * debian/control: Fix python-sqlalchemy dependency. 
+
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 19 Jul 2013 15:03:16 -0400
+
 nova (1:2013.2~b2-0ubuntu1) saucy; urgency=low
 
   [ Adam Gandelman ]
