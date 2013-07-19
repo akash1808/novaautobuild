@@ -1,4 +1,4 @@
-nova (1:2013.2.a2028.gd612ed9-0ubuntu1) UNRELEASED; urgency=low
+nova (1:2013.2~b2-0ubuntu1) saucy; urgency=low
 
   [ Adam Gandelman ]
   * d/patches/requirements_drop_requests_vers_cap.patch: Remove
@@ -23,7 +23,7 @@ nova (1:2013.2.a2028.gd612ed9-0ubuntu1) UNRELEASED; urgency=low
     with sqlalchemy 0.7.9.
   * debian/patches/avoid-failing-test.patch: Skip failing test on buildds.
 
- -- Adam Gandelman <adamg@ubuntu.com>  Tue, 02 Jul 2013 17:39:27 -0700
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 19 Jul 2013 09:15:03 -0400
 
 nova (1:2013.2~b1-0ubuntu3) saucy; urgency=low
 
