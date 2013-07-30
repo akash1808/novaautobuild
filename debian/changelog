@@ -1,3 +1,14 @@
+nova (1:2013.2.a2367.gb404bfd-0ubuntu1) UNRELEASED; urgency=low
+
+  * New usptream release. 
+  * debian/patches/avoid_requirements_cheetah.patch: Dropped
+  * debian/patches/fix-sqlalchemy-0.7.9-usage.patch: Dropped
+  * debian/patches/fix-requirements.patch: Refreshed.
+  * debian/patches/remove-deprecated-sqlalchemy-option.patch: Remove
+    deprecated option with sqlalchemy.
+
+ -- Chuck Short <zulcss@ubuntu.com>  Tue, 30 Jul 2013 13:05:37 +0000
+
 nova (1:2013.2~b2-0ubuntu2) saucy; urgency=low
 
   * debian/control: Fix python-sqlalchemy dependency. 

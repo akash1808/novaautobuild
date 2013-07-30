@@ -1,7 +1,6 @@
 # Ubuntu specific patches below here. Note these can be dropped eventually.
-avoid_requirements_cheetah.patch
 path-to-the-xenhost.conf-fixup.patch
 fix-docs-build-without-network.patch
 fix-requirements.patch
-fix-sqlalchemy-0.7.9-usage.patch
 avoid-failing-test.patch
+remove-deprecated-sqlalchemy-option.patch

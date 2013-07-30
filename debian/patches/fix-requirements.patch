@@ -1,15 +1,16 @@
-diff -Naurp nova-2013.2.a2069.gf8d3ff8.orig/requirements.txt nova-2013.2.a2069.gf8d3ff8/requirements.txt
---- nova-2013.2.a2069.gf8d3ff8.orig/requirements.txt	2013-07-16 19:00:34.034600924 -0400
-+++ nova-2013.2.a2069.gf8d3ff8/requirements.txt	2013-07-16 19:01:26.494602175 -0400
-@@ -1,6 +1,6 @@
+diff -Naurp nova-2013.2.a2367.gb404bfd.orig/requirements.txt nova-2013.2.a2367.gb404bfd/requirements.txt
+--- nova-2013.2.a2367.gb404bfd.orig/requirements.txt	2013-07-30 13:01:25.000000000 +0000
++++ nova-2013.2.a2367.gb404bfd/requirements.txt	2013-07-30 13:51:46.198948311 +0000
+@@ -1,7 +1,6 @@
  d2to1>=0.2.10,<0.3
  pbr>=0.5.16,<0.6
 -SQLAlchemy>=0.7.8,<0.7.99
+-Cheetah>=2.4.4
 +SQLAlchemy>=0.7.8,<0.8.99
  amqplib>=0.6.1
  anyjson>=0.2.4
  argparse
-@@ -20,14 +20,13 @@ paramiko
+@@ -21,14 +20,13 @@ paramiko
  pyasn1
  Babel>=0.9.6
  iso8601>=0.1.4
@@ -20,7 +21,7 @@ diff -Naurp nova-2013.2.a2069.gf8d3ff8.orig/requirements.txt nova-2013.2.a2069.g
  python-glanceclient>=0.9.0
  python-keystoneclient>=0.2.0
  six
- stevedore>=0.9
+ stevedore>=0.10
 -websockify<0.4
  pyparsing>=1.5.7,<2.0 # order-dependent python-quantumclient req, bug 1191866
  
