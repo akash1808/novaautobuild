@@ -1,6 +1,6 @@
 Description: Remove deprecated sqlalchemy assert_unicode.
 Author: Chuck Short <zulcss@ubuntu.com>
-Forwarded: Yes
+Forwarded: Yes (https://review.openstack.org/#/c/39296/)
 diff -Naurp nova-2013.2.a2367.gb404bfd.orig/nova/db/sqlalchemy/migrate_repo/versions/203_make_user_quotas_key_and_value.py nova-2013.2.a2367.gb404bfd/nova/db/sqlalchemy/migrate_repo/versions/203_make_user_quotas_key_and_value.py
 --- nova-2013.2.a2367.gb404bfd.orig/nova/db/sqlalchemy/migrate_repo/versions/203_make_user_quotas_key_and_value.py	2013-07-30 13:01:25.000000000 +0000
 +++ nova-2013.2.a2367.gb404bfd/nova/db/sqlalchemy/migrate_repo/versions/203_make_user_quotas_key_and_value.py	2013-07-30 13:44:02.410948311 +0000
