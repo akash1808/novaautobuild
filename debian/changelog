@@ -8,7 +8,7 @@ nova (1:2013.2~b3-0ubuntu1) saucy; urgency=low
   * debian/control: Add python-jinja2
   * debian/control: Dropped python-cheetah
 
- -- Chuck Short <zulcss@ubuntu.com>  Mon, 09 Sep 2013 08:58:03 -0400
+ -- Chuck Short <zulcss@ubuntu.com>  Mon, 09 Sep 2013 09:42:10 -0400
 
 nova (1:2013.2~b2-0ubuntu2) saucy; urgency=low
 
