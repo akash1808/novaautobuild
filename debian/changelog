@@ -5,6 +5,8 @@ nova (1:2013.2~b3-0ubuntu1) saucy; urgency=low
   * debian/patches/fix-sqlalchemy-0.7.9-usage.patch: Dropped
   * debian/patches/fix-requirements.patch: Refreshed.
   * debian/patches/path-to-the-xenhost.conf-fixup.patch: Refreshed
+  * debian/control: Add python-jinja2
+  * debian/control: Dropped python-cheetah
 
  -- Chuck Short <zulcss@ubuntu.com>  Mon, 09 Sep 2013 08:58:03 -0400
 
