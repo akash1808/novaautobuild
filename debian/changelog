@@ -1,9 +1,9 @@
-nova (1:2013.2.a43.g1533bb2-0ubuntu1) UNRELEASED; urgency=low
+nova (1:2013.2~b3-0ubuntu2) saucy; urgency=low
 
-  * New upstream release. 
-  * debian/patches/fix-requirements.patch: Refreshed.
+  * debian/tests: Removed tests for nova-compute-xen and nova-compute-xcp.
+ 
 
- -- Chuck Short <zulcss@ubuntu.com>  Tue, 10 Sep 2013 11:11:01 -0400
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 13 Sep 2013 10:12:52 -0400
 
 nova (1:2013.2~b3-0ubuntu1) saucy; urgency=low
 
