@@ -1,6 +1,19 @@
 nova (1:2013.2~b3-0ubuntu2) saucy; urgency=low
 
   * debian/tests: Removed tests for nova-compute-xen and nova-compute-xcp.
+  * debian/control: 
+    - Dropped python-setuptools-git, python-carrot, python-unittest2, python-daemon, 
+      python-gflags, python-cheetah, python-glance, python-lockfile, python-routes,
+      python-xattr, python-novaclient, python-pycurl, python-keystone, python-libxml2,
+      python-pyparsing.
+    - Suggest python-ldap for python-nova.
+    - Added python-mock, python-greenlet, python-keystoneclient, python-anyjson,
+      python-jsonschema, python-six
+    - Bumped versioned dependencies for python-fixtures, python-testtools, and testrepository,
+      python-stevedore,
+    - Added versioned depends for python-cinderclient, python-neutronclient, python-boto,
+      python-paramiko, python-amplib, python-eventlet, python-glanceclient, python-oslo.config,
+      python-paramiko, 
  
 
  -- Chuck Short <zulcss@ubuntu.com>  Fri, 13 Sep 2013 10:12:52 -0400
