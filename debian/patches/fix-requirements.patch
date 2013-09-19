@@ -1,5 +1,5 @@
 diff --git a/requirements.txt b/requirements.txt
-index 341a41e..610b576 100644
+index 64a65f5..f6638ab 100644
 --- a/requirements.txt
 +++ b/requirements.txt
 @@ -1,5 +1,5 @@
@@ -9,11 +9,15 @@ index 341a41e..610b576 100644
  amqplib>=0.6.1
  anyjson>=0.3.3
  argparse
-@@ -27,7 +27,6 @@ python-glanceclient>=0.9.0
+@@ -25,9 +25,8 @@ python-cinderclient>=1.0.5
+ python-neutronclient>=2.3.0,<3
+ python-glanceclient>=0.9.0
  python-keystoneclient>=0.3.2
- six<1.4.0
+-six<1.4.0
++six
  stevedore>=0.10
 -websockify>=0.5.1,<0.6
  
  -f http://tarballs.openstack.org/oslo.config/oslo.config-1.2.0a3.tar.gz#egg=oslo.config-1.2.0a3
  oslo.config>=1.2.0a3
+
