@@ -17,6 +17,8 @@ nova (1:2013.2~b3-0ubuntu2) saucy; urgency=low
       python-boto, python-paramiko, python-amplib, python-eventlet,
       python-glanceclient, python-oslo.config, python-paramiko, python-six
   * debian/patches/fix-requirements.patch: Rediffed
+  * debian/patches/native-lxc-hypervisor.patch: Add native lxc support.
+    (LP: #1220701)
 
  -- Chuck Short <zulcss@ubuntu.com>  Fri, 13 Sep 2013 10:12:52 -0400
 
