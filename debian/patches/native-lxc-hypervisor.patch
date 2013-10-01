@@ -1,6 +1,3 @@
-Description: This patch adds native lxc support to Nova.
-Author Chuck Short <zulcss@ubuntu.com>
-Forwarded: No
 diff -Naurp nova/etc/nova/nova.conf.sample nova.lxc/etc/nova/nova.conf.sample
 --- nova/etc/nova/nova.conf.sample	2013-09-30 23:23:16.952467626 -0400
 +++ nova.lxc/etc/nova/nova.conf.sample	2013-09-30 21:32:00.748464388 -0400
@@ -63,8 +60,8 @@ diff -Naurp nova/nova/tests/virt/lxc/__init__.py nova.lxc/nova/tests/virt/lxc/__
 +#    under the License.
 diff -Naurp nova/nova/tests/virt/lxc/test_driver.py nova.lxc/nova/tests/virt/lxc/test_driver.py
 --- nova/nova/tests/virt/lxc/test_driver.py	1969-12-31 19:00:00.000000000 -0500
-+++ nova.lxc/nova/tests/virt/lxc/test_driver.py	2013-09-30 21:32:27.104464401 -0400
-@@ -0,0 +1,124 @@
++++ nova.lxc/nova/tests/virt/lxc/test_driver.py	2013-10-01 11:06:44.672830906 -0400
+@@ -0,0 +1,126 @@
 +# vim: tabstop=4 shiftwidth=4 softtabstop=4
 +
 +# Copyright (c) 2013 Canonical
@@ -81,6 +78,7 @@ diff -Naurp nova/nova/tests/virt/lxc/test_driver.py nova.lxc/nova/tests/virt/lxc
 +#    License for the specific language governing permissions and limitations
 +#    under the License.
 +
++import fixtures
 +import mox
 +import os
 +
@@ -100,6 +98,7 @@ diff -Naurp nova/nova/tests/virt/lxc/test_driver.py nova.lxc/nova/tests/virt/lxc
 +class LXCDriverTestCase(test.TestCase):
 +    def setUp(self):
 +        super(LXCDriverTestCase, self).setUp()
++        self.flags(instances_path=self.useFixture(fixtures.TempDir()).path)
 +        self.lxc_connection = lxc_connection.LXCDriver(None)
 +
 +        instance_type = db.flavor_get(context.get_admin_context(), 5)
@@ -406,7 +405,7 @@ diff -Naurp nova/nova/virt/lxc/fstab.tmpl nova.lxc/nova/virt/lxc/fstab.tmpl
 +/sys/fs/pstore sys/fs/pstore none bind 0 0
 diff -Naurp nova/nova/virt/lxc/hostops.py nova.lxc/nova/virt/lxc/hostops.py
 --- nova/nova/virt/lxc/hostops.py	1969-12-31 19:00:00.000000000 -0500
-+++ nova.lxc/nova/virt/lxc/hostops.py	2013-09-30 21:26:37.796464232 -0400
++++ nova.lxc/nova/virt/lxc/hostops.py	2013-10-01 10:17:22.200760275 -0400
 @@ -0,0 +1,132 @@
 +# vim: tabstop=4 shiftwidth=4 softtabstop=4
 +
@@ -517,7 +516,7 @@ diff -Naurp nova/nova/virt/lxc/hostops.py nova.lxc/nova/virt/lxc/hostops.py
 +                        data["Buffers"] + data["Cached"])}
 +
 +    def _get_disk_info(self):
-+        hddinfo = os.statvfs(CONF.lxc_path)
++        hddinfo = os.statvfs(CONF.instances_path)
 +        total = hddinfo.f_frsize * hddinfo.f_blocks
 +        free = hddinfo.f_frsize * hddinfo.f_bavail
 +        return {'total': total, 'free': free}
