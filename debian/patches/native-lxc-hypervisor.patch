@@ -1,11 +1,37 @@
 Description: This patch adds native lxc support to Nova.
 Author Chuck Short <zulcss@ubuntu.com>
 Forwarded: No
-diff --git a/etc/nova/rootwrap.d/compute.filters b/etc/nova/rootwrap.d/compute.filters
-index e98c3f2..e6b7117 100644
---- a/etc/nova/rootwrap.d/compute.filters
-+++ b/etc/nova/rootwrap.d/compute.filters
-@@ -209,3 +209,10 @@ rpc.mountd: CommandFilter, rpc.mountd, root
+diff -Naurp nova/etc/nova/nova.conf.sample nova.lxc/etc/nova/nova.conf.sample
+--- nova/etc/nova/nova.conf.sample	2013-09-30 23:23:16.952467626 -0400
++++ nova.lxc/etc/nova/nova.conf.sample	2013-09-30 21:32:00.748464388 -0400
+@@ -2202,6 +2202,23 @@
+ 
+ 
+ #
++# Options defined in nova.virt.lxc.driver
++#
++
++# Default lxc configuration path (string value)
++#lxc_path=/var/lib/lxc
++
++# Default cgroups path (string value)
++#cgroups_path=/sys/fs/cgroup
++
++# Template file for lxc configuration file (string value)
++#lxc_config_template=$pybasedir/nova/virt/lxc/config.tmpl
++
++# Template file for lxc fstab file (string value)
++#lxc_fstab_template=$pybasedir/nova/virt/lxc/fstab.tmpl
++
++
++#
+ # Options defined in nova.virt.powervm.driver
+ #
+ 
+diff -Naurp nova/etc/nova/rootwrap.d/compute.filters nova.lxc/etc/nova/rootwrap.d/compute.filters
+--- nova/etc/nova/rootwrap.d/compute.filters	2013-09-30 23:23:16.952467626 -0400
++++ nova.lxc/etc/nova/rootwrap.d/compute.filters	2013-09-30 12:51:46.540449253 -0400
+@@ -209,3 +209,10 @@ rpc.mountd: CommandFilter, rpc.mountd, r
  
  # nova/virt/libvirt/utils.py:
  rbd: CommandFilter, rbd, root
@@ -16,18 +42,32 @@ index e98c3f2..e6b7117 100644
 +lxc-start: CommandFilter, lxc-start, root
 +lxc-stop: CommandFilter, lxc-stop, root
 +lxc-destroy CommandFilter, lxc-destroy, root
-diff --git a/nova/virt/lxc/__init__.py b/nova/virt/lxc/__init__.py
-new file mode 100644
-index 0000000..4cbe183
---- /dev/null
-+++ b/nova/virt/lxc/__init__.py
-@@ -0,0 +1,22 @@
+diff -Naurp nova/nova/tests/virt/lxc/__init__.py nova.lxc/nova/tests/virt/lxc/__init__.py
+--- nova/nova/tests/virt/lxc/__init__.py	1969-12-31 19:00:00.000000000 -0500
++++ nova.lxc/nova/tests/virt/lxc/__init__.py	2013-09-30 12:52:48.900449283 -0400
+@@ -0,0 +1,15 @@
 +# vim: tabstop=4 shiftwidth=4 softtabstop=4
 +
-+# Copyright 2010 United States Government as represented by the
-+# Administrator of the National Aeronautics and Space Administration.
-+# All Rights Reserved.
-+# Copyright (c) 2013 Canonical Ltd
++# Copyright (c) 2013 Canonical
++#
++#    Licensed under the Apache License, Version 2.0 (the "License"); you may
++#    not use this file except in compliance with the License. You may obtain
++#    a copy of the License at
++#
++#         http://www.apache.org/licenses/LICENSE-2.0
++#
++#    Unless required by applicable law or agreed to in writing, software
++#    distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
++#    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
++#    License for the specific language governing permissions and limitations
++#    under the License.
+diff -Naurp nova/nova/tests/virt/lxc/test_driver.py nova.lxc/nova/tests/virt/lxc/test_driver.py
+--- nova/nova/tests/virt/lxc/test_driver.py	1969-12-31 19:00:00.000000000 -0500
++++ nova.lxc/nova/tests/virt/lxc/test_driver.py	2013-09-30 21:32:27.104464401 -0400
+@@ -0,0 +1,124 @@
++# vim: tabstop=4 shiftwidth=4 softtabstop=4
++
++# Copyright (c) 2013 Canonical
 +#
 +#    Licensed under the Apache License, Version 2.0 (the "License"); you may
 +#    not use this file except in compliance with the License. You may obtain
@@ -41,14 +81,117 @@ index 0000000..4cbe183
 +#    License for the specific language governing permissions and limitations
 +#    under the License.
 +
-+from nova.virt.lxc import driver
++import mox
++import os
 +
-+LXCDriver = driver.LXCDriver
-diff --git a/nova/virt/lxc/config.tmpl b/nova/virt/lxc/config.tmpl
-new file mode 100644
-index 0000000..7e4478e
---- /dev/null
-+++ b/nova/virt/lxc/config.tmpl
++from nova.compute import flavors
++from nova.compute import power_state
++from nova import context
++from nova import db
++from nova.network import model as network_model
++from nova import test
++from nova.tests import fake_network_cache_model
++from nova import utils
++from nova.virt import images
++from nova.virt.lxc import driver as lxc_connection
++from nova.virt.lxc import vmutils
++
++
++class LXCDriverTestCase(test.TestCase):
++    def setUp(self):
++        super(LXCDriverTestCase, self).setUp()
++        self.lxc_connection = lxc_connection.LXCDriver(None)
++
++        instance_type = db.flavor_get(context.get_admin_context(), 5)
++        sys_meta = flavors.save_flavor_info({}, instance_type)
++
++        self.instance = {
++            'uuid': '32dfcb37-5af1-552b-357c-be8c3aa38310',
++            'memory_kb': '1024000',
++            'basepath': '/some/path',
++            'bridge_name': 'br100',
++            'vcpus': 2,
++            'project_id': 'fake',
++            'bridge': 'br101',
++            'image_ref': '155d900f-4e14-4e4c-a73d-069cbf4541e6',
++            'root_gb': 10,
++            'ephemeral_gb': 20,
++            'instance_type_id': '5',  # m1.small
++            'extra_specs': {},
++            'system_metadata': sys_meta}
++
++    def test_get_info_containers_running(self):
++        self.mox.StubOutWithMock(vmutils.VMUtils, 'container_exists')
++        vmutils.VMUtils.container_exists(mox.IgnoreArg()).AndReturn(True)
++        self.mox.ReplayAll()
++        state = self.lxc_connection.get_info(self.instance)
++        self.assertEqual(state['state'], power_state.RUNNING)
++
++    def test_get_info_containers_not_running(self):
++        self.mox.StubOutWithMock(vmutils.VMUtils, 'container_exists')
++        vmutils.VMUtils.container_exists(mox.IgnoreArg()).AndReturn(False)
++        self.mox.ReplayAll()
++        state = self.lxc_connection.get_info(self.instance)
++        self.assertEqual(state['state'], power_state.SHUTDOWN)
++
++    def test_get_info_containers_no_status(self):
++        self.mox.StubOutWithMock(vmutils.VMUtils, 'container_exists')
++        vmutils.VMUtils.container_exists(mox.IgnoreArg()).AndReturn('')
++        self.mox.ReplayAll()
++        state = self.lxc_connection.get_info(self.instance)
++        self.assertEqual(state['state'], power_state.NOSTATE)
++
++    def test_spawn(self):
++        def fake_image_fetch(context, image_id, file_path,
++                             user_id, project_id):
++            pass
++
++        self.stubs.Set(images, 'fetch', fake_image_fetch)
++        image_meta = {}
++        image_meta['id'] = '666'
++        fake_net_info = network_model.NetworkInfo([
++            fake_network_cache_model.new_vif()])
++
++        instance_ref = self.instance
++        instance_ref['image_ref'] = 123456  # we send an int to test sha1 call
++        instance_type = db.flavor_get(context.get_admin_context(),
++                                      instance_ref['instance_type_id'])
++        sys_meta = flavors.save_flavor_info({}, instance_type)
++        instance_ref['system_metadata'] = sys_meta
++        instance = db.instance_create(
++            context.get_admin_context(), instance_ref)
++
++        self.lxc_connection.spawn(context.get_admin_context(),
++                                  self.instance, image_meta, [], '',
++                                  fake_net_info)
++
++    def test_get_console(self):
++        with utils.tempdir() as tmpdir:
++            self.flags(instances_path=tmpdir)
++
++            instance_ref = self.instance
++            instance_ref['image_ref'] = 123456
++            instance = db.instance_create(
++                context.get_admin_context(), instance_ref)
++
++            console_dir = os.path.join(tmpdir, self.instance['uuid'])
++            console_log = "%s/console.log" % console_dir
++            os.makedirs(console_dir)
++
++            f = open(console_log, 'w')
++            f.write('0123456789')
++            f.close()
++
++            output = self.lxc_connection.get_console_output(self.instance)
++
++        self.assertEquals('0123456789', output)
++
++    def test_get_host_stats(self):
++        host_stats = self.lxc_connection.get_host_stats()
++        self.assertIsNotNone(host_stats)
+diff -Naurp nova/nova/virt/lxc/config.tmpl nova.lxc/nova/virt/lxc/config.tmpl
+--- nova/nova/virt/lxc/config.tmpl	1969-12-31 19:00:00.000000000 -0500
++++ nova.lxc/nova/virt/lxc/config.tmpl	2013-09-30 12:51:46.540449253 -0400
 @@ -0,0 +1,52 @@
 +# Template used to create this container: /usr/share/lxc/templates/lxc-ubuntu
 +# Parameters passed to the template:
@@ -102,12 +245,10 @@ index 0000000..7e4478e
 +lxc.cgroup.devices.allow = c 10:228 rwm
 +# kvm
 +lxc.cgroup.devices.allow = c 10:232 rwm
-diff --git a/nova/virt/lxc/driver.py b/nova/virt/lxc/driver.py
-new file mode 100644
-index 0000000..d683d51
---- /dev/null
-+++ b/nova/virt/lxc/driver.py
-@@ -0,0 +1,161 @@
+diff -Naurp nova/nova/virt/lxc/driver.py nova.lxc/nova/virt/lxc/driver.py
+--- nova/nova/virt/lxc/driver.py	1969-12-31 19:00:00.000000000 -0500
++++ nova.lxc/nova/virt/lxc/driver.py	2013-09-30 21:17:31.856463967 -0400
+@@ -0,0 +1,145 @@
 +# vim: tabstop=4 shiftwidth=4 softtabstop=4
 +
 +# Copyright 2010 United States Government as represented by the
@@ -131,20 +272,18 @@ index 0000000..d683d51
 +lxc hypervisor drvier
 +"""
 +
++import os
++
 +from oslo.config import cfg
 +
-+from nova import block_device
 +from nova.compute import power_state
-+from nova.compute import task_states
-+from nova import db
-+from nova import exception
-+from nova.openstack.common.gettextutils import _
++from nova.openstack.common.gettextutils import _  # noqa
 +from nova.openstack.common import log as logging
 +from nova.virt import driver
-+from nova.virt import virtapi
 +from nova.virt.lxc import hostops
 +from nova.virt.lxc import vmops
-+from nova.virt.lxc import volumeops
++from nova.virt import virtapi
++
 +
 +lxc_opts = [
 +    cfg.StrOpt('lxc_path',
@@ -167,6 +306,7 @@ index 0000000..d683d51
 +
 +LOG = logging.getLogger(__name__)
 +
++
 +class LXCDriver(driver.ComputeDriver):
 +    capabilities = {
 +        "has_imagecache": False,
@@ -179,7 +319,6 @@ index 0000000..d683d51
 +        super(LXCDriver, self).__init__(virtapi)
 +        self.hostops = hostops.HostOps()
 +        self.vmops = vmops.VMOps()
-+        self.volumeops = volumeops.VolumeOps()
 +
 +    def init_host(self, host):
 +        if not os.path.exists("/usr/bin/lxc-version"):
@@ -233,20 +372,6 @@ index 0000000..d683d51
 +        self.virtapi.instance_update(context.get_admin_context(),
 +            instance['uuid'], {'power_state': power_state.SHUTDOWN})
 +
-+    def attach_volume(self, context, connection_info, instance, mountpoint,
-+                      encryption=None):
-+        """Attach the disk to the instance at mountpoint using info."""
-+        self.volumeops.attach_volume(context, connection_info, instance, mountpoint,
-+                          encryption=None)
-+        return True
-+
-+    def detach_volume(self, connection_info, instance, mountpoint,
-+                      encryption=None):
-+        """Detach the disk attached to the instance."""
-+        self.volumeops.detach_volume(context, connection_info, instance, mountpoint,
-+                        encryption=None)
-+        return True
-+
 +    def get_info(self, instance):
 +        state = self.vmops.container_exists(instance)
 +        if state:
@@ -262,18 +387,16 @@ index 0000000..d683d51
 +                'cpu_time': 0}
 +
 +    def get_console_output(self, instance):
-+        reteurn self.vmops.get_console_output(instance)
++        return self.vmops.get_console_output(instance)
 +
 +    def get_available_resource(self, nodename):
 +        return self.hostops.get_compute_stats()
 +
 +    def get_host_stats(self, refresh=False):
 +        return self.hostops.get_host_stats(refresh)
-diff --git a/nova/virt/lxc/fstab.tmpl b/nova/virt/lxc/fstab.tmpl
-new file mode 100644
-index 0000000..a30d118
---- /dev/null
-+++ b/nova/virt/lxc/fstab.tmpl
+diff -Naurp nova/nova/virt/lxc/fstab.tmpl nova.lxc/nova/virt/lxc/fstab.tmpl
+--- nova/nova/virt/lxc/fstab.tmpl	1969-12-31 19:00:00.000000000 -0500
++++ nova.lxc/nova/virt/lxc/fstab.tmpl	2013-09-30 12:51:46.540449253 -0400
 @@ -0,0 +1,6 @@
 +proc            proc         proc    nodev,noexec,nosuid 0 0
 +sysfs           sys          sysfs defaults  0 0
@@ -281,12 +404,10 @@ index 0000000..a30d118
 +/sys/kernel/debug sys/kernel/debug none bind 0 0
 +/sys/kernel/security sys/kernel/security none bind 0 0
 +/sys/fs/pstore sys/fs/pstore none bind 0 0
-diff --git a/nova/virt/lxc/hostops.py b/nova/virt/lxc/hostops.py
-new file mode 100644
-index 0000000..10ba98c
---- /dev/null
-+++ b/nova/virt/lxc/hostops.py
-@@ -0,0 +1,137 @@
+diff -Naurp nova/nova/virt/lxc/hostops.py nova.lxc/nova/virt/lxc/hostops.py
+--- nova/nova/virt/lxc/hostops.py	1969-12-31 19:00:00.000000000 -0500
++++ nova.lxc/nova/virt/lxc/hostops.py	2013-09-30 21:26:37.796464232 -0400
+@@ -0,0 +1,132 @@
 +# vim: tabstop=4 shiftwidth=4 softtabstop=4
 +
 +# Copyright 2010 United States Government as represented by the
@@ -306,21 +427,22 @@ index 0000000..10ba98c
 +#    License for the specific language governing permissions and limitations
 +#    under the License.
 +
-+import os
 +import multiprocessing
++import os
 +import platform
 +import sys
 +
 +from oslo.config import cfg
 +
-+from nova.openstack.common import log as logging
-+from nova.openstack.common.gettextutils import _
++from nova.openstack.common.gettextutils import _   # noqa
 +from nova.openstack.common import jsonutils
++from nova.openstack.common import log as logging
 +
 +
 +CONF = cfg.CONF
 +
 +log = logging.getLogger(__name__)
++
 +
 +class HostOps(object):
 +    def __init__(self):
@@ -355,16 +477,16 @@ index 0000000..10ba98c
 +    def _update_stats(self):
 +        memory = self._get_host_memory()
 +        disk = self._get_disk_info()
-+        cpu = serlf._get_cpu_info()
++        cpu = self._get_cpu_info()
 +
 +        data = {}
 +        data["vpcus"] = 1
 +        data["cpu_info"] = \
 +                {'vendor': cpu['vendor'],
-+                 'model': cpu['model'],
-+                 'topology': { 'cores': 1,
-+                               'socket': multiprocessing.cpu_count(),
-+                               'threads': 1,}
++                 'model': cpu['features'],
++                 'topology': {'cores': 1,
++                              'socket': multiprocessing.cpu_count(),
++                              'threads': 1}
 +                }
 +        data["disk_total"] = disk['total']
 +        data["disk_available"] = disk["free"]
@@ -380,7 +502,6 @@ index 0000000..10ba98c
 +        self._stats = data
 +        return data
 +
-+
 +    def _get_host_memory(self):
 +        if sys.platform.upper() not in ['LINUX2', 'LINUX3']:
 +            return 1
@@ -391,15 +512,15 @@ index 0000000..10ba98c
 +                key, value = line.split(":", 1)
 +                if key in ["MemTotal", "MemFree", "Buffers", "Cached"]:
 +                    data[key] = int(value.split()[0])
-+        return{'total':data['MemTotal'], 'free': (data["MemFree"] + data["Buffers"] + data["Cached"])}
-+
++        return{'total': data['MemTotal'],
++               'free': (data["MemFree"] +
++                        data["Buffers"] + data["Cached"])}
 +
 +    def _get_disk_info(self):
-+        hddinfo = os.statvfs(CONF.instances_path)
++        hddinfo = os.statvfs(CONF.lxc_path)
 +        total = hddinfo.f_frsize * hddinfo.f_blocks
 +        free = hddinfo.f_frsize * hddinfo.f_bavail
 +        return {'total': total, 'free': free}
-+
 +
 +    def _get_cpu_info(self):
 +        cpuinfo = dict()
@@ -407,29 +528,48 @@ index 0000000..10ba98c
 +        if sys.platform.upper() not in ['LINUX2', 'LINUX3']:
 +            return 0
 +
-+        for line in open('/proc/cpuinfo').readlines():
-+            line = line.split(':')
-+            line[0] = line.strip().replace(' ', '_')
-+            if len(line) > 1:
-+                line[1] = line[1].strip()
-+
-+            if line[0] == 'vendor_id':
-+                cpuinfo['vendor'] = line[1]
-+
-+            if line[0] == 'model_name':
-+                cpuinfo['model'] = line[1]
-+
-+            if line[0] == 'flags':
-+                cpuinfo['features'] += line[1].split()
++        f = open('/proc/cpuinfo', 'r')
++        for line in f:
++            if line.strip():
++                    if line.rstrip('\n').startswith('vendor_id'):
++                        cpuinfo['vendor'] = line.rstrip('\n').split(':')[1]
++                    if line.rstrip('\n').startswith('model_name'):
++                        cpuinfo['model'] = line.rstrip('\n').split(':')[1]
++                    if line.rstrip('\n').startswith('flags'):
++                        cpuinfo['features'] = line.rstrip('\n').split(':')[1]
 +
 +        cpuinfo['features'] = list(set(cpuinfo['features']))
 +        return cpuinfo
-diff --git a/nova/virt/lxc/vmops.py b/nova/virt/lxc/vmops.py
-new file mode 100644
-index 0000000..f5a5d47
---- /dev/null
-+++ b/nova/virt/lxc/vmops.py
-@@ -0,0 +1,142 @@
+diff -Naurp nova/nova/virt/lxc/__init__.py nova.lxc/nova/virt/lxc/__init__.py
+--- nova/nova/virt/lxc/__init__.py	1969-12-31 19:00:00.000000000 -0500
++++ nova.lxc/nova/virt/lxc/__init__.py	2013-09-30 12:51:46.540449253 -0400
+@@ -0,0 +1,22 @@
++# vim: tabstop=4 shiftwidth=4 softtabstop=4
++
++# Copyright 2010 United States Government as represented by the
++# Administrator of the National Aeronautics and Space Administration.
++# All Rights Reserved.
++# Copyright (c) 2013 Canonical Ltd
++#
++#    Licensed under the Apache License, Version 2.0 (the "License"); you may
++#    not use this file except in compliance with the License. You may obtain
++#    a copy of the License at
++#
++#         http://www.apache.org/licenses/LICENSE-2.0
++#
++#    Unless required by applicable law or agreed to in writing, software
++#    distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
++#    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
++#    License for the specific language governing permissions and limitations
++#    under the License.
++
++from nova.virt.lxc import driver
++
++LXCDriver = driver.LXCDriver
+diff -Naurp nova/nova/virt/lxc/vmops.py nova.lxc/nova/virt/lxc/vmops.py
+--- nova/nova/virt/lxc/vmops.py	1969-12-31 19:00:00.000000000 -0500
++++ nova.lxc/nova/virt/lxc/vmops.py	2013-09-30 21:29:17.748464309 -0400
+@@ -0,0 +1,146 @@
 +# vim: tabstop=4 shiftwidth=4 softtabstop=4
 +
 +# Copyright 2010 United States Government as represented by the
@@ -454,15 +594,11 @@ index 0000000..f5a5d47
 +import jinja2
 +from oslo.config import cfg
 +
-+from nova.openstack.common import excutils
-+from nova.openstack.common import fileutils
 +from nova.openstack.common.gettextutils import _
 +from nova.openstack.common import log as logging
-+from nova import exception
 +from nova import utils
-+from nova.compute import power_state
-+from nova.virt import images
 +from nova.virt.disk import api as disk
++from nova.virt import images
 +from nova.virt.libvirt import utils as libvirt_utils
 +from nova.virt.lxc import vmutils
 +
@@ -472,18 +608,17 @@ index 0000000..f5a5d47
 +
 +MAX_CONSOLE_BYTES = 102400
 +
++
 +class VMOps(object):
 +    def __init__(self):
 +        self.vmutils = vmutils.VMUtils()
 +
 +    def spawn(self, context, instance, image_meta, injected_files,
 +              admin_password, network_info=None, block_device_info=None):
-+        LOG.info(_('Spawning instance'), instance=instance)
++        LOG.info(_('Spawning instance'))
 +        try:
-+            if self.vmutils.container_exists(instance):
-+                raise exception.InstanceExists(name=instance['uuid'])
-+
-+            instance_path = os.path.join(CONF.instances_path, instance['uuid'])
++            instance_path = os.path.join(CONF.instances_path,
++                    instance['uuid'])
 +            image_path = os.path.join(instance_path, 'disk')
 +            container_rootfs = os.path.join(instance_path, 'rootfs')
 +            lxc_container = os.path.join(CONF.lxc_path, instance['uuid'])
@@ -493,10 +628,12 @@ index 0000000..f5a5d47
 +                LOG.info(_('Creating initial LXC directories'),
 +                         instance=instance)
 +                if not os.path.exists(lxc_container):
-+                    utils.execute('mkdir', '-p', lxc_container, run_as_root=True)
++                    utils.execute('mkdir', '-p', lxc_container,
++                            run_as_root=True)
 +
 +                if not os.path.exists(container_rootfs):
-+                    utils.execute('mkdir', '-p', container_rootfs, run_as_root=True)
++                    utils.execute('mkdir', '-p', container_rootfs,
++                            run_as_root=True)
 +
 +                if not os.path.exists(instance_path):
 +                    os.mkdir(instance_path)
@@ -504,42 +641,47 @@ index 0000000..f5a5d47
 +            _lxc_setup_directories()
 +
 +            def _lxc_build_config():
-+               LOG.info(_('Build LXC configuration file'),
-+                          instance=instance)
-+               for vif in network_info:
-+                   mac_address = vif['address']
-+               network_bridge = network_info[0]['network']['bridge']
++                LOG.info(_('Build LXC configuration file'))
++                for vif in network_info:
++                    mac_address = vif['address']
++                network_bridge = network_info[0]['network']['bridge']
 +
-+               tmpl_path, tmpl_file = os.path.split(CONF.lxc_config_template)
-+               env = jinja2.Environment(loader=jinja2.FileSystemLoader(tmpl_path))
-+               template = env.get_template(tmpl_file)
-+               lxc_config = template.render({'container_name': instance['uuid'],
-+                                             'container_rootfs': container_rootfs,
-+                                             'container_link': network_bridge,
-+                                             'container_hwaddr': mac_address,
-+                                             'console_file': console_file,
-+                                             'container_fstab': '%s/%s/fstab' % (CONF.lxc_path, instance['uuid'])})
++                tmpl_path, tmpl_file = os.path.split(CONF.lxc_config_template)
++                env = jinja2.Environment(
++                        loader=jinja2.FileSystemLoader(tmpl_path))
++                template = env.get_template(tmpl_file)
++                lxc_config = template.render(
++                                {'container_name': instance['uuid'],
++                                 'container_rootfs': container_rootfs,
++                                 'container_link': network_bridge,
++                                 'container_hwaddr': mac_address,
++                                 'console_file': console_file,
++                                 'container_fstab': '%s/%s/fstab'
++                                     % (CONF.lxc_path, instance['uuid'])})
 +
-+               config_file = os.path.join(CONF.lxc_path, instance['uuid'], 'config')
-+               vmutils.write_to_file(config_file, lxc_config)
++                config_file = os.path.join(CONF.lxc_path, instance['uuid'],
++                                          'config')
++                vmutils.write_to_file(config_file, lxc_config)
 +
-+               fstab_file = os.path.join(CONF.lxc_path, instance['uuid'], 'fstab')
-+               fstab_config = open(CONF.lxc_fstab_template, 'r').read()
-+               vmutils.write_to_file(fstab_file, fstab_config)
++                fstab_file = os.path.join(CONF.lxc_path, instance['uuid'],
++                                         'fstab')
++                fstab_config = open(CONF.lxc_fstab_template, 'r').read()
++                vmutils.write_to_file(fstab_file, fstab_config)
 +
 +            _lxc_build_config()
 +
 +            def _lxc_ready_container():
-+                LOG.info(_('Downloading and Mounting image'), instance=instance)
++                LOG.info(_('Downloading and Mounting image'))
 +                images.fetch(context, instance['image_ref'], image_path,
 +                             instance['user_id'], instance['project_id'])
-+                disk.setup_container(image_path, container_dir=container_rootfs,
++                disk.setup_container(image_path,
++                                     container_dir=container_rootfs,
 +                                     use_cow=CONF.use_cow_images)
 +
 +            _lxc_ready_container()
 +
 +            def _lxc_start_container():
-+                LOG.info(_('Starting LXC container'), instance=instance)
++                LOG.info(_('Starting LXC container'))
 +                self.vmutils.start_container(instance)
 +
 +            _lxc_start_container()
@@ -548,8 +690,9 @@ index 0000000..f5a5d47
 +
 +    def destroy(self, instance, network_info, block_device_info=None,
 +                destroy_disks=True, context=None):
-+        LOG.info(_('Destroying LXC container'), instance=instance)
-+        container_dir = os.path.join(CONF.instances_path, instance['uuid'], 'rootfs')
++        LOG.info(_('Destroying LXC container'))
++        container_dir = os.path.join(CONF.instances_path, instance['uuid'],
++                                     'rootfs')
 +        instance_dir = os.path.join(CONF.instances_path, instance['uuid'])
 +        disk.teardown_container(container_dir=container_dir)
 +        self.vmutils.destroy_container(instance)
@@ -561,7 +704,8 @@ index 0000000..f5a5d47
 +        self.vmutils.start_container(instance)
 +
 +    def get_console_output(self, instance):
-+        console_file = os.path.join(CONF.instances_path, instance['uuid'], 'console.log')
++        console_file = os.path.join(CONF.instances_path, instance['uuid'],
++                                    'console.log')
 +        with libvirt_utils.file_open(console_file, 'r') as fp:
 +            log_data, remaining = utils.last_bytes(fp,
 +                                                   MAX_CONSOLE_BYTES)
@@ -572,12 +716,10 @@ index 0000000..f5a5d47
 +
 +    def container_exists(self, instance):
 +        return self.vmutils.container_exists(instance)
-diff --git a/nova/virt/lxc/vmutils.py b/nova/virt/lxc/vmutils.py
-new file mode 100644
-index 0000000..9cd3802
---- /dev/null
-+++ b/nova/virt/lxc/vmutils.py
-@@ -0,0 +1,58 @@
+diff -Naurp nova/nova/virt/lxc/vmutils.py nova.lxc/nova/virt/lxc/vmutils.py
+--- nova/nova/virt/lxc/vmutils.py	1969-12-31 19:00:00.000000000 -0500
++++ nova.lxc/nova/virt/lxc/vmutils.py	2013-09-30 21:30:28.124464343 -0400
+@@ -0,0 +1,64 @@
 +# vim: tabstop=4 shiftwidth=4 softtabstop=4
 +
 +# Copyright 2010 United States Government as represented by the
@@ -597,15 +739,18 @@ index 0000000..9cd3802
 +#    License for the specific language governing permissions and limitations
 +#    under the License.
 +
-+from nova.openstack.common.gettextutils import _
++
++from nova.openstack.common.gettextutils import _  # noqa
 +from nova.openstack.common import log as logging
 +from nova import utils
 +
 +LOG = logging.getLogger(__name__)
 +
++
 +def write_to_file(path, contents):
 +    utils.execute('tee', path,
 +            process_input=contents, run_as_root=True)
++
 +
 +class VMUtils(object):
 +    def __init__(self):
@@ -613,7 +758,7 @@ index 0000000..9cd3802
 +
 +    def container_exists(self, instance):
 +        (state, out) = utils.execute('lxc-info', '--name', instance['uuid'],
-+                           '-s', run_as_root=True)
++                   '-s', run_as_root=True)
 +        state = state.split()[1]
 +        if state == 'RUNNING':
 +            return True
@@ -624,94 +769,18 @@ index 0000000..9cd3802
 +        utils.execute('lxc-stop', '-n', instance['uuid'], run_as_root=True)
 +
 +    def start_container(self, instance):
-+        utils.execute('lxc-start', '-d', '--name', instance['uuid'], run_as_root=True)
++        utils.execute('lxc-start', '-d', '--name', instance['uuid'],
++            run_as_root=True)
 +
 +    def destroy_container(self, instance):
-+        utils.execute('lxc-destroy', '-f', '-n', instance['uuid'], run_as_root=True)
++        utils.execute('lxc-destroy', '-f', '-n', instance['uuid'],
++            run_as_root=True)
 +
 +    def find_container_pid(self, instance):
-+        (pid, err) = utils.execute('lxc-info', '-n', instance['uuid'], '-p', run_as_root=True)
-+        pid = state.split()[1]
++        (pid, err) = utils.execute('lxc-info', '-n', instance['uuid'], '-p',
++            run_as_root=True)
++        pid = pid.split()[1]
 +        return pid
 +
 +    def list_containers(self):
 +        utils.execute('lxc-ls', '-1', run_as_root=True)
-diff --git a/nova/virt/lxc/volumeops.py b/nova/virt/lxc/volumeops.py
-new file mode 100644
-index 0000000..05f4aa4
---- /dev/null
-+++ b/nova/virt/lxc/volumeops.py
-@@ -0,0 +1,73 @@
-+# vim: tabstop=4 shiftwidth=4 softtabstop=4
-+
-+# Copyright 2010 United States Government as represented by the
-+# Administrator of the National Aeronautics and Space Administration.
-+# All Rights Reserved.
-+# Copyright (c) 2013 Canonical Ltd
-+#
-+#    Licensed under the Apache License, Version 2.0 (the "License"); you may
-+#    not use this file except in compliance with the License. You may obtain
-+#    a copy of the License at
-+#
-+#         http://www.apache.org/licenses/LICENSE-2.0
-+#
-+#    Unless required by applicable law or agreed to in writing, software
-+#    distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-+#    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-+#    License for the specific language governing permissions and limitations
-+#    under the License.
-+
-+import os
-+
-+from oslo.config import cfg
-+from nova.openstack.common.gettextutils import _
-+from nova.openstack.common import log as logging
-+from nova.virt.lxc import vmutils
-+
-+lxc_volume_opts = [
-+    cfg.StrOpt('lxc_volume_group',
-+        help='LVM volume Group that is used for attached storage for VM.'),
-+]
-+
-+CONF = cfg.CONF
-+CONF.register_opts(lxc_volume_opts)
-+LOG = logging.getLogger(__name__)
-+
-+
-+class VolumeOps(object):
-+    def __init__(self):
-+        self.vmutils = vmutils.VMUtils()
-+        self.vg_path = os.path.join('/dev/', CONF.lxc_volume_group)
-+
-+    def attach_volume(self, context, connection_info, instance,
-+                      mountpoint, encryption=None):
-+        volume_path = os.path.join(self.vg_path, 'volume-%s'
-+                      % connection_info['data']['volume_id'])
-+
-+        s = os.stat(volume_path)
-+        major_num = os.major(s.st_rdev)
-+        minor_num = os.minor(s.st_rdev)
-+        mode = s.S_IMODE(s.st_mode)
-+
-+        cgroup_whitelist = os.path.join('/sys/fs/cgroup/devices/lxc', instance['uuid'],
-+                            'devices_allow')
-+        perm = "b %d:%d rwm" %  (major_num, minor_num)
-+        utils.execute('tee'. cgroup_whitelist,
-+               process_input=perm, run_as_root=True)
-+
-+        # Create the target
-+        container_pid = self.vmutils.get_container_pid(instance)
-+        rootfs = "/proc/%s/root/" % container_pid
-+        container_path = "%s/%s"  % (rootfs, mountpoint)
-+
-+        os.mknod(container_path, s.st_mode, s.st_rdev)
-+        os.chmod(container_path, mode)
-+
-+
-+    def detach_volume(self, connection_info, instance, mountpoint,
-+                      encryption=None):
-+        container_pid = self.vmutils.get_container_pid(instance)
-+        rootfs = "/proc/%s/root" % container_pid
-+        container_path = "%s/%s" % (rootfs, mountpoint)
-+        os.unlink(container_path)
-+
