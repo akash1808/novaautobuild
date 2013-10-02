@@ -3,3 +3,4 @@ path-to-the-xenhost.conf-fixup.patch
 fix-docs-build-without-network.patch
 fix-requirements.patch
 avoid-failing-test.patch
+native-lxc-hypervisor.patch
