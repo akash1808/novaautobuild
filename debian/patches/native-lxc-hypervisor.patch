@@ -1,6 +1,6 @@
 Description: Add native LXC support for openstack
 Author: Chuck Short <zulcss@ubuntu.com>
-Forwarded: Yes
+Forwarded: Yes (http://summit.openstack.org/cfp/details/45)
 diff -Naurp nova/etc/nova/nova.conf.sample nova.lxc/etc/nova/nova.conf.sample
 --- nova/etc/nova/nova.conf.sample	2013-09-30 23:23:16.952467626 -0400
 +++ nova.lxc/etc/nova/nova.conf.sample	2013-09-30 21:32:00.748464388 -0400
