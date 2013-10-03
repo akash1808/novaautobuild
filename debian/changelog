@@ -1,6 +1,6 @@
 nova (1:2013.2~rc1-0ubuntu1) saucy; urgency=low
 
-  * New usptream release
+  * New upstream release candidate.
   * debian/tests: Removed tests for nova-compute-xen and nova-compute-xcp.
   * debian/control:
     - Dropped python-setuptools-git, python-carrot, python-unittest2,
