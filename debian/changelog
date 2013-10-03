@@ -23,6 +23,12 @@ nova (1:2013.2~rc1-0ubuntu1) saucy; urgency=low
 
  -- Chuck Short <zulcss@ubuntu.com>  Thu, 03 Oct 2013 09:42:52 -0400
 
+nova (1:2013.2~b3-0ubuntu2) saucy; urgency=low
+
+  * debian/tests: Removed tests for nova-compute-xen and nova-compute-xcp.
+
+ -- Chuck Short <zulcss@ubuntu.com>   Fri, 13 Sep 2013 10:12:52 -0400
+
 nova (1:2013.2~b3-0ubuntu1) saucy; urgency=low
 
   * New usptream release. 
