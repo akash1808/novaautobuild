@@ -1,15 +1,16 @@
-nova (1:2013.2~b3-0ubuntu2) saucy; urgency=low
+nova (1:2013.2~rc1-0ubuntu1) saucy; urgency=low
 
+  * New usptream release
   * debian/tests: Removed tests for nova-compute-xen and nova-compute-xcp.
   * debian/control:
     - Dropped python-setuptools-git, python-carrot, python-unittest2,
       python-daemon, python-gflags, python-cheetah, python-glance,
       python-lockfile, python-routes, python-xattr, python-novaclient,
-      python-pycurl, python-keystone, python-libxml2, python-pyparsing.
+      python-pycurl, python-keystone, python-libxml2, python-pyparsing,
+      and python-d2to1.
     - Suggest python-ldap for python-nova.
     - Added python-mock, python-greenlet, python-keystoneclient,
-      python-anyjson,
-      python-jsonschema, python-six
+      python-anyjson, python-jsonschema, and python-six
     - Bumped versioned dependencies for python-fixtures, python-testtools, and
       testrepository,
       python-stevedore,
@@ -20,7 +21,7 @@ nova (1:2013.2~b3-0ubuntu2) saucy; urgency=low
   * debian/patches/native-lxc-hypervisor.patch: Add native lxc support.
     (LP: #1220701)
 
- -- Chuck Short <zulcss@ubuntu.com>  Fri, 13 Sep 2013 10:12:52 -0400
+ -- Chuck Short <zulcss@ubuntu.com>  Thu, 03 Oct 2013 09:42:52 -0400
 
 nova (1:2013.2~b3-0ubuntu1) saucy; urgency=low
 
