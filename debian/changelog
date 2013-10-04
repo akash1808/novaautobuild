@@ -1,7 +1,7 @@
 nova (1:2013.2~rc1-0ubuntu2) UNRELEASED; urgency=low
 
   * debian/patches/fix-novnc-regression.patch: Fix regression caused
-    by a non packaged version of websockify. (LP: #1235044)
+    by a non-packaged version of websockify. (LP: #1235044)
 
  -- Chuck Short <zulcss@ubuntu.com>  Thu, 03 Oct 2013 21:24:29 -0400
 
