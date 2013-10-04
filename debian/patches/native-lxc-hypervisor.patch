@@ -39,7 +39,7 @@ Forwarded: no, https://github.com/zulcss/nova
 +lxc-ls: CommandFilter, lxc-ls, root
 +lxc-start: CommandFilter, lxc-start, root
 +lxc-stop: CommandFilter, lxc-stop, root
-+lxc-destroy CommandFilter, lxc-destroy, root
++lxc-destroy: CommandFilter, lxc-destroy, root
 --- /dev/null
 +++ b/nova/tests/virt/lxc/__init__.py
 @@ -0,0 +1,15 @@

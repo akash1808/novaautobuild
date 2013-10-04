@@ -1,3 +1,10 @@
+nova (1:2013.2~rc1-0ubuntu3) saucy; urgency=low
+
+  * debian/patches/native-lxc-hypervisor.patch: Update
+    rootwrap.d/compute.filters to allow nova-network to start.
+
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 04 Oct 2013 13:18:17 -0400
+
 nova (1:2013.2~rc1-0ubuntu2) saucy; urgency=low
 
   [ Chuck Short ]
