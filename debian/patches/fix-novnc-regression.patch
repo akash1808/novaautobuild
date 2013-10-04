@@ -1,0 +1,15 @@
+Description: Fix regression caused by a non released version of websockify on Ubuntu.
+Author: Chuck Short <zulcss@ubuntu.com>
+Forwarded: No
+diff -Naurp nova-2013.2.rc1.orig/nova/cmd/novncproxy.py nova-2013.2.rc1/nova/cmd/novncproxy.py
+--- nova-2013.2.rc1.orig/nova/cmd/novncproxy.py	2013-10-03 14:32:06.000000000 -0400
++++ nova-2013.2.rc1/nova/cmd/novncproxy.py	2013-10-03 21:19:06.428136557 -0400
+@@ -77,8 +77,6 @@ def main():
+                                    daemon=CONF.daemon,
+                                    record=CONF.record,
+                                    web=CONF.web,
+-                                   file_only=True,
+-                                   no_parent=True,
+                                    target_host='ignore',
+                                    target_port='ignore',
+                                    wrap_mode='exit',
