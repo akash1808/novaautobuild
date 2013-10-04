@@ -1,3 +1,11 @@
+nova (1:2013.2~rc1-0ubuntu2) saucy; urgency=low
+
+  [ Chuck Short ]
+  * debian/patches/fix-novnc-regression.patch: Fix regression caused
+    by use of more recent version of websockify upstream (LP: #1235044).
+
+ -- James Page <james.page@ubuntu.com>  Fri, 04 Oct 2013 11:13:34 +0100
+
 nova (1:2013.2~rc1-0ubuntu1) saucy; urgency=low
 
   * New upstream release candidate.

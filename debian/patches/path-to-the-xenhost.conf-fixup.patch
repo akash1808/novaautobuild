@@ -1,6 +1,5 @@
-diff -Naurp nova-2013.2.a2481.ge685a72.orig/plugins/xenserver/xenapi/etc/xapi.d/plugins/xenhost nova-2013.2.a2481.ge685a72/plugins/xenserver/xenapi/etc/xapi.d/plugins/xenhost
---- nova-2013.2.a2481.ge685a72.orig/plugins/xenserver/xenapi/etc/xapi.d/plugins/xenhost	2013-08-02 13:51:10.000000000 +0000
-+++ nova-2013.2.a2481.ge685a72/plugins/xenserver/xenapi/etc/xapi.d/plugins/xenhost	2013-08-02 14:00:12.527156844 +0000
+--- a/plugins/xenserver/xenapi/etc/xapi.d/plugins/xenhost
++++ b/plugins/xenserver/xenapi/etc/xapi.d/plugins/xenhost
 @@ -41,7 +41,7 @@ _ = pluginlib._
  
  

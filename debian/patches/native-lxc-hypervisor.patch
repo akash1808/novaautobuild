@@ -1,9 +1,8 @@
 Description: Add native LXC support for openstack
 Author: Chuck Short <zulcss@ubuntu.com>
 Forwarded: no, https://github.com/zulcss/nova
-diff -Naurp nova/etc/nova/nova.conf.sample nova.lxc/etc/nova/nova.conf.sample
---- nova/etc/nova/nova.conf.sample	2013-09-30 23:23:16.952467626 -0400
-+++ nova.lxc/etc/nova/nova.conf.sample	2013-09-30 21:32:00.748464388 -0400
+--- a/etc/nova/nova.conf.sample
++++ b/etc/nova/nova.conf.sample
 @@ -2202,6 +2202,23 @@
  
  
@@ -28,9 +27,8 @@ diff -Naurp nova/etc/nova/nova.conf.sample nova.lxc/etc/nova/nova.conf.sample
  # Options defined in nova.virt.powervm.driver
  #
  
-diff -Naurp nova/etc/nova/rootwrap.d/compute.filters nova.lxc/etc/nova/rootwrap.d/compute.filters
---- nova/etc/nova/rootwrap.d/compute.filters	2013-09-30 23:23:16.952467626 -0400
-+++ nova.lxc/etc/nova/rootwrap.d/compute.filters	2013-09-30 12:51:46.540449253 -0400
+--- a/etc/nova/rootwrap.d/compute.filters
++++ b/etc/nova/rootwrap.d/compute.filters
 @@ -209,3 +209,10 @@ rpc.mountd: CommandFilter, rpc.mountd, r
  
  # nova/virt/libvirt/utils.py:
@@ -42,9 +40,8 @@ diff -Naurp nova/etc/nova/rootwrap.d/compute.filters nova.lxc/etc/nova/rootwrap.
 +lxc-start: CommandFilter, lxc-start, root
 +lxc-stop: CommandFilter, lxc-stop, root
 +lxc-destroy CommandFilter, lxc-destroy, root
-diff -Naurp nova/nova/tests/virt/lxc/__init__.py nova.lxc/nova/tests/virt/lxc/__init__.py
---- nova/nova/tests/virt/lxc/__init__.py	1969-12-31 19:00:00.000000000 -0500
-+++ nova.lxc/nova/tests/virt/lxc/__init__.py	2013-09-30 12:52:48.900449283 -0400
+--- /dev/null
++++ b/nova/tests/virt/lxc/__init__.py
 @@ -0,0 +1,15 @@
 +# vim: tabstop=4 shiftwidth=4 softtabstop=4
 +
@@ -61,9 +58,8 @@ diff -Naurp nova/nova/tests/virt/lxc/__init__.py nova.lxc/nova/tests/virt/lxc/__
 +#    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 +#    License for the specific language governing permissions and limitations
 +#    under the License.
-diff -Naurp nova/nova/tests/virt/lxc/test_driver.py nova.lxc/nova/tests/virt/lxc/test_driver.py
---- nova/nova/tests/virt/lxc/test_driver.py	1969-12-31 19:00:00.000000000 -0500
-+++ nova.lxc/nova/tests/virt/lxc/test_driver.py	2013-10-01 11:06:44.672830906 -0400
+--- /dev/null
++++ b/nova/tests/virt/lxc/test_driver.py
 @@ -0,0 +1,126 @@
 +# vim: tabstop=4 shiftwidth=4 softtabstop=4
 +
@@ -191,9 +187,8 @@ diff -Naurp nova/nova/tests/virt/lxc/test_driver.py nova.lxc/nova/tests/virt/lxc
 +    def test_get_host_stats(self):
 +        host_stats = self.lxc_connection.get_host_stats()
 +        self.assertIsNotNone(host_stats)
-diff -Naurp nova/nova/virt/lxc/config.tmpl nova.lxc/nova/virt/lxc/config.tmpl
---- nova/nova/virt/lxc/config.tmpl	1969-12-31 19:00:00.000000000 -0500
-+++ nova.lxc/nova/virt/lxc/config.tmpl	2013-09-30 12:51:46.540449253 -0400
+--- /dev/null
++++ b/nova/virt/lxc/config.tmpl
 @@ -0,0 +1,52 @@
 +# Template used to create this container: /usr/share/lxc/templates/lxc-ubuntu
 +# Parameters passed to the template:
@@ -247,9 +242,8 @@ diff -Naurp nova/nova/virt/lxc/config.tmpl nova.lxc/nova/virt/lxc/config.tmpl
 +lxc.cgroup.devices.allow = c 10:228 rwm
 +# kvm
 +lxc.cgroup.devices.allow = c 10:232 rwm
-diff -Naurp nova/nova/virt/lxc/driver.py nova.lxc/nova/virt/lxc/driver.py
---- nova/nova/virt/lxc/driver.py	1969-12-31 19:00:00.000000000 -0500
-+++ nova.lxc/nova/virt/lxc/driver.py	2013-09-30 21:17:31.856463967 -0400
+--- /dev/null
++++ b/nova/virt/lxc/driver.py
 @@ -0,0 +1,145 @@
 +# vim: tabstop=4 shiftwidth=4 softtabstop=4
 +
@@ -396,9 +390,8 @@ diff -Naurp nova/nova/virt/lxc/driver.py nova.lxc/nova/virt/lxc/driver.py
 +
 +    def get_host_stats(self, refresh=False):
 +        return self.hostops.get_host_stats(refresh)
-diff -Naurp nova/nova/virt/lxc/fstab.tmpl nova.lxc/nova/virt/lxc/fstab.tmpl
---- nova/nova/virt/lxc/fstab.tmpl	1969-12-31 19:00:00.000000000 -0500
-+++ nova.lxc/nova/virt/lxc/fstab.tmpl	2013-09-30 12:51:46.540449253 -0400
+--- /dev/null
++++ b/nova/virt/lxc/fstab.tmpl
 @@ -0,0 +1,6 @@
 +proc            proc         proc    nodev,noexec,nosuid 0 0
 +sysfs           sys          sysfs defaults  0 0
@@ -406,9 +399,8 @@ diff -Naurp nova/nova/virt/lxc/fstab.tmpl nova.lxc/nova/virt/lxc/fstab.tmpl
 +/sys/kernel/debug sys/kernel/debug none bind 0 0
 +/sys/kernel/security sys/kernel/security none bind 0 0
 +/sys/fs/pstore sys/fs/pstore none bind 0 0
-diff -Naurp nova/nova/virt/lxc/hostops.py nova.lxc/nova/virt/lxc/hostops.py
---- nova/nova/virt/lxc/hostops.py	1969-12-31 19:00:00.000000000 -0500
-+++ nova.lxc/nova/virt/lxc/hostops.py	2013-10-01 10:17:22.200760275 -0400
+--- /dev/null
++++ b/nova/virt/lxc/hostops.py
 @@ -0,0 +1,132 @@
 +# vim: tabstop=4 shiftwidth=4 softtabstop=4
 +
@@ -542,9 +534,8 @@ diff -Naurp nova/nova/virt/lxc/hostops.py nova.lxc/nova/virt/lxc/hostops.py
 +
 +        cpuinfo['features'] = list(set(cpuinfo['features']))
 +        return cpuinfo
-diff -Naurp nova/nova/virt/lxc/__init__.py nova.lxc/nova/virt/lxc/__init__.py
---- nova/nova/virt/lxc/__init__.py	1969-12-31 19:00:00.000000000 -0500
-+++ nova.lxc/nova/virt/lxc/__init__.py	2013-09-30 12:51:46.540449253 -0400
+--- /dev/null
++++ b/nova/virt/lxc/__init__.py
 @@ -0,0 +1,22 @@
 +# vim: tabstop=4 shiftwidth=4 softtabstop=4
 +
@@ -568,9 +559,8 @@ diff -Naurp nova/nova/virt/lxc/__init__.py nova.lxc/nova/virt/lxc/__init__.py
 +from nova.virt.lxc import driver
 +
 +LXCDriver = driver.LXCDriver
-diff -Naurp nova/nova/virt/lxc/vmops.py nova.lxc/nova/virt/lxc/vmops.py
---- nova/nova/virt/lxc/vmops.py	1969-12-31 19:00:00.000000000 -0500
-+++ nova.lxc/nova/virt/lxc/vmops.py	2013-09-30 21:29:17.748464309 -0400
+--- /dev/null
++++ b/nova/virt/lxc/vmops.py
 @@ -0,0 +1,146 @@
 +# vim: tabstop=4 shiftwidth=4 softtabstop=4
 +
@@ -718,9 +708,8 @@ diff -Naurp nova/nova/virt/lxc/vmops.py nova.lxc/nova/virt/lxc/vmops.py
 +
 +    def container_exists(self, instance):
 +        return self.vmutils.container_exists(instance)
-diff -Naurp nova/nova/virt/lxc/vmutils.py nova.lxc/nova/virt/lxc/vmutils.py
---- nova/nova/virt/lxc/vmutils.py	1969-12-31 19:00:00.000000000 -0500
-+++ nova.lxc/nova/virt/lxc/vmutils.py	2013-09-30 21:30:28.124464343 -0400
+--- /dev/null
++++ b/nova/virt/lxc/vmutils.py
 @@ -0,0 +1,64 @@
 +# vim: tabstop=4 shiftwidth=4 softtabstop=4
 +
