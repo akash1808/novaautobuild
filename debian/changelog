@@ -1,3 +1,9 @@
+nova (1:2013.2~rc1-0ubuntu4) UNRELEASED; urgency=low
+
+  * d/control: Add epoch to versioned dependencies for python-oslo.config. 
+
+ -- James Page <james.page@ubuntu.com>  Tue, 08 Oct 2013 16:48:39 +0100
+
 nova (1:2013.2~rc1-0ubuntu3) saucy; urgency=low
 
   * debian/patches/native-lxc-hypervisor.patch: Update
