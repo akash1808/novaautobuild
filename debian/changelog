@@ -1,9 +1,9 @@
 nova (1:2013.2~rc2-0ubuntu1) saucy; urgency=low
 
-  * New upstream release candidate.
+  * New upstream release candidate (LP: #1239156).
   * d/control: Add epoch to versioned dependencies for python-oslo.config. 
 
- -- James Page <james.page@ubuntu.com>  Sat, 12 Oct 2013 13:25:57 +0100
+ -- James Page <james.page@ubuntu.com>  Sat, 12 Oct 2013 16:53:24 +0100
 
 nova (1:2013.2~rc1-0ubuntu3) saucy; urgency=low
 
