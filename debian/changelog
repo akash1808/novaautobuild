@@ -1,8 +1,11 @@
-nova (1:2013.2~rc1-0ubuntu4) UNRELEASED; urgency=low
+nova (1:2013.2~rc2-0ubuntu1) saucy; urgency=low
 
+  * New upstream release candidate (LP: #1239156):
+    - d/p/fix-boto-versioning.patch: Cherry picked fix from upstream gerrit for
+      test failures with boto < 2.13.
   * d/control: Add epoch to versioned dependencies for python-oslo.config. 
 
- -- James Page <james.page@ubuntu.com>  Tue, 08 Oct 2013 16:48:39 +0100
+ -- James Page <james.page@ubuntu.com>  Sun, 13 Oct 2013 11:05:46 +0100
 
 nova (1:2013.2~rc1-0ubuntu3) saucy; urgency=low
 
