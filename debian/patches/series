@@ -5,3 +5,4 @@ fix-requirements.patch
 avoid-failing-test.patch
 native-lxc-hypervisor.patch
 fix-novnc-regression.patch
+fix-boto-versioning.patch
