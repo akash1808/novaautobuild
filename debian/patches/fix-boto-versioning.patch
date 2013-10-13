@@ -1,6 +1,7 @@
-Description: Use StrictVersion for version checks.
- Comparing strings does not work; use StrictVersion instead
-Author: James Page <james.page@ubuntu.com>
+Description: Harden version checking for boto
+ Simple string comparison is not effective for version checking.
+ Let's switch to using pkg_resources.parse_version and compare
+ the tuples
 Origin: https://review.openstack.org/#/c/51426/
 Bug: https://bugs.launchpad.net/nova/+bug/1239220
 
