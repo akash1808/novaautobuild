@@ -1,3 +1,9 @@
+nova (1:2013.2-0ubuntu1) saucy; urgency=low
+
+  * New upstream release (LP: #1236462).
+
+ -- Chuck Short <zulcss@ubuntu.com>  Thu, 17 Oct 2013 11:27:05 -0400
+
 nova (1:2013.2~rc2-0ubuntu1) saucy; urgency=low
 
   * New upstream release candidate (LP: #1239156):
