@@ -1,3 +1,9 @@
+nova (1:2013.2-0ubuntu2) UNRELEASED; urgency=low
+
+  * debian/control: Open icehouse release.
+
+ -- Chuck Short <zulcss@ubuntu.com>  Tue, 22 Oct 2013 09:40:21 -0700
+
 nova (1:2013.2-0ubuntu1) saucy; urgency=low
 
   * New upstream release (LP: #1236462).

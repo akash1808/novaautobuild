@@ -54,8 +54,8 @@ Build-Depends-Indep: openssh-client,
 Build-Conflicts: python-cjson
 Standards-Version: 3.9.3
 Homepage: http://launchpad.net/nova
-Vcs-Browser: http://bazaar.launchpad.net/~ubuntu-server-dev/nova/havana/files
-Vcs-Bzr: https://code.launchpad.net/~ubuntu-server-dev/nova/havana
+Vcs-Browser: http://bazaar.launchpad.net/~ubuntu-server-dev/nova/icehouse/files
+Vcs-Bzr: https://code.launchpad.net/~ubuntu-server-dev/nova/icehouse
 XS-Testsuite: autopkgtest
 
 Package: python-nova
