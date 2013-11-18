@@ -1,8 +1,5 @@
 # Ubuntu specific patches below here. Note these can be dropped eventually.
-path-to-the-xenhost.conf-fixup.patch
 fix-docs-build-without-network.patch
 fix-requirements.patch
-avoid-failing-test.patch
-native-lxc-hypervisor.patch
+#avoid-failing-test.patch
 fix-novnc-regression.patch
-fix-boto-versioning.patch
