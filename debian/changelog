@@ -3,7 +3,8 @@ nova (1:2013.2-0ubuntu1) UNRELEASED; urgency=low
   * New upstream release.
   * debian/control:
     - Open icehouse release.
-    - Bump the versioned dependencies of python-pbr. python-six
+    - Bump the versioned dependencies of python-pbr, python-migrate,
+      and python-six.
   * Dropped xcp support (LP: #1197386) (LP: #1199791):
     - debian/patches/path-to-the-xenhost.conf-fixup.patch: Removed
     - debian/control: Removed nova-compute-xcp, nova-xcp-plugins,
