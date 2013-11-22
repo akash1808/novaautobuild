@@ -1,4 +1,4 @@
-Description: Reversion of upstream commit for new websockify
+Description: Revert of upstream commit for new websockify
  Ubuntu carries an older version of websockify; reverting
  this commit restores nova-novncproxy functionality.
 Author: Chuck Short <zulcss@ubuntu.com>

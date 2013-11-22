@@ -63,7 +63,6 @@ endif
 
 override_dh_python2:
 	dh_python2
-	dh_python2  /usr/lib/xcp
 
 override_dh_installlogrotate:
 	dh_installlogrotate
