@@ -57,6 +57,7 @@ Homepage: http://launchpad.net/nova
 Vcs-Browser: http://bazaar.launchpad.net/~ubuntu-server-dev/nova/icehouse/files
 Vcs-Bzr: https://code.launchpad.net/~ubuntu-server-dev/nova/icehouse
 XS-Testsuite: autopkgtest
+X-Python-Version: >= 2.7
 
 Package: python-nova
 Architecture: all

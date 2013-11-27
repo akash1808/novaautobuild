@@ -1,9 +1,9 @@
 #!/bin/sh -e
 
 if [ "$1" = "configure" ]; then
-    if ! getent group %LIBVIRTGRP% | grep -qE '\<nova\>'
+    if ! getent group libvirtd | grep -qE '\<nova\>'
     then
-        adduser nova %LIBVIRTGRP%
+        adduser nova libvirtd
     fi
     chown root:root /etc/nova/rootwrap.d/compute.filters
 fi
