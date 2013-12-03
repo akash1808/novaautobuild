@@ -16,7 +16,10 @@ nova (1:2013.2-0ubuntu1) UNRELEASED; urgency=low
     - Remove git vcs, its not being used by anyone, complain if you are.
     - Removed libvirtd detection, no need for it so drop it.
     - Simplify building required docs including mangpages.
-    - Temporarily pass testsuite.
+  * debian/patches/sqlachemy-0.8.3-compat.patch: Add support for
+    sqlachemy 0.8.3.
+  * debian/patches/avoid-failing-test.patch: Dropped.
+  * debian/patches/skip_ipv6_test.patch: Skip ipv6 test.
 
  -- Chuck Short <zulcss@ubuntu.com>  Thu, 14 Nov 2013 08:51:55 -0500
 

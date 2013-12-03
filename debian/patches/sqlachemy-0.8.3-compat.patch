@@ -1,0 +1,68 @@
+From 8dd9c223eac51bdb95d82c9aab881a46d0d581e1 Mon Sep 17 00:00:00 2001
+From: Ilya Pekelny <ipekelny@mirantis.com>
+Date: Wed, 20 Nov 2013 18:51:39 +0200
+Subject: [PATCH] Fix migrations changing the type of deleted column
+
+SQLite doesn't provide a native implementation of BOOLEAN data type.
+SQLAlchemy emulates BOOLEAN data type for SQLite using INT column +
+CHECK constraint.
+We have a few migrations changing the type of column 'deleted' from
+BOOLEAN to INT. Due to limitations of ALTER in SQLite, in order to do
+that, we omit the original 'deleted' column as well as the corresponding
+CHECK constraint when recreating the table. Omitting of the constraint
+is more tricky. It's implemented by analyzing the SQL text used for its
+rendering. SQLAlchemy versions 0.8.3+ slightly changed the way
+constraints are rendered, so we have to update our migrations changing
+the type of 'deleted' column to work with SQLAlchemy 0.8.3+ on SQLite
+backend (we aren't using SQLite in production, but we still need it for
+running of unit tests).
+
+Closes-Bug: #1252693
+Change-Id: I52f2b5f90a2f9191767fadc7b1eacae236c30e98
+---
+ .../migrate_repo/versions/152_change_type_of_deleted_column.py   | 9 +++++++--
+ nova/db/sqlalchemy/utils.py                                      | 8 ++++++--
+ 2 files changed, 13 insertions(+), 4 deletions(-)
+
+diff --git a/nova/db/sqlalchemy/migrate_repo/versions/152_change_type_of_deleted_column.py b/nova/db/sqlalchemy/migrate_repo/versions/152_change_type_of_deleted_column.py
+index 2da4487..98cfe76 100644
+--- a/nova/db/sqlalchemy/migrate_repo/versions/152_change_type_of_deleted_column.py
++++ b/nova/db/sqlalchemy/migrate_repo/versions/152_change_type_of_deleted_column.py
+@@ -168,8 +168,13 @@ def upgrade(migrate_engine):
+             if not isinstance(constraint, CheckConstraint):
+                 return False
+             sqltext = str(constraint.sqltext)
+-            return (sqltext.endswith("deleted in (0, 1)") or
+-                    sqltext.endswith("deleted IN (:deleted_1, :deleted_2)"))
++            constraint_markers = (
++                "deleted in (0, 1)",
++                "deleted IN (:deleted_1, :deleted_2)",
++                "deleted IN (:param_1, :param_2)"
++            )
++            return any(
++                    sqltext.endswith(marker) for marker in constraint_markers)
+ 
+         constraints = []
+         for constraint in table.constraints:
+diff --git a/nova/db/sqlalchemy/utils.py b/nova/db/sqlalchemy/utils.py
+index b07058c..d65d03d 100644
+--- a/nova/db/sqlalchemy/utils.py
++++ b/nova/db/sqlalchemy/utils.py
+@@ -514,8 +514,12 @@ def _change_deleted_column_type_to_id_type_sqlite(migrate_engine, table_name,
+         if not isinstance(constraint, CheckConstraint):
+             return False
+         sqltext = str(constraint.sqltext)
+-        return (sqltext.endswith("deleted in (0, 1)") or
+-                sqltext.endswith("deleted IN (:deleted_1, :deleted_2)"))
++        constraint_markers = (
++            "deleted in (0, 1)",
++            "deleted IN (:deleted_1, :deleted_2)",
++            "deleted IN (:param_1, :param_2)"
++        )
++        return any(sqltext.endswith(marker) for marker in constraint_markers)
+ 
+     constraints = []
+     for constraint in table.constraints:
+-- 
+1.8.5
+
