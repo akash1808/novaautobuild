@@ -1,6 +1,6 @@
 Description: Fix regression while running libvirt
 Author: Chuck Short <zulcss@ubuntu.com>
-Uptream: https://review.openstack.org/#/c/60052/
+Forwarded: https://review.openstack.org/#/c/60052/
 diff -Naurp nova-2014.1.b1.orig/nova/tests/virt/libvirt/fakelibvirt.py nova-2014.1.b1/nova/tests/virt/libvirt/fakelibvirt.py
 --- nova-2014.1.b1.orig/nova/tests/virt/libvirt/fakelibvirt.py	2013-12-05 09:21:50.000000000 -0500
 +++ nova-2014.1.b1/nova/tests/virt/libvirt/fakelibvirt.py	2013-12-05 10:50:14.023727889 -0500
