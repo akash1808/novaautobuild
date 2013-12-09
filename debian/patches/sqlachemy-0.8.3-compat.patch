@@ -20,35 +20,14 @@ running of unit tests).
 Closes-Bug: #1252693
 Change-Id: I52f2b5f90a2f9191767fadc7b1eacae236c30e98
 ---
- .../migrate_repo/versions/152_change_type_of_deleted_column.py   | 9 +++++++--
+ .../migrate_repo/versions/152_change_type_of_deleted_column.py   | 9 +++++++-- 
  nova/db/sqlalchemy/utils.py                                      | 8 ++++++--
  2 files changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/nova/db/sqlalchemy/migrate_repo/versions/152_change_type_of_deleted_column.py b/nova/db/sqlalchemy/migrate_repo/versions/152_change_type_of_deleted_column.py
-index 2da4487..98cfe76 100644
---- a/nova/db/sqlalchemy/migrate_repo/versions/152_change_type_of_deleted_column.py
-+++ b/nova/db/sqlalchemy/migrate_repo/versions/152_change_type_of_deleted_column.py
-@@ -168,8 +168,13 @@ def upgrade(migrate_engine):
-             if not isinstance(constraint, CheckConstraint):
-                 return False
-             sqltext = str(constraint.sqltext)
--            return (sqltext.endswith("deleted in (0, 1)") or
--                    sqltext.endswith("deleted IN (:deleted_1, :deleted_2)"))
-+            constraint_markers = (
-+                "deleted in (0, 1)",
-+                "deleted IN (:deleted_1, :deleted_2)",
-+                "deleted IN (:param_1, :param_2)"
-+            )
-+            return any(
-+                    sqltext.endswith(marker) for marker in constraint_markers)
- 
-         constraints = []
-         for constraint in table.constraints:
-diff --git a/nova/db/sqlalchemy/utils.py b/nova/db/sqlalchemy/utils.py
-index b07058c..d65d03d 100644
---- a/nova/db/sqlalchemy/utils.py
-+++ b/nova/db/sqlalchemy/utils.py
-@@ -514,8 +514,12 @@ def _change_deleted_column_type_to_id_type_sqlite(migrate_engine, table_name,
+diff -Naurp nova-2014.1.dev100.ga27cf10.orig/nova/db/sqlalchemy/utils.py nova-2014.1.dev100.ga27cf10/nova/db/sqlalchemy/utils.py
+--- nova-2014.1.dev100.ga27cf10.orig/nova/db/sqlalchemy/utils.py	2013-12-09 09:49:18.000000000 -0500
++++ nova-2014.1.dev100.ga27cf10/nova/db/sqlalchemy/utils.py	2013-12-09 09:56:34.058389265 -0500
+@@ -514,8 +514,12 @@ def _change_deleted_column_type_to_id_ty
          if not isinstance(constraint, CheckConstraint):
              return False
          sqltext = str(constraint.sqltext)
@@ -63,6 +42,3 @@ index b07058c..d65d03d 100644
  
      constraints = []
      for constraint in table.constraints:
--- 
-1.8.5
-
