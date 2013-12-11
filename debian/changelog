@@ -10,6 +10,13 @@ nova (1:2014.1~b1+master-0ubuntu1) UNRELEASED; urgency=low
 
  -- Chuck Short <zulcss@ubuntu.com>  Thu, 05 Dec 2013 15:08:16 -0500
 
+nova (1:2014.1~b1-0ubuntu2) trusty; urgency=low
+
+  * d/nova-compute.postinst.in: rename to nova-compute.postinst
+    as libvirtd detection is no longer done in d/rules.
+
+ -- James Page <james.page@ubuntu.com>  Wed, 11 Dec 2013 09:38:18 +0000
+
 nova (1:2014.1~b1-0ubuntu1) trusty; urgency=low
 
   * New upstream release.
