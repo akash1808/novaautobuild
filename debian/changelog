@@ -1,8 +1,9 @@
-nova (1:2014.1~b1-0ubuntu2) UNRELEASED; urgency=low
+nova (1:2014.1~b1-0ubuntu2) trusty; urgency=low
 
-  * debian/patches/fix-libvirt-regression.patch: Dropped. 
+  * d/nova-compute.postinst.in: rename to nova-compute.postinst
+    as libvirtd detection is no longer done in d/rules.
 
- -- Chuck Short <zulcss@ubuntu.com>  Thu, 05 Dec 2013 15:08:16 -0500
+ -- James Page <james.page@ubuntu.com>  Wed, 11 Dec 2013 09:38:18 +0000
 
 nova (1:2014.1~b1-0ubuntu1) trusty; urgency=low
 
