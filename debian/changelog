@@ -24,7 +24,6 @@ nova (1:2014.1~b1+master-0ubuntu1) UNRELEASED; urgency=low
     for it to reach running state before starting nova-compute
     (LP: #907152, #1190280).
   * d/nova-spiceproxy.logrotate: Manage the correct log file (LP: #1259332).
-  * d/control: Drop BDI on openssh-client, no longer required.
   * d/control: Drop dependency on curl, no longer required.
   * d/control,rules,nova-compute-uml.*: Drop nova-compute-uml package.
 
