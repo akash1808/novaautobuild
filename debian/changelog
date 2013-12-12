@@ -16,6 +16,8 @@ nova (1:2014.1~b1+master-0ubuntu1) UNRELEASED; urgency=low
     align to this approach (LP: #928834).
   * d/nova-compute.postinst: Renamed to nova-compute-libvirt.postinst
     as its only appropriate for libvirt based hypervisors.
+  * d/control,nova-compute-vmware.*,rules: Add new nova-compute-vmware
+    hypervisor package.
   * d/control: Add missing ebtables dependency for nova-network
     (LP: #1161338).
   * d/nova-compute.upstart: If libvirt-bin is installed, then wait
