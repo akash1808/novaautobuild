@@ -9,7 +9,6 @@ Build-Depends:
  python-all (>= 2.6),
  python-all-dev (>= 2.6.6-3~)
 Build-Depends-Indep:
- openssh-client,
  openssl,
  python-amqplib (>= 0.6.1),
  python-anyjson (>= 0.3.3),
@@ -66,7 +65,6 @@ Package: python-nova
 Architecture: all
 Section: python
 Depends:
- openssh-client,
  openssl,
  python-amqplib (>= 0.6.1),
  python-anyjson (>= 0.3.3),
@@ -153,6 +151,7 @@ Description: OpenStack Compute - common files
 Package: nova-compute
 Architecture: all
 Depends:
+ openssh-client,
  nova-common (= ${binary:Version}),
  nova-compute-kvm | nova-compute-hypervisor,
  ${misc:Depends},
@@ -179,7 +178,6 @@ Package: nova-compute-libvirt
 Architecture: all
 Depends:
  adduser,
- curl,
  ebtables,
  genisoimage,
  iptables,
@@ -233,31 +231,6 @@ Description: OpenStack Compute - compute node (LXC)
  databases (LDAP or SQL), etc.
  .
  Install this package on your compute nodes if you're using LXC.
-
-Package: nova-compute-uml
-Architecture: all
-Depends:
- nova-compute-libvirt (= ${binary:Version}),
- user-mode-linux,
- ${misc:Depends}
-Provides: nova-compute-hypervisor
-Conflicts: nova-compute-hypervisor
-Description: OpenStack Compute - compute node (UserModeLinux)
- OpenStack is a reliable cloud infrastructure. Its mission is to produce
- the ubiquitous cloud computing platform that will meet the needs of public
- and private cloud providers regardless of size, by being simple to implement
- and massively scalable.
- .
- OpenStack Compute, codenamed Nova, is a cloud computing fabric controller. In
- addition to its "native" API (the OpenStack API), it also supports the Amazon
- EC2 API.
- .
- Nova is intended to be modular and easy to extend and adapt. It supports many
- different hypervisors (KVM and Xen to name a few), different database backends
- (SQLite, MySQL, and PostgreSQL, for instance), different types of user
- databases (LDAP or SQL), etc.
- .
- Install this package on your compute nodes if you're using UserModeLinux.
 
 Package: nova-compute-xen
 Architecture: all
