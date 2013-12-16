@@ -3,14 +3,29 @@ nova (1:2014.1~b1+master-0ubuntu1) UNRELEASED; urgency=low
   [ Chuck Short ]
   * debian/patches/fix-libvirt-regression.patch: Dropped.
   * debian/patches/sqlachemy-0.8.3-compat.patch: Refreshed.
-  * debian/control: Add python-pycadf as a dependency.
-  * debian/patches/fix-requirements.patch: Refreshed
+  * debian/control: Add python-pycadf dependency.
+  * debian/patches/fix-requirements.patch: Refreshed.
 
   [ James Page ]
   * d/nova-compute-*.conf: Update default hypervisor configurations
     to use new libvirt section configuration. 
   * d/control: Bump version for stevedore to >= 0.12.
   * d/p/*: Refreshed.
+  * d/control: Add new nova-compute-libvirt package to support libvirt
+    based hypervisors, rework dependencies for nova-compute{-*} to
+    align to this approach (LP: #928834).
+  * d/nova-compute.postinst: Renamed to nova-compute-libvirt.postinst
+    as its only appropriate for libvirt based hypervisors.
+  * d/control,nova-compute-vmware.*,rules: Add new nova-compute-vmware
+    hypervisor package.
+  * d/control: Add missing ebtables dependency for nova-network
+    (LP: #1161338).
+  * d/nova-compute.upstart: If libvirt-bin is installed, then wait
+    for it to reach running state before starting nova-compute
+    (LP: #907152, #1190280).
+  * d/nova-spiceproxy.logrotate: Manage the correct log file (LP: #1259332).
+  * d/control: Drop dependency on curl, no longer required.
+  * d/control,rules,nova-compute-uml.*: Drop nova-compute-uml package.
 
  -- Chuck Short <zulcss@ubuntu.com>  Thu, 05 Dec 2013 15:08:16 -0500
 
