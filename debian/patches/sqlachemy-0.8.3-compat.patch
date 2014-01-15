@@ -1,33 +1,11 @@
-From 8dd9c223eac51bdb95d82c9aab881a46d0d581e1 Mon Sep 17 00:00:00 2001
-From: Ilya Pekelny <ipekelny@mirantis.com>
-Date: Wed, 20 Nov 2013 18:51:39 +0200
-Subject: [PATCH] Fix migrations changing the type of deleted column
-
-SQLite doesn't provide a native implementation of BOOLEAN data type.
-SQLAlchemy emulates BOOLEAN data type for SQLite using INT column +
-CHECK constraint.
-We have a few migrations changing the type of column 'deleted' from
-BOOLEAN to INT. Due to limitations of ALTER in SQLite, in order to do
-that, we omit the original 'deleted' column as well as the corresponding
-CHECK constraint when recreating the table. Omitting of the constraint
-is more tricky. It's implemented by analyzing the SQL text used for its
-rendering. SQLAlchemy versions 0.8.3+ slightly changed the way
-constraints are rendered, so we have to update our migrations changing
-the type of 'deleted' column to work with SQLAlchemy 0.8.3+ on SQLite
-backend (we aren't using SQLite in production, but we still need it for
-running of unit tests).
-
-Closes-Bug: #1252693
-Change-Id: I52f2b5f90a2f9191767fadc7b1eacae236c30e98
----
- .../migrate_repo/versions/152_change_type_of_deleted_column.py   | 9 +++++++-- 
- nova/db/sqlalchemy/utils.py                                      | 8 ++++++--
- 2 files changed, 13 insertions(+), 4 deletions(-)
-
-diff -Naurp nova-2014.1.dev100.ga27cf10.orig/nova/db/sqlalchemy/utils.py nova-2014.1.dev100.ga27cf10/nova/db/sqlalchemy/utils.py
---- nova-2014.1.dev100.ga27cf10.orig/nova/db/sqlalchemy/utils.py	2013-12-09 09:49:18.000000000 -0500
-+++ nova-2014.1.dev100.ga27cf10/nova/db/sqlalchemy/utils.py	2013-12-09 09:56:34.058389265 -0500
-@@ -514,8 +514,12 @@ def _change_deleted_column_type_to_id_ty
+Description: Fixes sqlalchemy 0.8.3 errors
+Author: Chuck Short <zulcss@ubuntu.com>
+Fowarded: Not-needed
+diff --git a/nova/db/sqlalchemy/utils.py b/nova/db/sqlalchemy/utils.py
+index b07058c..d65d03d 100644
+--- a/nova/db/sqlalchemy/utils.py
++++ b/nova/db/sqlalchemy/utils.py
+@@ -514,8 +514,12 @@ def _change_deleted_column_type_to_id_type_sqlite(migrate_engine, table_name,
          if not isinstance(constraint, CheckConstraint):
              return False
          sqltext = str(constraint.sqltext)
@@ -42,3 +20,85 @@ diff -Naurp nova-2014.1.dev100.ga27cf10.orig/nova/db/sqlalchemy/utils.py nova-20
  
      constraints = []
      for constraint in table.constraints:
+diff --git a/nova/openstack/common/db/sqlalchemy/session.py b/nova/openstack/common/db/sqlalchemy/session.py
+index 67c0c70..d750788 100644
+--- a/nova/openstack/common/db/sqlalchemy/session.py
++++ b/nova/openstack/common/db/sqlalchemy/session.py
+@@ -438,6 +438,11 @@ def get_session(autocommit=True, expire_on_commit=False,
+ # 1 column - (IntegrityError) column c1 is not unique
+ # N columns - (IntegrityError) column c1, c2, ..., N are not unique
+ #
++# sqlite since 3.7.16:
++# 1 column - (IntegrityError) UNIQUE constraint failed: k1
++#
++# N columns - (IntegrityError) UNIQUE constraint failed: k1, k2
++#
+ # postgres:
+ # 1 column - (IntegrityError) duplicate key value violates unique
+ #               constraint "users_c1_key"
+@@ -450,9 +455,10 @@ def get_session(autocommit=True, expire_on_commit=False,
+ # N columns - (IntegrityError) (1062, "Duplicate entry 'values joined
+ #               with -' for key 'name_of_our_constraint'")
+ _DUP_KEY_RE_DB = {
+-    "sqlite": re.compile(r"^.*columns?([^)]+)(is|are)\s+not\s+unique$"),
+-    "postgresql": re.compile(r"^.*duplicate\s+key.*\"([^\"]+)\"\s*\n.*$"),
+-    "mysql": re.compile(r"^.*\(1062,.*'([^\']+)'\"\)$")
++    "sqlite": (re.compile(r"^.*columns?([^)]+)(is|are)\s+not\s+unique$"),
++               re.compile(r"^.*UNIQUE\s+constraint\s+failed:\s+(.+)$")),
++    "postgresql": (re.compile(r"^.*duplicate\s+key.*\"([^\"]+)\"\s*\n.*$"),),
++    "mysql": (re.compile(r"^.*\(1062,.*'([^\']+)'\"\)$"),)
+ }
+ 
+ 
+@@ -477,10 +483,14 @@ def _raise_if_duplicate_entry_error(integrity_error, engine_name):
+     if engine_name not in ["mysql", "sqlite", "postgresql"]:
+         return
+ 
+-    m = _DUP_KEY_RE_DB[engine_name].match(integrity_error.message)
+-    if not m:
++    for pattern in _DUP_KEY_RE_DB[engine_name]:
++        match = pattern.match(integrity_error.message)
++        if match:
++            break
++    else:
+         return
+-    columns = m.group(1)
++
++    columns = match.group(1)
+ 
+     if engine_name == "sqlite":
+         columns = columns.strip().split(", ")
+diff --git a/nova/tests/db/test_db_api.py b/nova/tests/db/test_db_api.py
+index d8ed8d0..0519a94 100644
+--- a/nova/tests/db/test_db_api.py
++++ b/nova/tests/db/test_db_api.py
+@@ -2209,7 +2209,7 @@ class ServiceTestCase(test.TestCase, ModelsObjectComparatorMixin):
+         db.service_create(self.ctxt, self._get_base_values())
+         values = self._get_base_values()
+         values.update({'topic': 'top1'})
+-        self.assertRaises(exception.ServiceBinaryExists, db.service_create,
++        self.assertRaises(exception.ServiceTopicExists, db.service_create,
+                           self.ctxt, values)
+ 
+     def test_service_topic_exists_exceptions(self):
+@@ -2682,7 +2682,7 @@ class InstanceTypeTestCase(BaseInstanceTypeTestCase):
+ 
+     def test_flavor_create_duplicate_flavorid(self):
+         self._create_flavor({})
+-        self.assertRaises(exception.FlavorIdExists,
++        self.assertRaises(exception.FlavorExists,
+                           self._create_flavor,
+                           {'name': 'some_random_name'})
+ 
+diff --git a/nova/tests/test_flavors.py b/nova/tests/test_flavors.py
+index 64395dd..d704264 100644
+--- a/nova/tests/test_flavors.py
++++ b/nova/tests/test_flavors.py
+@@ -556,6 +556,6 @@ class CreateInstanceTypeTest(test.TestCase):
+     def test_duplicate_flavorids_fail(self):
+         # Ensures that flavorid duplicates raise FlavorCreateFailed.
+         flavors.create('flavor1', 64, 1, 120, flavorid='flavorid')
+-        self.assertRaises(exception.FlavorIdExists,
++        self.assertRaises(exception.FlavorExists,
+                           flavors.create,
+                           'flavor2', 64, 1, 120, flavorid='flavorid')
