@@ -1,10 +1,9 @@
 Description: Skip trying to connect to ipv6 server.
 Author: Chuck Short <zulcss@ubuntu.com>
 Forwarded: no
-diff -Naurp nova-2014.1.dev1049.g6a16674.orig/nova/tests/test_wsgi.py nova-2014.1.dev1049.g6a16674/nova/tests/test_wsgi.py
---- nova-2014.1.dev1049.g6a16674.orig/nova/tests/test_wsgi.py	2013-12-03 11:55:43.000000000 -0500
-+++ nova-2014.1.dev1049.g6a16674/nova/tests/test_wsgi.py	2013-12-03 13:40:18.815649049 -0500
-@@ -216,7 +216,10 @@ class TestWSGIServerWithSSL(test.NoDBTes
+--- a/nova/tests/test_wsgi.py
++++ b/nova/tests/test_wsgi.py
+@@ -224,7 +224,10 @@ class TestWSGIServerWithSSL(test.NoDBTes
  
          server.start()
  

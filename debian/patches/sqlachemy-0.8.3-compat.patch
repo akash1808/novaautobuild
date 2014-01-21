@@ -1,11 +1,9 @@
 Description: Fixes sqlalchemy 0.8.3 errors
 Author: Chuck Short <zulcss@ubuntu.com>
 Fowarded: Not-needed
-diff --git a/nova/db/sqlalchemy/utils.py b/nova/db/sqlalchemy/utils.py
-index b07058c..d65d03d 100644
 --- a/nova/db/sqlalchemy/utils.py
 +++ b/nova/db/sqlalchemy/utils.py
-@@ -514,8 +514,12 @@ def _change_deleted_column_type_to_id_type_sqlite(migrate_engine, table_name,
+@@ -514,8 +514,12 @@ def _change_deleted_column_type_to_id_ty
          if not isinstance(constraint, CheckConstraint):
              return False
          sqltext = str(constraint.sqltext)
@@ -20,11 +18,9 @@ index b07058c..d65d03d 100644
  
      constraints = []
      for constraint in table.constraints:
-diff --git a/nova/openstack/common/db/sqlalchemy/session.py b/nova/openstack/common/db/sqlalchemy/session.py
-index 67c0c70..d750788 100644
 --- a/nova/openstack/common/db/sqlalchemy/session.py
 +++ b/nova/openstack/common/db/sqlalchemy/session.py
-@@ -438,6 +438,11 @@ def get_session(autocommit=True, expire_on_commit=False,
+@@ -438,6 +438,11 @@ def get_session(autocommit=True, expire_
  # 1 column - (IntegrityError) column c1 is not unique
  # N columns - (IntegrityError) column c1, c2, ..., N are not unique
  #
@@ -36,7 +32,7 @@ index 67c0c70..d750788 100644
  # postgres:
  # 1 column - (IntegrityError) duplicate key value violates unique
  #               constraint "users_c1_key"
-@@ -450,9 +455,10 @@ def get_session(autocommit=True, expire_on_commit=False,
+@@ -450,9 +455,10 @@ def get_session(autocommit=True, expire_
  # N columns - (IntegrityError) (1062, "Duplicate entry 'values joined
  #               with -' for key 'name_of_our_constraint'")
  _DUP_KEY_RE_DB = {
@@ -50,7 +46,7 @@ index 67c0c70..d750788 100644
  }
  
  
-@@ -477,10 +483,14 @@ def _raise_if_duplicate_entry_error(integrity_error, engine_name):
+@@ -477,10 +483,14 @@ def _raise_if_duplicate_entry_error(inte
      if engine_name not in ["mysql", "sqlite", "postgresql"]:
          return
  
@@ -68,11 +64,9 @@ index 67c0c70..d750788 100644
  
      if engine_name == "sqlite":
          columns = columns.strip().split(", ")
-diff --git a/nova/tests/db/test_db_api.py b/nova/tests/db/test_db_api.py
-index d8ed8d0..0519a94 100644
 --- a/nova/tests/db/test_db_api.py
 +++ b/nova/tests/db/test_db_api.py
-@@ -2209,7 +2209,7 @@ class ServiceTestCase(test.TestCase, ModelsObjectComparatorMixin):
+@@ -2209,7 +2209,7 @@ class ServiceTestCase(test.TestCase, Mod
          db.service_create(self.ctxt, self._get_base_values())
          values = self._get_base_values()
          values.update({'topic': 'top1'})
@@ -81,7 +75,7 @@ index d8ed8d0..0519a94 100644
                            self.ctxt, values)
  
      def test_service_topic_exists_exceptions(self):
-@@ -2682,7 +2682,7 @@ class InstanceTypeTestCase(BaseInstanceTypeTestCase):
+@@ -2682,7 +2682,7 @@ class InstanceTypeTestCase(BaseInstanceT
  
      def test_flavor_create_duplicate_flavorid(self):
          self._create_flavor({})
@@ -90,11 +84,9 @@ index d8ed8d0..0519a94 100644
                            self._create_flavor,
                            {'name': 'some_random_name'})
  
-diff --git a/nova/tests/test_flavors.py b/nova/tests/test_flavors.py
-index 64395dd..d704264 100644
 --- a/nova/tests/test_flavors.py
 +++ b/nova/tests/test_flavors.py
-@@ -556,6 +556,6 @@ class CreateInstanceTypeTest(test.TestCase):
+@@ -556,6 +556,6 @@ class CreateInstanceTypeTest(test.TestCa
      def test_duplicate_flavorids_fail(self):
          # Ensures that flavorid duplicates raise FlavorCreateFailed.
          flavors.create('flavor1', 64, 1, 120, flavorid='flavorid')
