@@ -26,6 +26,8 @@ nova (1:2014.1~b1+master-0ubuntu1) UNRELEASED; urgency=low
   * d/nova-spiceproxy.logrotate: Manage the correct log file (LP: #1259332).
   * d/control: Drop dependency on curl, no longer required.
   * d/control,rules,nova-compute-uml.*: Drop nova-compute-uml package.
+  * d/nova-compute.postinst,nova-compute-libvirt.postinst: Move permissions
+    changes to compute rootwrap filters to nova-compute postinst.
 
  -- Chuck Short <zulcss@ubuntu.com>  Thu, 05 Dec 2013 15:08:16 -0500
 
