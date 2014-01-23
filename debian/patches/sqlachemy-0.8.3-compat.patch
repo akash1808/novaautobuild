@@ -1,4 +1,4 @@
-Description: Fixes sqlalchemy 0.8.3 errors
+Description: Fixes sqlalchemy 0.8.3 errors, skip tests that fail on the buildds.
 Author: Chuck Short <zulcss@ubuntu.com>
 Fowarded: Not-needed
 diff -Naurp nova-2014.1.dev555.g80efcae.orig/nova/db/sqlalchemy/utils.py nova-2014.1.dev555.g80efcae/nova/db/sqlalchemy/utils.py
