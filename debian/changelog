@@ -31,7 +31,7 @@ nova (1:2014.1~b2-0ubuntu1) trusty; urgency=low
     changes to compute rootwrap filters to nova-compute postinst.
   * d/control: Add python-oslo.rootwrap to BD's.
 
- -- Chuck Short <zulcss@ubuntu.com>  Thu, 23 Jan 2014 13:13:22 -0500
+ -- Chuck Short <zulcss@ubuntu.com>  Thu, 23 Jan 2014 13:26:34 -0500
 
 nova (1:2014.1~b1-0ubuntu2) trusty; urgency=low
 
