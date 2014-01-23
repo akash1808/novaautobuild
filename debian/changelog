@@ -1,6 +1,7 @@
-nova (1:2014.1~b1+master-0ubuntu1) UNRELEASED; urgency=low
+nova (1:2014.1~b2-0ubuntu1) trusty; urgency=low
 
   [ Chuck Short ]
+  * New upstream release.
   * debian/patches/fix-libvirt-regression.patch: Dropped.
   * debian/patches/sqlachemy-0.8.3-compat.patch: Refreshed.
   * debian/control: Add python-pycadf dependency.
@@ -30,7 +31,7 @@ nova (1:2014.1~b1+master-0ubuntu1) UNRELEASED; urgency=low
     changes to compute rootwrap filters to nova-compute postinst.
   * d/control: Add python-oslo.rootwrap to BD's.
 
- -- Chuck Short <zulcss@ubuntu.com>  Thu, 05 Dec 2013 15:08:16 -0500
+ -- Chuck Short <zulcss@ubuntu.com>  Thu, 23 Jan 2014 13:13:22 -0500
 
 nova (1:2014.1~b1-0ubuntu2) trusty; urgency=low
 
