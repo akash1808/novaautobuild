@@ -1,6 +1,6 @@
 nova (1:2014.1~b2-0ubuntu3) UNRELEASED; urgency=medium
-  
-* debian/patches/fix-requirements.patch: Refreshed 
+
+  *  debian/patches/fix-requirements.patch: Refreshed.
 
  -- Chuck Short <zulcss@ubuntu.com>  Thu, 30 Jan 2014 14:06:29 -0500
 nova (1:2014.1~b2-0ubuntu2) trusty; urgency=medium
