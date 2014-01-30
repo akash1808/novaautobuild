@@ -1,0 +1,100 @@
+commit 94587d814f21fa0787dd5447c7581c2f0cfe7966
+Author: Alexis Lee <alexisl@hp.com>
+Date:   Wed Jan 8 10:43:58 2014 +0000
+
+    Move fake_network config option to linux_net
+    
+    Option 'fake_network' is used by nova/network/linux_net.py but not
+    imported from nova/network/manager.py. Both use it, but manager imports
+    linux_net (via nova/network/api.py + nova/network/floating_ips.py) so it
+    makes more sense to define the option in linux_net and import_opt in
+    manager.
+    
+    Precise example import chain:
+        bin/nova-manage
+        nova/cmd/manage.py: import_opt('flat_network_bridge', 'nova.network.manager')
+        nova/network/manager.py: from nova.network import api as network_api
+          -- At this point, manager has started to import but not yet called
+          register_opts
+        nova/network/api.py: from nova.network import floating_ips
+        nova/nova/network/floating_ips.py: import_opt('public_interface', 'nova.network.linux_net')
+        nova/nova/network/linux_net.py: import_opt('fake_network', 'nova.network.manager')
+          -- BANG! Manager hasn't registered the option we want to import
+    
+    Change-Id: I66f021b34aef650dca148a58203c249f6aa0e83e
+
+diff --git a/etc/nova/nova.conf.sample b/etc/nova/nova.conf.sample
+index baf5d5d..639f63e 100644
+--- a/etc/nova/nova.conf.sample
++++ b/etc/nova/nova.conf.sample
+@@ -1154,6 +1154,10 @@
+ # value)
+ #ovs_vsctl_timeout=120
+ 
++# If passed, use fake network devices and addresses (boolean
++# value)
++#fake_network=false
++
+ 
+ #
+ # Options defined in nova.network.manager
+@@ -1211,10 +1215,6 @@
+ # value)
+ #create_unique_mac_address_attempts=5
+ 
+-# If passed, use fake network devices and addresses (boolean
+-# value)
+-#fake_network=false
+-
+ # If True, skip using the queue and make local calls (boolean
+ # value)
+ #fake_call=false
+diff --git a/nova/network/linux_net.py b/nova/network/linux_net.py
+index 4f1624f..dc63970 100644
+--- a/nova/network/linux_net.py
++++ b/nova/network/linux_net.py
+@@ -127,6 +127,9 @@ linux_net_opts = [
+                default=120,
+                help='Amount of time, in seconds, that ovs_vsctl should wait '
+                     'for a response from the database. 0 is to wait forever.'),
++    cfg.BoolOpt('fake_network',
++                default=False,
++                help='If passed, use fake network devices and addresses'),
+     ]
+ 
+ CONF = cfg.CONF
+diff --git a/nova/network/manager.py b/nova/network/manager.py
+index 9ade2b8..635426e 100644
+--- a/nova/network/manager.py
++++ b/nova/network/manager.py
+@@ -126,9 +126,6 @@ network_opts = [
+     cfg.IntOpt('create_unique_mac_address_attempts',
+                default=5,
+                help='Number of attempts to create unique mac address'),
+-    cfg.BoolOpt('fake_network',
+-                default=False,
+-                help='If passed, use fake network devices and addresses'),
+     cfg.BoolOpt('fake_call',
+                 default=False,
+                 help='If True, skip using the queue and make local calls'),
+@@ -168,6 +165,7 @@ CONF.register_opts(network_opts)
+ CONF.import_opt('use_ipv6', 'nova.netconf')
+ CONF.import_opt('my_ip', 'nova.netconf')
+ CONF.import_opt('network_topic', 'nova.network.rpcapi')
++CONF.import_opt('fake_network', 'nova.network.linux_net')
+ 
+ 
+ class RPCAllocateFixedIP(object):
+diff --git a/nova/tests/conf_fixture.py b/nova/tests/conf_fixture.py
+index e29087f..f8b2ef4 100644
+--- a/nova/tests/conf_fixture.py
++++ b/nova/tests/conf_fixture.py
+@@ -29,7 +29,7 @@ CONF = cfg.CONF
+ CONF.import_opt('use_ipv6', 'nova.netconf')
+ CONF.import_opt('host', 'nova.netconf')
+ CONF.import_opt('scheduler_driver', 'nova.scheduler.manager')
+-CONF.import_opt('fake_network', 'nova.network.manager')
++CONF.import_opt('fake_network', 'nova.network.linux_net')
+ CONF.import_opt('network_size', 'nova.network.manager')
+ CONF.import_opt('num_networks', 'nova.network.manager')
+ CONF.import_opt('floating_ip_dns_manager', 'nova.network.floating_ips')

@@ -1,3 +1,10 @@
+nova (1:2014.1~b2-0ubuntu2) trusty; urgency=medium
+
+  * debian/patches/fix-nova-api-fake-network.patch: Fixed nova-api-metadata
+    not starting. (LP: #1270845)
+
+ -- Chuck Short <zulcss@ubuntu.com>  Thu, 30 Jan 2014 14:06:29 -0500
+
 nova (1:2014.1~b2-0ubuntu1) trusty; urgency=low
 
   [ Chuck Short ]
