@@ -5,3 +5,4 @@ fix-novnc-regression.patch
 sqlachemy-0.8.3-compat.patch
 skip_ipv6_test.patch
 fix-novnc-regression.patch
+fix-nova-api-fake-network.patch
