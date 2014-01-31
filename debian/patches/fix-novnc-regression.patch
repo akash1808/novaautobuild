@@ -1,11 +1,6 @@
-Description: Revert of upstream commit for new websockify
- Ubuntu carries an older version of websockify; reverting
- this commit restores nova-novncproxy functionality.
-Author: Chuck Short <zulcss@ubuntu.com>
-Origin: https://github.com/openstack/nova/commit/3eb67b811ae2442bd86781d9f1c4078a982cfe84
-
---- a/nova/cmd/novncproxy.py
-+++ b/nova/cmd/novncproxy.py
+diff -Naurp nova-2014.1.b2.orig/nova/cmd/novncproxy.py nova-2014.1.b2/nova/cmd/novncproxy.py
+--- nova-2014.1.b2.orig/nova/cmd/novncproxy.py	2014-01-23 10:06:46.000000000 -0500
++++ nova-2014.1.b2/nova/cmd/novncproxy.py	2014-01-31 08:43:16.667524506 -0500
 @@ -77,8 +77,6 @@ def main():
                                     daemon=CONF.daemon,
                                     record=CONF.record,
