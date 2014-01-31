@@ -3,7 +3,7 @@
 # Testing nova-compute
 #---------------------
 set -e
-DAEMONS=('nova-compute-kvm' 'nova-compute-lxc' 'nova-compute-uml' 'nova-compute-qemu')
+DAEMONS=('nova-compute-kvm' 'nova-compute-lxc' 'nova-compute-qemu')
 
 for daemon in "${DAEMONS[@]}"; do
     apt-get install -y nova-compute $daemon 2>&1 > /dev/null

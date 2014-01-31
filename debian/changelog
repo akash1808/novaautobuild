@@ -3,6 +3,13 @@ nova (1:2014.1~b2-0ubuntu3) UNRELEASED; urgency=medium
   *  debian/patches/fix-requirements.patch: Refreshed.
 
  -- Chuck Short <zulcss@ubuntu.com>  Thu, 30 Jan 2014 14:06:29 -0500
+
+nova (1:2014.1~b2-0ubuntu3) trusty; urgency=medium
+
+  * debian/tests/nova-compute-daemons: Drop nova-compute-uml. 
+
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 31 Jan 2014 14:40:23 -0500
+
 nova (1:2014.1~b2-0ubuntu2) trusty; urgency=medium
 
   * debian/patches/fix-nova-api-fake-network.patch: Fixed nova-api-metadata
