@@ -1,12 +1,13 @@
-nova (1:2014.1~b2-0ubuntu3) UNRELEASED; urgency=medium
+nova (1:2014.1~b2-0ubuntu4) UNRELEASED; urgency=medium
 
-  *  debian/patches/fix-requirements.patch: Refreshed.
+  * debian/patches/fix-requirements.patch: Refreshed.
+  * debian/patches/fix-novnc-regression.patch: Dropped no longer needed.
 
  -- Chuck Short <zulcss@ubuntu.com>  Thu, 30 Jan 2014 14:06:29 -0500
 
 nova (1:2014.1~b2-0ubuntu3) trusty; urgency=medium
 
-  * debian/tests/nova-compute-daemons: Drop nova-compute-uml. 
+  * debian/tests/nova-compute-daemons: Drop nova-compute-uml.
 
  -- Chuck Short <zulcss@ubuntu.com>  Fri, 31 Jan 2014 14:40:23 -0500
 
