@@ -3,4 +3,3 @@ fix-docs-build-without-network.patch
 fix-requirements.patch
 sqlachemy-0.8.3-compat.patch
 skip_ipv6_test.patch
-fix-nova-api-fake-network.patch
