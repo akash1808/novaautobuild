@@ -1,5 +1,5 @@
 diff --git a/requirements.txt b/requirements.txt
-index c360250..b05a2df 100644
+index 16e41fe..4f27f3c 100644
 --- a/requirements.txt
 +++ b/requirements.txt
 @@ -9,7 +9,7 @@ Jinja2
@@ -20,4 +20,16 @@ index c360250..b05a2df 100644
  oslo.config>=1.2.0
  oslo.rootwrap
  pycadf>=0.1.9
+diff --git a/test-requirements.txt b/test-requirements.txt
+index 32b0af2..c22c13d 100644
+--- a/test-requirements.txt
++++ b/test-requirements.txt
+@@ -8,7 +8,6 @@ mox>=0.5.3
+ MySQL-python
+ psycopg2
+ pylint==0.25.2
+-python-subunit
+ sphinx>=1.1.2,<1.2
+ oslo.sphinx
+ testrepository>=0.0.17
 
