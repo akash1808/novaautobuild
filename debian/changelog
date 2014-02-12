@@ -4,7 +4,8 @@ nova (1:2014.1~b2-0ubuntu4) UNRELEASED; urgency=medium
   * debian/patches/fix-novnc-regression.patch: Dropped no longer needed.
   * debian/control: Add python-oslo.messaging as a build dependcy.
   * debian/patches/sqlachemy-0.8.3-compat.patch: Dropped no longer needed.
-
+  * debian/rules: Run ./run_tests.sh.
+ 
  -- Chuck Short <zulcss@ubuntu.com>  Thu, 30 Jan 2014 14:06:29 -0500
 
 nova (1:2014.1~b2-0ubuntu3) trusty; urgency=medium
