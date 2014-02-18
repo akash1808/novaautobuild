@@ -2,9 +2,12 @@ nova (1:2014.1~b2-0ubuntu4) UNRELEASED; urgency=medium
 
   * debian/patches/fix-requirements.patch: Refreshed.
   * debian/patches/fix-novnc-regression.patch: Dropped no longer needed.
+  * debian/patches/fix-docs-build-without-network.patch: Dropped no longer needed.
   * debian/control: Add python-oslo.messaging as a build dependcy.
   * debian/patches/sqlachemy-0.8.3-compat.patch: Dropped no longer needed.
-  * debian/rules: Run ./run_tests.sh.
+  * debian/patches/use-oslo.sphinx-namespace.patch: Use the oslo.sphinx name
+    space for documentation.
+  * debian/patches/arm-console-patch.patch: Add additonal tty for arm64.
  
  -- Chuck Short <zulcss@ubuntu.com>  Thu, 30 Jan 2014 14:06:29 -0500
 
