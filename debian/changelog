@@ -8,7 +8,8 @@ nova (1:2014.1~b2-0ubuntu4) UNRELEASED; urgency=medium
   * debian/patches/use-oslo.sphinx-namespace.patch: Use the oslo.sphinx name
     space for documentation.
   * debian/patches/arm-console-patch.patch: Add additonal tty for arm64.
-  * debian/rules: Set concurrency to 1.
+  * debian/patches/update-run-tests.patch: Display tests results while building
+    and set the concurrency to 1.
  
  -- Chuck Short <zulcss@ubuntu.com>  Thu, 30 Jan 2014 14:06:29 -0500
 
