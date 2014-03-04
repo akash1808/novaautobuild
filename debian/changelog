@@ -10,6 +10,7 @@ nova (1:2014.1~b2-0ubuntu4) UNRELEASED; urgency=medium
   * debian/patches/arm-console-patch.patch: Add additonal tty for arm64.
   * debian/patches/update-run-tests.patch: Display tests results while building
     and set the concurrency to 1.
+  * debian/control: Add subunit as a build-dependency.
  
  -- Chuck Short <zulcss@ubuntu.com>  Thu, 30 Jan 2014 14:06:29 -0500
 

@@ -55,6 +55,7 @@ Build-Depends-Indep:
  python-testtools (>= 0.9.32),
  python-webob (>= 1.2.3),
  sqlite3,
+ subunit,
  testrepository ( >= 0.0.17)
 Build-Conflicts: python-cjson
 Standards-Version: 3.9.3
