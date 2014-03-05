@@ -10,7 +10,7 @@ index 1fecc4c..84537cb 100755
  debug=0
  update=0
 -concurrency=0
-+concurrency=1
++concurrency=4
  
  LANG=en_US.UTF-8
  LANGUAGE=en_US:en
