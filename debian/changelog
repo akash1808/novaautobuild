@@ -1,5 +1,6 @@
-nova (1:2014.1~b2-0ubuntu4) UNRELEASED; urgency=medium
+nova (1:2014.1~b3-0ubuntu1) trusty; urgency=medium
 
+  * New upstream release.
   * debian/patches/fix-requirements.patch: Refreshed.
   * debian/patches/fix-novnc-regression.patch: Dropped no longer needed.
   * debian/patches/fix-docs-build-without-network.patch: Dropped no longer needed.
@@ -11,8 +12,8 @@ nova (1:2014.1~b2-0ubuntu4) UNRELEASED; urgency=medium
   * debian/patches/update-run-tests.patch: Display tests results while building
     and set the concurrency to 1.
   * debian/control: Add subunit as a build-dependency.
- 
- -- Chuck Short <zulcss@ubuntu.com>  Thu, 30 Jan 2014 14:06:29 -0500
+
+ -- Chuck Short <zulcss@ubuntu.com>  Thu, 06 Mar 2014 12:02:41 -0500
 
 nova (1:2014.1~b2-0ubuntu3) trusty; urgency=medium
 
