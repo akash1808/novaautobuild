@@ -1,3 +1,10 @@
+nova (1:2014.1~b3-0ubuntu2) trusty; urgency=medium
+
+  * d/nova-common.postinst: Tidy detection of default sqlite to ensure
+    that db sync is only run against local databases (LP: #1290423). 
+
+ -- James Page <james.page@ubuntu.com>  Thu, 13 Mar 2014 11:00:23 +0000
+
 nova (1:2014.1~b3-0ubuntu1) trusty; urgency=medium
 
   * New upstream release.

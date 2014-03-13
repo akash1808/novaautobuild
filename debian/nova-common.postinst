@@ -60,7 +60,8 @@ if [ "$1" = "configure" ]; then
     chown root:root /etc/nova/rootwrap.d
     chmod 0755 /etc/nova/rootwrap.d
 
-    if ! grep -q sql_connection /etc/nova/nova.conf
+    if ! grep -qE "^(sql_)?connection( )?=.*" /etc/nova/nova.conf || \
+         grep -qE "^(sql_)?connection.*sqlite.*" /etc/nova/nova.conf
     then
       su -s /bin/sh -c 'nova-manage db sync' nova
     fi
