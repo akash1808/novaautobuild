@@ -1,3 +1,11 @@
+nova (1:2014.1~b3-0ubuntu3) UNRELEASED; urgency=medium
+
+  * debian/control: Use python-oslosphinx instead of python-oslo.sphinx.
+  * debian/patches/use-oslo.sphinx-namespace.patch: Dropped.
+  * debian/patches/arm-console-patch.patch: Adjust console line.
+
+ -- Chuck Short <zulcss@ubuntu.com>  Thu, 20 Mar 2014 09:22:58 -0400
+
 nova (1:2014.1~b3-0ubuntu2) trusty; urgency=medium
 
   * d/nova-common.postinst: Tidy detection of default sqlite to ensure

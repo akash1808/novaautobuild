@@ -38,7 +38,7 @@ Build-Depends-Indep:
  python-oslo.config (>= 1:1.2.0),
  python-oslo.messaging,
  python-oslo.rootwrap,
- python-oslo.sphinx,
+ python-oslosphinx,
  python-paramiko (>= 1.8.0),
  python-paste,
  python-pastedeploy (>= 1.5.0),

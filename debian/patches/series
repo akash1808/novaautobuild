@@ -1,6 +1,5 @@
 # Ubuntu specific patches below here. Note these can be dropped eventually.
 fix-requirements.patch
 skip_ipv6_test.patch
-use-oslo.sphinx-namespace.patch
 arm-console-patch.patch
 update-run-tests.patch

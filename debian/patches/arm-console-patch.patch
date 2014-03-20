@@ -7,7 +7,7 @@ index 884050e..0056cec 100644
          img_meta_prop = image_meta.get('properties', {}) if image_meta else {}
  
 -        CONSOLE = "console=tty0 console=ttyS0"
-+        CONSOLE = "console=tty0 console=ttyS0 console=ttyAM0"
++        CONSOLE = "console=tty0 console=ttyS0 console=ttyAMA0"
  
          guest = vconfig.LibvirtConfigGuest()
          guest.virt_type = CONF.libvirt.virt_type
