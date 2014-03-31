@@ -1,13 +1,16 @@
-nova (1:2014.1~b3-0ubuntu3) UNRELEASED; urgency=medium
+nova (1:2014.1~rc1-0ubuntu1) trusty; urgency=medium
 
+  [ Chuck Short ]
   * debian/control: Use python-oslosphinx instead of python-oslo.sphinx.
   * debian/patches/use-oslo.sphinx-namespace.patch: Dropped.
   * debian/patches/arm-console-patch.patch: Adjust console line.
   * debian/nova-common.install: Remove nova-rpc-zmq-receiver.
   * debian/patches/skip_sample_tests.patch: Skip tests that fail on the buildds.
 
+  [ Corey Bryant ]
+  * New upstream release.
 
- -- Chuck Short <zulcss@ubuntu.com>  Thu, 20 Mar 2014 09:22:58 -0400
+ -- Corey Bryant <corey.bryant@canonical.com>  Mon, 31 Mar 2014 16:21:50 -0400
 
 nova (1:2014.1~b3-0ubuntu2) trusty; urgency=medium
 
