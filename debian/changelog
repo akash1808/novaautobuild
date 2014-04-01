@@ -4,12 +4,12 @@ nova (1:2014.1~rc1-0ubuntu1) trusty; urgency=medium
   * debian/control: Use python-oslosphinx instead of python-oslo.sphinx.
   * debian/patches/use-oslo.sphinx-namespace.patch: Dropped no longer needed
     because of the python-oslo.sphinx rename.
-  * debian/patches/arm-console-patch.patch: Adjust console line to allow booting 
-    for ARM vm.
-  * debian/nova-common.install: Remove nova-rpc-zmq-receiver, it has been removed 
-    upstream.
-  * debian/patches/skip_sample_tests.patch: Skip tests that fail on the buildds.
-    (LP: #1300522)
+  * debian/patches/arm-console-patch.patch: Fix typo in patch to allow
+    booting ARM vm.
+  * debian/nova-common.install: Remove nova-rpc-zmq-receiver, it has been
+    removed upstream.
+  * debian/patches/skip_sample_tests.patch: Skip tests that fail on the
+    buildds. (LP: #1300522)
 
   [ Corey Bryant ]
   * New upstream release. (LP: #1299055)
