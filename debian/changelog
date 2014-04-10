@@ -1,3 +1,9 @@
+nova (1:2014.1~rc2-0ubuntu1) trusty; urgency=medium
+
+  * New upstream release candidate (LP: #1299055).
+
+ -- James Page <james.page@ubuntu.com>  Thu, 10 Apr 2014 10:59:37 +0100
+
 nova (1:2014.1~rc1-0ubuntu1) trusty; urgency=medium
 
   [ Chuck Short ]
