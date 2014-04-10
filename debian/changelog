@@ -1,6 +1,9 @@
 nova (1:2014.1~rc2-0ubuntu1) trusty; urgency=medium
 
-  * New upstream release candidate (LP: #1299055).
+  * New upstream release candidate (LP: #1299055) including fixes for:
+    - Require admin context for interfaces on external networks to prevent
+      non-admin users directly creating ports on external networks
+      (LP: #1284718).
 
  -- James Page <james.page@ubuntu.com>  Thu, 10 Apr 2014 10:59:37 +0100
 
