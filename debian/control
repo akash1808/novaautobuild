@@ -312,7 +312,8 @@ Package: nova-compute-vmware
 Architecture: all
 Depends:
  nova-compute (= ${binary:Version}),
- ${misc:Depends}
+ ${misc:Depends},
+ genisoimage
 Provides: nova-compute-hypervisor
 Conflicts: nova-compute-hypervisor
 Description: OpenStack Compute - compute node (VMware)
