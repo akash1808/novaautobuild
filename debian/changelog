@@ -1,4 +1,4 @@
-nova (1:2014.1.1-0ubuntu1) utopic; urgency=medium
+nova (1:2014.1.1-0ubuntu1.3) utopic; urgency=medium
 
    * Resynchronize with stable/icehouse (867341f) (LP: #1328134)
      - [867341f] Fix security group race condition while listing and deleting rules
@@ -33,6 +33,19 @@ nova (1:2014.1.1-0ubuntu1) utopic; urgency=medium
      LXC containers. (LP: #1297962)
 
  -- Chuck Short <zulcss@ubuntu.com>  Mon, 09 Jun 2014 12:26:24 -0400
+
+nova (1:2014.1-0ubuntu1.2) trusty-security; urgency=medium
+
+  * SECURITY UPDATE: specify /etc/nova/rootwrap.conf for use with
+    nova-rootwrap
+    - CVE-2013-1068 (LP: #1185019)
+
+ -- Jamie Strandboge <jamie@ubuntu.com>   Mon, 09 Jun 2014 09:32:44 -0500
+
+nova (1:2014.1-0ubuntu1.1) trusty; urgency=medium
+
+  * debian/patches/libvirt-Handle-unsupported-host-capabilities.patch: Fix
+    exception when starting instances with libvirt LXC or XEN. (LP: #1297962)
 
 nova (1:2014.1-0ubuntu1) trusty; urgency=medium
 
