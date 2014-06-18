@@ -1,4 +1,4 @@
-nova (1:2014.1.1-0ubuntu1.3) utopic; urgency=medium
+nova (1:2014.1.1-0ubuntu1.3) trusty; urgency=medium
 
    * Resynchronize with stable/icehouse (867341f) (LP: #1328134)
      - [867341f] Fix security group race condition while listing and deleting rules
