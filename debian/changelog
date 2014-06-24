@@ -1,38 +1,8 @@
-nova (1:2014.1.1-0ubuntu1.3) trusty; urgency=medium
+nova (1:2014.1.1-0ubuntu1) trusty; urgency=medium
 
-   * Resynchronize with stable/icehouse (867341f) (LP: #1328134)
-     - [867341f] Fix security group race condition while listing and deleting rules
-     - [ffcb176] VMware: ensure rescue instance is deleted when instance is deleted
-     - [fe4fe70] VMware: Log additional details of suds faults
-     - [43f0437] Add info_cache as expected attribute when evacuate instance
-     - [a2da9ce] VMware: uncaught exception during snapshot deletion
-     - [1a45944] Catch InstanceNotFound exception if migration fails
-     - [ee374f1] Do not wait for neutron event if not powering on libvirt domain
-     - [705ad64] Reap child processes gracefully if greenlet thread gets killed
-     - [f769bf8] Fixes arguments parsing when executing command
-     - [bedb66f] Use one query instead of two for quota_usages
-     - [422decd] VMWare - Check for compute node before triggering destroy
-     - [6629116] Use debug level logging in unit tests, but don't save them.
-     - [088b718] support local debug logging
-     - [080f785] Revert "Use debug level logging during unit tests"
-     - [fb03028] VMWare: add power off vm before detach disk during unrescue
-     - [d93427a] Check for None or timestamp in availability zone api sample
-     - [f5c3330f] Pass configured auth strategy to neutronclient
-     - [74d1043] remove unneeded call to network_api on rebuild_instance
-     - [f1fdb3c] Remove unnecessary call to fetch info_cache
-     - [395ec82] Remove metadata's network-api dependence on the database
-     - [a48d268] InvalidCPUInfo exception added to except block
-     - [77392a9] Moved the registration of lifecycle event handler in init_host()
-     - [40ae1ee] Fix display of server group members
-     - [66c7ca1] Change errors_out_migration decorator to work with RPC
-     - [e1e140b] Don't explode if we fail to unplug VIFs after a failed boot
-     - [c816488] Remove unneeded call to fetch network info on shutdown
-     - [7f9f3ef] Don't overwrite instance object with dict in _init_instance()
-     - [2728f1e] Fix bug detach volume fails with "KeyError" in EC2
-   * debian/patches/fix-lxc-libvirt-starting.patch: Fix exception when starting
-     LXC containers. (LP: #1297962)
+  * debian 
 
- -- Chuck Short <zulcss@ubuntu.com>  Mon, 09 Jun 2014 12:26:24 -0400
+ -- Chuck Short <zulcss@ubuntu.com>  Tue, 24 Jun 2014 10:47:47 -0400
 
 nova (1:2014.1-0ubuntu1.2) trusty-security; urgency=medium
 
@@ -40,23 +10,18 @@ nova (1:2014.1-0ubuntu1.2) trusty-security; urgency=medium
     nova-rootwrap
     - CVE-2013-1068 (LP: #1185019)
 
- -- Jamie Strandboge <jamie@ubuntu.com>   Mon, 09 Jun 2014 09:32:44 -0500
-
-nova (1:2014.1-0ubuntu1.1) trusty; urgency=medium
-
-  * debian/patches/libvirt-Handle-unsupported-host-capabilities.patch: Fix
-    exception when starting instances with libvirt LXC or XEN. (LP: #1297962)
+ -- Jamie Strandboge <jamie@ubuntu.com>  Mon, 09 Jun 2014 09:32:44 -0500
 
 nova (1:2014.1-0ubuntu1) trusty; urgency=medium
 
   [ Chuck Short ]
-  * debian/control: Add genisoimage as a dependency for nova-comute-vmware.
+  * debian/control: Add genisoimage as a dependency for nova-compute-vmware.
     (LP: #1306484)
 
   [ Corey Bryant ]
   * New upstream release (LP: #1299055).
 
- -- Corey Bryant <corey.bryant@canonical.com>  Wed, 16 Apr 2014 13:08:36 -0400
+ -- James Page <james.page@ubuntu.com>  Thu, 17 Apr 2014 11:09:35 +0100
 
 nova (1:2014.1~rc2-0ubuntu1) trusty; urgency=medium
 
