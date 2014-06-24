@@ -310,7 +310,7 @@ Description: OpenStack Compute - compute node (KVM)
 
 Package: nova-compute-vmware
 Architecture: all
-Depends: nova-compute (= ${binary:Version}), ${misc:Depends}, genisoimage
+Depends: genisoimage, nova-compute (= ${binary:Version}), ${misc:Depends}
 Provides: nova-compute-hypervisor
 Conflicts: nova-compute-hypervisor
 Description: OpenStack Compute - compute node (VMware)
