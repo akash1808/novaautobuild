@@ -29,8 +29,8 @@ nova (1:2014.1.1-0ubuntu1) trusty; urgency=medium
     - [c816488] Remove unneeded call to fetch network info on shutdown
     - [7f9f3ef] Don't overwrite instance object with dict in _init_instance()
     - [2728f1e] Fix bug detach volume fails with "KeyError" in EC2
-   * debian/patches/fix-lxc-libvirt-starting.patch: Fix exception when starting
-     LXC containers. (LP: #1297962)
+   * debian/patches/libvirt-Handle-unsupported-host-capabilities.patch: Fix exception
+     when starting LXC containers. (LP: #1297962)
 
  -- Chuck Short <zulcss@ubuntu.com>  Tue, 24 Jun 2014 10:47:47 -0400
 
