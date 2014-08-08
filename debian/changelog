@@ -1,3 +1,52 @@
+nova (1:2014.1.2-0ubuntu1) trusty; urgency=medium
+
+  * Resynchronize with stable/icehouse (c545075) (LP: #1354159):
+    - [1408081] Mask block_device_info auth_password in virt driver debug logs
+    - [8d7de91] VMware: Add check for datacenter with no datastore
+    - [0d9419f] Fixes hyper-v volume attach when host is AD member
+    - [1469c8e] Prevent clean-up of migrating instances on compute init
+    - [0617601] VMware: use default values in get_info() when properties are missing
+    - [c8df2ac] Set python hash seed to 0 in tox.ini
+    - [7de0132] Do not pass instances without host to compute API
+    - [811cab7] Do not process events for instances without host
+    - [0e1580e] Attach/detach interface to paused instance with affect live flag
+    - [397de7b] Turn periodic tasks off in all unit tests
+    - [9f59ca7] Avoid possible timing attack in metadata api
+    - [72cc37d] Handle service creation race by service workers
+    - [af7ba1c] Fixes rbd backend image size
+    - [a8b52c0] VMware: Fix race in spawn() when resizing cached image
+    - [132d5a2] Avoid re-adding iptables rules for instances that have disappeared
+    - [0142324] VMware: Fix fake raising the wrong exception in _remove_file
+    - [b08f62a] Fix security group list when not defined for an instance
+    - [f598864] libvirt: Make nwfilter driver use right filterref
+    - [da777f1] Make sure domain exists before referencing it
+    - [8d260a8] Scheduler: enable scheduler hint to pass the group name
+    - [4c551d9] Instance groups: add method get_by_hint
+    - [9f5d2a6] Avoid referencing stale instance/network_info dicts in firewall
+    - [e43c43e] Neutronv2 api does not support neutron without port quota
+    - [120ecf3] Fix the wrong dest of 'vlan' option and add new 'vlan_start' option
+    - [f864329] Use default rpc_response_timeout in unit tests
+    - [4aeefa7] Network: ensure that ports are 'unset' when instance is deleted
+    - [a365897] Save connection info in libvirt after volume connect
+    - [d1c5736] Cleanup allocating networks when InstanceNotFound is raised
+    - [2f40191] Failure during termination should always leave state as error()
+    - [485f25d] Use no_timer_check with soft-qemu
+    - [0994254] Use correct project/user for quotas
+    - [4c6b0f7] Revert "Remove broken quota-classes API"
+    - [96212b1] libvirt: Refresh volume connection_info after volume snapshot
+    - [c104f2f] Set the volume access mode during volume attach
+    - [c754305] VCDriver - Ignore host in Maintenance mode in stats update
+    - [4820dbb] VMware: Fix memory leaks caused by caches
+    - [0252c87] Include pending task in log message on skip sync_power_state
+    - [9095bcf] Fixes Hyper-V iSCSI target login method
+    - [17e71f7] VMware: prevent image snapshot if no root disk defined
+    - [c545075] versions API: ignore request with a body
+  * d/p/fix-requirements.patch: Refreshed.
+  * d/p/libvirt-convert-cpu-features-attribute-from-list-to-.patch: convert cpu
+        features attribute from list to a set (LP: #1267191)
+
+ -- Corey Bryant <corey.bryant@canonical.com>  Thu, 07 Aug 2014 17:16:50 -0400
+
 nova (1:2014.1.1-0ubuntu1) trusty; urgency=medium
 
   * Resynchronize with stable/icehouse (867341f) (LP: #1328134):
