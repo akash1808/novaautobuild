@@ -43,6 +43,7 @@ nova (1:2014.1.2-0ubuntu1) trusty; urgency=medium
     - [17e71f7] VMware: prevent image snapshot if no root disk defined
     - [c545075] versions API: ignore request with a body
   * d/p/fix-requirements.patch: Refreshed.
+  * d/p/Fixes-rdb-backend-image-size.patch: Dropped. Fixed upstream in 2014.1.2.
 
   [ James Page ]
   * d/watch: Point to tarballs.openstack.org for release artifacts.
