@@ -1,3 +1,11 @@
+nova (1:2014.1.2-0ubuntu2) trusty; urgency=medium
+
+  * debian/patches/cells-json-store.patch Fix nova-cells fails when using
+    JSON file to store cell information
+    (LP: #1314677)
+
+ -- Liam Young <liam.young@canonical.com>  Mon, 29 Sep 2014 12:59:24 +0000
+
 nova (1:2014.1.2-0ubuntu1) trusty; urgency=medium
 
   [ Corey Bryant ]
