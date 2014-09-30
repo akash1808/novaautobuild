@@ -1,6 +1,12 @@
+Description: Fix nova cells failing with a json topology file bug
+Author: Liam Young <liam.young@canonical.com>
+Bug: https://bugs.launchpad.net/nova/+bug/1314677
+Forwarded: https://review.openstack.org/#/c/124811/
+diff --git a/nova/cells/state.py b/nova/cells/state.py
+index b9112bd..1e12450 100644
 --- a/nova/cells/state.py
 +++ b/nova/cells/state.py
-@@ -152,10 +152,7 @@
+@@ -152,10 +152,7 @@ class CellStateManager(base.Base):
              cells_config = CONF.cells.cells_config
  
          if cells_config:
@@ -12,7 +18,7 @@
  
          return CellStateManagerDB(cell_state_cls)
  
-@@ -450,8 +447,11 @@
+@@ -450,8 +447,11 @@ class CellStateManagerDB(CellStateManager):
  
  
  class CellStateManagerFile(CellStateManager):
@@ -26,14 +32,18 @@
          super(CellStateManagerFile, self).__init__(cell_state_cls)
  
      def _cell_data_sync(self, force=False):
+diff --git a/nova/tests/cells/test_cells_state_manager.py b/nova/tests/cells/test_cells_state_manager.py
+index 1c29927..4841e14 100644
 --- a/nova/tests/cells/test_cells_state_manager.py
 +++ b/nova/tests/cells/test_cells_state_manager.py
-@@ -17,14 +17,16 @@
+@@ -16,12 +16,16 @@
+ Tests For CellStateManager
  """
  
- from oslo.config import cfg
 +import mock
 +import six
++
+ from oslo.config import cfg
  
  from nova.cells import state
  from nova import db
@@ -42,11 +52,8 @@
 +from nova.openstack.common import fileutils
  from nova import test
  
--
- FAKE_COMPUTES = [
-     ('host1', 1024, 100, 0, 0),
-     ('host2', 1024, 100, -1, -1),
-@@ -78,6 +80,19 @@
+ 
+@@ -78,6 +82,19 @@ class TestCellsStateManager(test.TestCase):
                                state.CellStateManager)
          self.assertEqual(['no_such_file_exists.conf'], e.config_files)
  
@@ -66,3 +73,4 @@
      def test_capacity_no_reserve(self):
          # utilize entire cell
          cap = self._capacity(0.0)
+
