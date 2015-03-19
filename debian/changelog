@@ -1,4 +1,4 @@
-nova (1:2014.1.4-0ubuntu1) UNRELEASED; urgency=medium
+nova (1:2014.1.4-0ubuntu1) trusty; urgency=medium
 
   * Resynchronize with stable/icehouse (cac6472) (LP: #1432608):
     - [0ff6742] Websocket Proxy should verify Origin header

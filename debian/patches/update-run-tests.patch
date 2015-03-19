@@ -1,4 +1,4 @@
-Description: Update run_tests.sh to show results and default the concurrency to 1.
+Description: Update run_tests.sh to show results.
 Author: Chuck Short <zulcss@ubuntu.com>
 Forwarded: Not needed.
 --- a/run_tests.sh
