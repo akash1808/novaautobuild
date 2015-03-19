@@ -50,6 +50,7 @@ nova (1:2014.1.4-0ubuntu1) UNRELEASED; urgency=medium
     upstream in [8141e7a] and [df9ead9].
   * d/p/cells-json-store.patch: Dropped. Fixed upstream in [bfeae68].
   * d/p/fix-requirements.patch: Rebased.
+  * d/p/update-run-tests.patch: Run tests with default concurrencey.
 
  -- Corey Bryant <corey.bryant@canonical.com>  Mon, 16 Mar 2015 08:29:39 -0400
 
