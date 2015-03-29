@@ -1,3 +1,13 @@
+nova (1:2014.1.4-0ubuntu2) UNRELEASED; urgency=medium
+
+  [ Edward Hope-Morley ]
+  * Fixed race between nova-compute and neutron-ovs-cleanup (LP: #1420572)
+
+  [ Corey Bryant ]
+  * d/control: Set minimum python-six dependency to 1.5.2 (LP: #1403114).
+
+ -- Corey Bryant <corey.bryant@canonical.com>  Sun, 29 Mar 2015 11:00:09 -0400
+
 nova (1:2014.1.4-0ubuntu1) trusty; urgency=medium
 
   * Resynchronize with stable/icehouse (cac6472) (LP: #1432608):
