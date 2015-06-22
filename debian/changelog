@@ -1,3 +1,31 @@
+nova (1:2014.1.5-0ubuntu1) UNRELEASED; urgency=medium
+
+  * Resynchronize with stable/icehouse (08b5d48) (LP: #1467533):
+    - [74295ed] Use ebtables to isolate dhcp traffic
+    - [a83eb5f] VMware: fix AttributeError: TaskInfo instance has no attribute 'name'
+    - [8876294] libvirt: partial fix for live-migration with config drive
+    - [b77c188] Type conflict in trusted_filter.py using attestation_port default value
+    - [378a8d4] Use instance.uuid instead of instance
+    - [c12f21d] Make test_version_string_with_package_is_good work with pbr 0.11
+    - [1668178] Moves trusted filter unit tests into own file
+    - [4812617] Use hypervisor hostname for compute trust level
+    - [d8853ee] Recover from POWERING-* state on compute manager start-up
+    - [0784b0c] Avoid referring to juno-era exception type
+    - [f513a28] libvirt: Make sure volumes are well detected during block migration
+    - [68ec684] libvirt: avoid changing UUID when redefining nwfilters
+    - [cc86ef5] delete python bytecode before every test run
+    - [3501ec2] Drop use of oslo.utils in nova
+    - [392dc22] Eventlet green threads not released back to pool
+    - [1e03160] Sync strutils from oslo-incubator for mask_password fix
+    - [7292c02] Allow instances to attach to shared external nets
+    - [dbc348d] Fix libvirt watchdog support
+    - [08b5d48] HyperV Driver - Fix to implement hypervisor-uptime
+  * d/p/drop-oslo-utils-usage.patch: Dropped; Fixed upstream.
+  * d/p/recover-from-power-state-on-compute.patch: Dropped; Fixed upstream.
+  * d/p/fix-requirements.patch: Rebased.
+
+ -- Corey Bryant <corey.bryant@canonical.com>  Mon, 22 Jun 2015 10:15:07 -0400
+
 nova (1:2014.1.4-0ubuntu2.1) trusty; urgency=medium
 
   * Ensure that compute manager restarts during instance power
