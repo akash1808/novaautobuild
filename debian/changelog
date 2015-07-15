@@ -1,3 +1,11 @@
+nova (1:2014.1.5-0ubuntu1.1) trusty; urgency=medium
+
+    [ Edward Hope-Morley ]
+    - d/nova-compute.upstart: Fix (another) race between nova-compute
+      and neutron-ovs-cleanup (LP: #1471022)
+
+ -- Edward Hope-Morley <edward.hope-morley@canonical.com>  Wed, 08 Jul 2015 09:44:18 -0500
+
 nova (1:2014.1.5-0ubuntu1) trusty; urgency=medium
 
   * Resynchronize with stable/icehouse (08b5d48) (LP: #1467533):
