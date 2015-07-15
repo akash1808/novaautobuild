@@ -1,8 +1,8 @@
 nova (1:2014.1.5-0ubuntu1.2) UNRELEASED; urgency=medium
 
   [ Edward Hope-Morley ]
-  * Add rsyslog retry support
-    - d/p/add-support-for-syslog-connect-retries.patch (LP: #1459046)
+  * Add rsyslog retry support (LP: #1459046)
+    - d/p/add-support-for-syslog-connect-retries.patch
 
  -- Edward Hope-Morley <edward.hope-morley@canonical.com>  Wed, 15 Jul 2015 18:05:40 +0200
 
