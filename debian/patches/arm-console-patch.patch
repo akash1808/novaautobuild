@@ -1,14 +1,31 @@
-diff --git a/nova/virt/libvirt/driver.py b/nova/virt/libvirt/driver.py
-index 884050e..0056cec 100644
+--- a/nova/tests/unit/virt/libvirt/test_driver.py
++++ b/nova/tests/unit/virt/libvirt/test_driver.py
+@@ -1032,7 +1032,7 @@ class LibvirtConnTestCase(test.NoDBTestC
+         self.assertEqual(1, cfg.vcpus)
+         self.assertEqual(vm_mode.EXE, cfg.os_type)
+         self.assertEqual("/sbin/init", cfg.os_init_path)
+-        self.assertEqual("console=tty0 console=ttyS0", cfg.os_cmdline)
++        self.assertEqual("console=tty0 console=ttyS0 console=ttyAMA0", cfg.os_cmdline)
+         self.assertIsNone(cfg.os_root)
+         self.assertEqual(3, len(cfg.devices))
+         self.assertIsInstance(cfg.devices[0],
+@@ -1058,7 +1058,7 @@ class LibvirtConnTestCase(test.NoDBTestC
+         self.assertEqual(1, cfg.vcpus)
+         self.assertEqual(vm_mode.EXE, cfg.os_type)
+         self.assertEqual("/sbin/init", cfg.os_init_path)
+-        self.assertEqual("console=tty0 console=ttyS0", cfg.os_cmdline)
++        self.assertEqual("console=tty0 console=ttyS0 console=ttyAMA0", cfg.os_cmdline)
+         self.assertIsNone(cfg.os_root)
+         self.assertEqual(3, len(cfg.devices))
+         self.assertIsInstance(cfg.devices[0],
 --- a/nova/virt/libvirt/driver.py
 +++ b/nova/virt/libvirt/driver.py
-@@ -3032,7 +3032,7 @@ class LibvirtDriver(driver.ComputeDriver):
-         disk_mapping = disk_info['mapping']
-         img_meta_prop = image_meta.get('properties', {}) if image_meta else {}
+@@ -290,7 +290,7 @@ DISABLE_PREFIX = 'AUTO: '
+ DISABLE_REASON_UNDEFINED = None
  
--        CONSOLE = "console=tty0 console=ttyS0"
-+        CONSOLE = "console=tty0 console=ttyS0 console=ttyAMA0"
+ # Guest config console string
+-CONSOLE = "console=tty0 console=ttyS0"
++CONSOLE = "console=tty0 console=ttyS0 console=ttyAMA0"
  
-         guest = vconfig.LibvirtConfigGuest()
-         guest.virt_type = CONF.libvirt.virt_type
-
+ GuestNumaConfig = collections.namedtuple(
+     'GuestNumaConfig', ['cpuset', 'cputune', 'numaconfig', 'numatune'])

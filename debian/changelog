@@ -1,323 +1,348 @@
-nova (1:2014.1.5-0ubuntu1.2) trusty; urgency=medium
+nova (1:2015.1.1-0ubuntu2) UNRELEASED; urgency=medium
 
-  * Add rsyslog retry support (LP: #1459046)
-    - d/p/add-support-for-syslog-connect-retries.patch
-  * Add vm clean shutdown support (LP: #1196924)
-    - d/p/clean-shutdown.patch
+  * d/rules: Prevent dh_python2 from guessing dependencies.
 
- -- Edward Hope-Morley <edward.hope-morley@canonical.com>  Thu, 16 Jul 2015 11:55:57 +0100
+ -- Corey Bryant <corey.bryant@canonical.com>  Thu, 13 Aug 2015 15:13:43 -0400
 
-nova (1:2014.1.5-0ubuntu1.1) trusty; urgency=medium
+nova (1:2015.1.1-0ubuntu1) vivid; urgency=medium
 
-    [ Edward Hope-Morley ]
-    - d/nova-compute.upstart: Fix (another) race between nova-compute
-      and neutron-ovs-cleanup (LP: #1471022)
+  * Resynchronize with stable/kilo (d8a470d) (LP: #1481008):
+    - [e6e39e1] Remove incorrect Instance 1.18 relationship for PciDevice 1.2
+    - [a55ea8c] Fix the incorrect PciDeviceList version number
+    - [e56aed8] Add support for forcing migrate_flavor_data
+    - [ccd002b] Fix migrate_flavor_data string substitution
+    - [124b501] Allow libvirt cleanup completion when serial ports already released
+    - [4908d46] Fixed incorrect dhcp_server value during nova-network creation
+    - [0cf44ff] Fixed nova-network dhcp-hostsfile update during live-migration
+    - [dc6af6b] libvirt: handle code=38 + sigkill (ebusy) in destroy()
+    - [6e22a8b] hypervisor support matrix: add kvm on system z in kilo release
+    - [e013ebf] Fix max_number for migrate_flavor data
+    - [2b5fe5d] Reduce window for allocate_fixed_ip / release_fixed_ip race in nova-net
+    - [cd6353a] Mark ironic credential config as secret
+    - [48a6217] Ensure to store context in thread local after spawn/spawn_n
+    - [fc7f1ab] Store context in local store after spawn_n
+    - [199f0ab] Fixes TypeError when libvirt version is BAD_LIBVIRT_CPU_POLICY_VERSIONS
+    - [1f4088d] Add 'docker' to the list of known hypervisor types
+    - [30fe27d] Fix noVNC console access for an IPv6 setup
+    - [41ba203] libvirt: Don't try to confine a non-NUMA instance
+    - [2635ee0] Fix quota-update stuck in deleting when nova-compute startup finish
+    - [540221f] Remove useless volume when boot from volume failed
+    - [4bb1e08] network: fix instance cache refresh for empty list
+    - [22adc62] Make nova-manage handle completely missing flavor information
+    - [c66c8e1] libvirt: safe_decode xml for i18n logging
+    - [c42b47e] Reschedules sometimes do not allocate networks
+    - [72f7e30] Hyper-V: Fixes cold migration / resize issue
+    - [a0f093a] Create instance_extra entry if it doesn't update
+    - [6463b38] Don't wait for an event on a resize-revert
+    - [d55ee5a] Ironic: pass injected files through to configdrive
+    - [e7519b4] Associate floating IPs with first v4 fixed IP if none specified
+    - [d18058e] libvirt: handle NotSupportedError in compareCPU
+    - [1a6053b] fix network setup on evacuate
+    - [aaaf7ce] Delete shelved_* keys in n-cpu unshelve call
+    - [82f83d4] Correct the help text for the compute option.
+    - [8ba0159] Fix loading things in instance_extra for old instances
+    - [709f0bb] Delay STOPPED lifecycle event for all domains, not just Xen
+    - [1b941f1] Handle return code 2 from blkid calls
+    - [8e9ecf7] Libvirt: Use tpool to invoke guestfs api
+    - [7ae9466] Incorrect argument order passed to swap_volume
+    - [c363c2d] VMWare: Isolate unit tests from requests
+    - [e896c5a] Make test_version_string_with_package_is_good work with pbr 0.11
+    - [cbf606b] view hypervisor details rest api should be allowed for non-admins
+    - [c1b6e1a] sync oslo: service child process normal SIGTERM exit
+    - [d8a470d] Hyper-V: checks for existent Notes in list_instance_notes
+  * d/p/fixup-blkid.patch: Dropped. Fixed upstream.
 
- -- Edward Hope-Morley <edward.hope-morley@canonical.com>  Wed, 08 Jul 2015 09:44:18 -0500
+ -- Corey Bryant <corey.bryant@canonical.com>  Mon, 03 Aug 2015 14:30:20 -0400
 
-nova (1:2014.1.5-0ubuntu1) trusty; urgency=medium
+nova (1:2015.1.0-0ubuntu1.1) vivid; urgency=medium
 
-  * Resynchronize with stable/icehouse (08b5d48) (LP: #1467533):
-    - [74295ed] Use ebtables to isolate dhcp traffic
-    - [a83eb5f] VMware: fix AttributeError: TaskInfo instance has no attribute 'name'
-    - [8876294] libvirt: partial fix for live-migration with config drive
-    - [b77c188] Type conflict in trusted_filter.py using attestation_port default value
-    - [378a8d4] Use instance.uuid instead of instance
-    - [c12f21d] Make test_version_string_with_package_is_good work with pbr 0.11
-    - [1668178] Moves trusted filter unit tests into own file
-    - [4812617] Use hypervisor hostname for compute trust level
-    - [d8853ee] Recover from POWERING-* state on compute manager start-up
-    - [0784b0c] Avoid referring to juno-era exception type
-    - [f513a28] libvirt: Make sure volumes are well detected during block migration
-    - [68ec684] libvirt: avoid changing UUID when redefining nwfilters
-    - [cc86ef5] delete python bytecode before every test run
-    - [3501ec2] Drop use of oslo.utils in nova
-    - [392dc22] Eventlet green threads not released back to pool
-    - [1e03160] Sync strutils from oslo-incubator for mask_password fix
-    - [7292c02] Allow instances to attach to shared external nets
-    - [dbc348d] Fix libvirt watchdog support
-    - [08b5d48] HyperV Driver - Fix to implement hypervisor-uptime
-  * d/p/drop-oslo-utils-usage.patch: Dropped; Fixed upstream.
-  * d/p/recover-from-power-state-on-compute.patch: Dropped; Fixed upstream.
-  * d/p/fix-requirements.patch: Rebased.
+  * d/nova-compute.upstart.in: Fix (another) race between nova-compute
+    and neutron-ovs-cleanup (LP: #1471022).
 
- -- Corey Bryant <corey.bryant@canonical.com>  Mon, 22 Jun 2015 10:15:07 -0400
+ -- Edward Hope-Morley <edward.hope-morley@canonical.com>  Fri, 03 Jul 2015 18:57:59 +0100
 
-nova (1:2014.1.4-0ubuntu2.1) trusty; urgency=medium
+nova (1:2015.1.0-0ubuntu1) vivid; urgency=medium
 
-  * Ensure that compute manager restarts during instance power
-    operations don't leave instances stuck in transitional task
-    states (LP: #1304333):
-    - d/p/recover-from-power-state-on-compute.patch
-      Cherry pick backport of upstream fix from OpenStack >= Juno.
+  * New upstream release for OpenStack Kilo. (LP: #1449744)
 
- -- Edward Hope-Morley <edward.hope-morley@canonical.com>  Wed, 22 Apr 2015 09:51:28 +0100
+ -- Chuck Short <zulcss@ubuntu.com>  Sun, 03 May 2015 13:56:17 -0400
 
-nova (1:2014.1.4-0ubuntu2) trusty; urgency=medium
+nova (1:2015.1~rc1-0ubuntu1) vivid; urgency=medium
 
-  [ Edward Hope-Morley ]
-  * Fixed race between nova-compute and neutron-ovs-cleanup (LP: #1420572)
+  * New uptream milestone release:
+    - d/control: Align with upstream version requirements.
 
-  [ Corey Bryant ]
-  * d/control: Set minimum python-six dependency to 1.5.2 (LP: #1403114).
+ -- Chuck Short <zulcss@ubuntu.com>  Wed, 15 Apr 2015 14:00:05 -0400
 
- -- Corey Bryant <corey.bryant@canonical.com>  Mon, 30 Mar 2015 09:28:30 -0400
+nova (1:2015.1~b3-0ubuntu1) vivid; urgency=medium
 
-nova (1:2014.1.4-0ubuntu1) trusty; urgency=medium
+  * New upstream milestone release:
+    - d/p/*: Refresh.
+    - d/p/compute-blkid-filter.patch,fix-oslo-transition.patch: Dropped,
+      no longer required.
+    - d/p/rate-limit-power-syncs.patch: Disable pending full rebase.
+    - d/control: Align with upstream version requirements.
+    - d/control: Add new dependencies on oslo-log, psutil.
+    - d/control: Move oslo-vmware dependency to nova-compute-vmware package
+      as no longer core.
+    - d/p/skip-proxy-test.patch: Skip test which fails in launchpad buildds
+      due to proxy confusion.
+  * d/control: Add python-testresources to BD's.
+  * d/pydist-overrides: Add overrides for oslo packages.
 
-  * Resynchronize with stable/icehouse (cac6472) (LP: #1432608):
-    - [0ff6742] Websocket Proxy should verify Origin header
-    - [c70e1fb] Fix kwargs['instance'] KeyError in @reverts_task_state decorator
-    - [07ec12c] Revert "Eventlet green threads not released back to pool"
-    - [e9cf07b] Compute: Catch binding failed exception while init host
-    - [e275961] Make tests use sha256 as openssl default digest algorithm
-    - [a657582] Eventlet green threads not released back to pool
-    - [4b46a86] Fix image metadata returned for volumes
-    - [58a6393] Check min_ram and min_disk when boot from volume
-    - [c5411d2] Extends use of ServiceProxy to more methods in HostAPI in cells
-    - [1e2abd6] Remove usage of self.__dict__ for message var replacement
-    - [54f9225] only emit deprecation warnings once
-    - [52103be] Fix disconnecting necessary iSCSI sessions issue
-    - [cca94d0] Fix connecting unnecessary iSCSI sessions issue
-    - [ac9f5c7] Fix wrong command for _rescan_multipath
-    - [d7c8e93] Fix unsafe SSL connection on TrustedFilter
-    - [9ecc468] Fix SecurityGroupExists error when booting instances
-    - [33be7d7] Update "num_instance" during delete instance
-    - [3de3f10] Fix nova evacuate issues for RBD
-    - [fe289fb] Fix nova-compute start issue after evacuate
-    - [f781656] Add _security_group_ensure_default() DBAPI method
-    - [8812672] Run build_and_run_instance in a separate greenthread
-    - [b6a080b] Fixes DOS issue in instance list ip filter
-    - [5ab0421] Make the block device mapping retries configurable
-    - [0695e14] Retry on closing of luks encrypted volume in case device is busy
-    - [dffa810] Add @_retry_on_deadlock to _instance_update()
-    - [f086ca3] Nova api service doesn't handle SIGHUP properly
-    - [7cdb643] Fix XML UnicodeEncode serialization error
-    - [98a6c1e] postgresql: use postgres db instead of template1
-    - [155664f] share neutron admin auth tokens
-    - [3e80433] VMware: validate that VM exists on backend prior to deletion
-    - [d71445c] VMWare: Fix VM leak when deletion of VM during resizing
-    - [56b62b7] Sync process utils from oslo
-    - [ddd62ff] VMware: prevent race condition with VNC port allocation
-    - [4174130] Fixes Hyper-V volume mapping issue on reboot
-    - [bfeae68] Fix CellStateManagerFile init to failure
-    - [5ec3cd3] Raise descriptive error for over volume quota
-    - [f9fad7a] Fixes missing ec2 api address disassociate error on failure
-    - [64ec1bf] Fix instance cross AZ check when attaching volumes
-    - [698c821] Ignore errors when deleting non-existing vifs
-    - [8141e7a] libvirt: Handle unsupported host capabilities
-    - [df9ead9] libvirt: Make `fakelibvirt.libvirtError` match
-    - [cac6472] Add _wrap_db_error() support to SessionTransaction.commit()
-  * d/p/drop-oslo-utils-usage.patch: Added to override new oslo.utils dep.
-  * d/p/disable-websockify-tests.patch: Added to disable websockify tests.
-  * d/p/block-device-mapping-config.patch: Dropped. Fixed upstream in [5ab0421].
-  * d/p/libvirt-Handle-unsupported-host-capabilities.patch: Dropped. Fixed
-    upstream in [8141e7a] and [df9ead9].
-  * d/p/cells-json-store.patch: Dropped. Fixed upstream in [bfeae68].
-  * d/p/fix-requirements.patch: Rebased.
-  * d/p/update-run-tests.patch: Run tests with default concurrencey.
+ -- James Page <james.page@ubuntu.com>  Mon, 30 Mar 2015 11:20:49 +0100
 
- -- Corey Bryant <corey.bryant@canonical.com>  Fri, 20 Mar 2015 07:27:23 +0000
+nova (1:2015.1~b2-0ubuntu6) vivid; urgency=medium
 
-nova (1:2014.1.3-0ubuntu2) trusty; urgency=medium
+  * d/p/fixup-blkid.patch: Cherry pick inflight fix for return code
+    handling of blkid calls in libvirt kvm compute driver (LP: #1426324). 
 
-  [ Corey Bryant ]
-  * d/p/block-device-mapping-config.patch: Make the block device mapping
-    retries configurable (LP: #1376927).
+ -- James Page <james.page@ubuntu.com>  Tue, 03 Mar 2015 14:42:44 +0000
 
- -- Chuck Short <zulcss@ubuntu.com>  Wed, 12 Nov 2014 09:22:45 -0500
+nova (1:2015.1~b2-0ubuntu5) vivid; urgency=medium
 
-nova (1:2014.1.3-0ubuntu1.1) trusty-security; urgency=medium
+  * d/nova-compute.init.in: Start after neutron-ovs-cleanup if
+    installed.
+  * d/p/compute-blkid-filter.patch: Cherry pick fix for missing blkid
+    rootwrap filter from upstream gerrit (LP: #1424054).
 
-  * No change rebuild for security:
-    - [82a13b3] VM in rescue state must have a restricted set of actions
-      + CVE-2014-3604
-      + LP: #1338830
-    - [f58d95c] Sync process and str utils from oslo
-      + CVE-2014-7230
-      + LP: #1343604
+ -- James Page <james.page@ubuntu.com>  Tue, 24 Feb 2015 14:13:16 +0000
 
- -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Tue, 21 Oct 2014 12:07:58 -0400
+nova (1:2015.1~b2-0ubuntu4) vivid; urgency=medium
 
-nova (1:2014.1.3-0ubuntu1) trusty; urgency=medium
+  * Fixed race between nova-compute and neutron-ovs-cleanup (LP: #1420572).
 
-  [ Liam Young ]
-  * d/p/cells-json-store.patch: Fix issue with nova-cells failing when using
-    JSON file to store cell information (LP: #1314677).
+ -- Edward Hope-Morley <edward.hope-morley@canonical.com>  Mon, 23 Feb 2015 13:41:47 +0000
 
-  [ Corey Bryant ]
-  * Resynchronize with stable/icehouse (a058646) (LP: #1377136):
-    - [1a95c95] Adds tests for Hyper-V VM Utils
-    - [bb47d55] Removes unnecessary instructions in test_hypervapi
-    - [4f41d37] Fixes a Hyper-V list_instances localization issue
-    - [9015410] Adds list_instance_uuids to the Hyper-V driver
-    - [3371ad8] Add _wrap_db_error() support to Session.commit()
-    - [dfb0e0f] Neutron: Atomic update of instance info cache
-    - [bce481c] Ensure info cache updates don't overwhelm cells
-    - [f58d95c] Sync process and str utils from oslo
-    - [4e6371b] remove test_multiprocess_api
-    - [7e09173] Fixes Hyper-V agent force_hyperv_utils_v1 flag issue
-    - [7523ab4] Fix attaching config drive issue on Hyper-V when migrate instances
-    - [74e0ba7] Fix live-migration failure in FC multipath case
-    - [b61aa4d] libvirt: Save device_path in connection_info when booting from volume
-    - [f93b8ee] Made unassigned networks visible in flat networking
-    - [82cc3be] Do not fail cell's instance deletion, if it's missing info_cache
-    - [d72c0a4] Fixes Hyper-V boot from volume root device issue
-    - [0d3dad7] Fixes Hyper-V resize down exception
-    - [5d5970a] db: Add @_retry_on_deadlock to service_update()
-    - [9596f52] Add Hyper-V driver in the "compute_driver" option description
-    - [4a8d6ca] Block sqlalchemy migrate 0.9.2 as it breaks all of nova
-    - [311ab57] Move the error check for "brctl addif"
-    - [df09c2a] Fix rootwrap for non openstack.org iqn's
-    - [1613cd99] Fix instance boot when Ceph is used for ephemeral storage
-    - [4bc680f] Make floatingip-ip-delete atomic with neutron
-    - [0d69163] Fix race condition with vif plugging in finish migrate
-    - [520aa4c] libvirt: Use VIR_DOMAIN_AFFECT_LIVE for paused instances
-    - [3c34e37] add repr for event objects
-    - [1b7ab22] make lifecycle event logs more clear
-    - [e1d6e18] Catch missing Glance image attrs with None
-    - [b591389] Update block_device_info to contain swap and ephemeral disks
-    - [2155188] Adds get_instance_disk_info to compute drivers
-    - [87f842d] Fixes Hyper-V vm state issue
-    - [1106ef2] Fix expected error details from jsonschema
-    - [e5e6bc7] Include next link when default limit is reached
-    - [526853e] Fix FloatingIP.save() passing FixedIP object to sqlalchemy
-    - [4e1e217] Read deleted instances during lifecycle events
-    - [d8b9ba5] Add a retry_on_deadlock to reservations_expire
-    - [b53adea] Add expire reservations in backport position.
-    - [e874ee2] Fixes Hyper-V SCSI slot selection
-    - [471e644] VMware: do not cache image when root_gb is 0
-    - [825cfe4] Fix _parse_datetime in simple tenant usage extension
-    - [073ee06] Avoid traceback logs from simple tenant usage extension
-    - [9447203] replace NovaException with VirtualInterfaceCreate when neutron fails
-    - [6b7cb1a] libvirt: convert cpu features attribute from list to a set
-    - [7ca83e8] Delete image when backup operation failed on snapshot step
-    - [82a13b3] VM in rescue state must have a restricted set of actions
-    - [e7d2087] shelve doesn't work on nova-cells environment
-    - [aeb71a8] libvirt: return the correct instance path while cleanup_resize
-    - [cce6d22] Fix nova image-show with queued image
-    - [aff80d5] _translate_from_glance() can cause an unnecessary HTTP request
-    - [a058646] Loosen import_exceptions to cover all of gettextutils
-  * d/p/libvirt-convert-cpu-features-attribute-from-list-to-.patch: Dropped.
-    Code has been fixed upstream.
-  * d/p/libvirt-Handle-unsupported-host-capabilities.patch: Rebased.
+nova (1:2015.1~b2-0ubuntu3) vivid; urgency=medium
 
- -- Chuck Short <zulcss@ubuntu.com>  Mon, 06 Oct 2014 09:24:45 -0400
+  * debian/control: Remove python-wsgiref and add it the blacklist. 
 
-nova (1:2014.1.2-0ubuntu1) trusty; urgency=medium
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 13 Feb 2015 13:12:53 -0500
 
-  [ Corey Bryant ]
-  * Resynchronize with stable/icehouse (c545075) (LP: #1354159):
-    - [1408081] Mask block_device_info auth_password in virt driver debug logs
-    - [8d7de91] VMware: Add check for datacenter with no datastore
-    - [0d9419f] Fixes hyper-v volume attach when host is AD member
-    - [1469c8e] Prevent clean-up of migrating instances on compute init
-    - [0617601] VMware: use default values in get_info() when properties are missing
-    - [c8df2ac] Set python hash seed to 0 in tox.ini
-    - [7de0132] Do not pass instances without host to compute API
-    - [811cab7] Do not process events for instances without host
-    - [0e1580e] Attach/detach interface to paused instance with affect live flag
-    - [397de7b] Turn periodic tasks off in all unit tests
-    - [9f59ca7] Avoid possible timing attack in metadata api
-    - [72cc37d] Handle service creation race by service workers
-    - [af7ba1c] Fixes rbd backend image size
-    - [a8b52c0] VMware: Fix race in spawn() when resizing cached image
-    - [132d5a2] Avoid re-adding iptables rules for instances that have disappeared
-    - [0142324] VMware: Fix fake raising the wrong exception in _remove_file
-    - [b08f62a] Fix security group list when not defined for an instance
-    - [f598864] libvirt: Make nwfilter driver use right filterref
-    - [da777f1] Make sure domain exists before referencing it
-    - [8d260a8] Scheduler: enable scheduler hint to pass the group name
-    - [4c551d9] Instance groups: add method get_by_hint
-    - [9f5d2a6] Avoid referencing stale instance/network_info dicts in firewall
-    - [e43c43e] Neutronv2 api does not support neutron without port quota
-    - [120ecf3] Fix the wrong dest of 'vlan' option and add new 'vlan_start' option
-    - [f864329] Use default rpc_response_timeout in unit tests
-    - [4aeefa7] Network: ensure that ports are 'unset' when instance is deleted
-    - [a365897] Save connection info in libvirt after volume connect
-    - [d1c5736] Cleanup allocating networks when InstanceNotFound is raised
-    - [2f40191] Failure during termination should always leave state as error()
-    - [485f25d] Use no_timer_check with soft-qemu
-    - [0994254] Use correct project/user for quotas
-    - [4c6b0f7] Revert "Remove broken quota-classes API"
-    - [96212b1] libvirt: Refresh volume connection_info after volume snapshot
-    - [c104f2f] Set the volume access mode during volume attach
-    - [c754305] VCDriver - Ignore host in Maintenance mode in stats update
-    - [4820dbb] VMware: Fix memory leaks caused by caches
-    - [0252c87] Include pending task in log message on skip sync_power_state
-    - [9095bcf] Fixes Hyper-V iSCSI target login method
-    - [17e71f7] VMware: prevent image snapshot if no root disk defined
-    - [c545075] versions API: ignore request with a body
-  * d/p/fix-requirements.patch: Refreshed.
-  * d/p/Fixes-rdb-backend-image-size.patch: Dropped. Fixed upstream in 2014.1.2.
+nova (1:2015.1~b2-0ubuntu2) vivid; urgency=medium
+
+  [ Corey Byrant ]
+  * d/control: Align with upstream dependencies.
+
+  [ Chuck Short]
+  * debian/patches/fix-oslo-transition.patch: Fixes oslo transtion.
+
+ -- Chuck Short <zulcss@ubuntu.com>  Thu, 12 Feb 2015 14:02:31 -0500
+
+nova (1:2015.1~b2-0ubuntu1) vivid; urgency=medium
+
+  [ Corey Byrant ]
+  * New upstream release.
+    - d/control: Align with upstream dependencies.
+    - d/p/arm-console-patch.patch: Rebased.
+    - d/p/update-run-tests.patch: Rebased.
+    - d/p/rate-limit-power-syncs.patch: Rebased.
+    - d/p/skip-ubuntu-tests.patch: Dropped. Patched code removed upstream.
+
+  [ Chuck Short ]
+  * debian/control: Transition to new oslo namespace.
+  * debian/control: Dropped python-posix-ipc, python-anyjson,  python-pycadf, 
+    python-lockfile, python-simplejson, python-mox, python-feedparser, and,
+    python-wsgiref
+  * debian/patches/skip-ubuntu-tests.patch: Skipped failing tests.
+
+ -- Chuck Short <zulcss@ubuntu.com>  Thu, 12 Feb 2015 09:05:09 -0500
+
+nova (1:2015.1~b1-0ubuntu5) vivid; urgency=medium
+
+  * Rebuild to pick up pkgos upstart generation fix.
+    - d/control: Bump openstack-pkg-tools to ensure upstart fix inclusion.
+
+ -- Corey Bryant <corey.bryant@canonical.com>  Wed, 14 Jan 2015 16:27:46 +0000
+
+nova (1:2015.1~b1-0ubuntu4) vivid; urgency=medium
+
+  * d/nova-objectstore.init.in: Add missing init.in configuration for
+    object storage daemon, resolving DEP-8 test failure.
+
+ -- James Page <james.page@ubuntu.com>  Mon, 12 Jan 2015 08:31:49 +0000
+
+nova (1:2015.1~b1-0ubuntu3) vivid; urgency=medium
+
+  * Systemd enablement:
+    - d/control,rules: Add BD on openstack-pkg-tools, include in rules file.
+    - d/*.init.in: Cherry pick and adapt init script template configurations
+      from Debian packaging (thanks Thomas).
+    - d/*.upstart: Drop all upstart configuration files in preference to
+      templates apart from nova-compute.
+    - d/nova-compute.upstart.in: Rename to make part of openstack-pkg-tools
+      templating.
+  * d/control,d/nova-serialproxy.*: Add nova-serialproxy binary package,
+    moved from nova-compute package.
+  * d/*.logrotate,nova-common.logrotate: Move to single logrotate
+    configuration file.
+  * d/compat,control: Bump debhelper compat level to 9.
+  * Patchworks:
+    - d/p/scalable-scheduler.patch: Cherry pick scalable scheduler feature
+      from upstream gerrit.
+    - d/p/rate-limit-power-syncs.patch: Cherry pick feature to rate limit
+      power sync tasks from compute nodes from upstream gerrit.
+  * d/changelog: Fixup formatting error for 1:2013.2~b3-0ubuntu2.
+  * d/*.manpages: Add any missing manpages.
+  * d/rules: General tidy.
+  * d/control: Drop obsolete ostack-lsb-base usage for dependency generation.
+  * d/control: Switch unversioned Breaks: nova-api to Conflicts.
+
+ -- James Page <james.page@ubuntu.com>  Thu, 08 Jan 2015 10:09:44 +0000
+
+nova (1:2015.1~b1-0ubuntu2) vivid; urgency=medium
+
+  * d/tests/*: Drop nova-baremetal tests.
+
+ -- James Page <james.page@ubuntu.com>  Sat, 20 Dec 2014 09:27:30 +0000
+
+nova (1:2015.1~b1-0ubuntu1) vivid; urgency=medium
+
+  [ Chuck Short ]
+  * Open for Kilo  
+  * debian/control: Update bzr branch.
+  * debian/patches/arm-console-patch.patch: Refreshed.
+  * debian/patches/disable-websockify-tests.patch: Refreshed.
+  * debian/patches/skip-ubuntu-tests.patch: Refreshed.
+  * debian/control: Add python-oslo.middleware as a build dependency.
+  * debian/control: Add python-oslo.concurrency as a build dependency.
+  * debian/control: Add python-oslo.serializatoin as a build dependency.
+  * debian/control: Add python-oslo.utils as a build dependency.
+  * debian/control: Add python-requests-mock as a build dependency.
+  * debian/control: Add python-mox3 as a build depenency.
+  * debian/nova-baremetal.install: Remove baremetal helpers.
+  * debian/patches/skip-cinder-tests.patch: Skip cinder tests that
+    are not setup.
+  * debian/control: Remove nova-baremetal.
+  * debian/control: 
+    - Bump python-sqlachemy-ext to 0.8.4.
+    - Bump python-eventlet to 0.15.2.
 
   [ James Page ]
-  * d/watch: Point to tarballs.openstack.org for release artifacts.
+  * New upstream release:
+    - d/p/*: Refreshed.
+    - d/control: Align version requirements with upstream.
+  * d/control: Bumped Standards-Version to 3.9.6, no changes.
+  * d/rules: Limit package build tests to unit tests only.
 
- -- Corey Bryant <corey.bryant@canonical.com>  Thu, 07 Aug 2014 17:16:50 -0400
+ -- James Page <james.page@ubuntu.com>  Fri, 19 Dec 2014 17:16:33 +0000
 
-nova (1:2014.1.1-0ubuntu2) trusty; urgency=high
+nova (1:2014.2-0ubuntu1) utopic; urgency=medium
 
-  * Cherry picked two fixes from upstream.
-    - [2cebfd2] libvirt: convert cpu features attribute from list to a set (LP: #1267191)
-    - [b86a0e5] Fixes rdb backend image size (LP: #1219658)
+  [ Chuck Short ]
+  * New upstream release.
 
- -- Rafael David Tinoco <rafael.tinoco@canonical.com>  Wed, 25 Jun 2014 12:56:15 -0300
+  [ James Page ]
+  * d/p/neutron-floating-ip-list.patch: Cherry pick proposed fix for
+    missing server uuids in floating-ip-list when using neutron networking
+    (LP: #1380965).
 
-nova (1:2014.1.1-0ubuntu1) trusty; urgency=medium
+ -- Chuck Short <zulcss@ubuntu.com>  Thu, 16 Oct 2014 13:44:25 -0400
 
-  * Resynchronize with stable/icehouse (867341f) (LP: #1328134):
-    - [867341f] Fix security group race condition while listing and deleting rules
-    - [ffcb176] VMware: ensure rescue instance is deleted when instance is deleted
-    - [fe4fe70] VMware: Log additional details of suds faults
-    - [43f0437] Add info_cache as expected attribute when evacuate instance
-    - [a2da9ce] VMware: uncaught exception during snapshot deletion
-    - [1a45944] Catch InstanceNotFound exception if migration fails
-    - [ee374f1] Do not wait for neutron event if not powering on libvirt domain
-    - [705ad64] Reap child processes gracefully if greenlet thread gets killed
-    - [f769bf8] Fixes arguments parsing when executing command
-    - [bedb66f] Use one query instead of two for quota_usages
-    - [422decd] VMWare - Check for compute node before triggering destroy
-    - [6629116] Use debug level logging in unit tests, but don't save them.
-    - [088b718] support local debug logging
-    - [080f785] Revert "Use debug level logging during unit tests"
-    - [fb03028] VMWare: add power off vm before detach disk during unrescue
-    - [d93427a] Check for None or timestamp in availability zone api sample
-    - [f5c3330f] Pass configured auth strategy to neutronclient
-    - [74d1043] remove unneeded call to network_api on rebuild_instance
-    - [f1fdb3c] Remove unnecessary call to fetch info_cache
-    - [395ec82] Remove metadata's network-api dependence on the database
-    - [a48d268] InvalidCPUInfo exception added to except block
-    - [77392a9] Moved the registration of lifecycle event handler in init_host()
-    - [40ae1ee] Fix display of server group members
-    - [66c7ca1] Change errors_out_migration decorator to work with RPC
-    - [e1e140b] Don't explode if we fail to unplug VIFs after a failed boot
-    - [c816488] Remove unneeded call to fetch network info on shutdown
-    - [7f9f3ef] Don't overwrite instance object with dict in _init_instance()
-    - [2728f1e] Fix bug detach volume fails with "KeyError" in EC2
-   * debian/patches/libvirt-Handle-unsupported-host-capabilities.patch: Fix exception
-     when starting LXC containers. (LP: #1297962)
+nova (1:2014.2~rc2-0ubuntu1) utopic; urgency=medium
 
- -- Chuck Short <zulcss@ubuntu.com>  Tue, 24 Jun 2014 10:47:47 -0400
+  [ Corey Bryant ]
+  * New upstream release candidate.
 
-nova (1:2014.1-0ubuntu1.2) trusty-security; urgency=medium
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 10 Oct 2014 13:42:33 -0400
+
+nova (1:2014.2~rc1-0ubuntu2) utopic; urgency=medium
+
+  * d/control: Drop websockify from BD's as its not ready for Ubuntu
+    main inclusion.
+  * d/p/disable-websockify-tests.patch: Skip websocketproxy tests
+    if import of websockify fails.
+  * d/watch: Limit matches to versions starting with numbers.
+
+ -- James Page <james.page@ubuntu.com>  Wed, 08 Oct 2014 17:29:34 +0100
+
+nova (1:2014.2~rc1-0ubuntu1) utopic; urgency=medium
+
+  [ Chuck Short ]
+  * d/fix-requirements.patch: Dropped 
+  * d/control: Add python-oslo.db as a dependency.
+
+  [ James Page ]
+  * d/watch: Use tarballs.openstack.org for releases.
+  * New upstream release candidate:
+    - d/p/*: Refreshed.
+    - d/control: Aligned versioned dependencies with upstream.
+    - d/control: Add python-ironicclient, python-libvirt and
+      websockify to BD's.
+  * d/p/update-run-tests.sh: Let testr decide what test concurrency is
+    appropriate.
+  * d/control,rules: Drop python-nose BD, switch back to run_tests.sh wrapper
+    for unit test execution.
+
+ -- James Page <james.page@ubuntu.com>  Wed, 01 Oct 2014 13:46:17 +0100
+
+nova (1:2014.2~b3-0ubuntu1) utopic; urgency=medium
+
+  * New upstream release.
+  * debian/nova-compute.install: Add nova-idmapshift and nova-serialproxy. 
+  * debian/control: Add python-rfc3986 as a build dependency.
+  * debian/control: Add python-lockfile as a build dependency.
+  * debian/control: Add python-oslo.vmware as a build dependency 
+  * debian/rules: Enable tests.
+  * debian/patches/debian/patches/arm-console-patch.patch: Refreshed
+
+ -- Chuck Short <zulcss@ubuntu.com>  Tue, 09 Sep 2014 09:32:37 -0400
+
+nova (1:2014.2~b2-0ubuntu2) utopic; urgency=medium
+
+  *  debian/patches/fix-requirements.patch: Refreshed. 
+
+ -- Chuck Short <zulcss@ubuntu.com>  Mon, 18 Aug 2014 11:13:13 -0400
+
+nova (1:2014.2~b2-0ubuntu1) utopic; urgency=medium
+
+  * New upstream version.
+  * debian/rules: Re-enabled tests.
+  * debian/patches/fix-requirements.patch: Refreshed.
+  * debian/control: Add python-hacking as a build dependency.
+  * debian/patches/skip-ipv6-tests.patch: Renamed to skip-ubunut-tests.patch
+  * debian/nova.conf: Cleaned up configuration file.
+  * debian/control: Add python-posix-ipc as a build dependency.
+  * debian/control: Add python-oslo.i18n as a build dependency.
+
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 25 Jul 2014 12:01:03 -0400
+
+nova (1:2014.2~b1-0ubuntu3) utopic; urgency=medium
+
+  * debian/tests/nova-daemon: Do not run nova-novncproxy. 
+
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 27 Jun 2014 09:10:24 -0400
+
+nova (1:2014.2~b1-0ubuntu2) utopic; urgency=medium
 
   * SECURITY UPDATE: specify /etc/nova/rootwrap.conf for use with
     nova-rootwrap
     - CVE-2013-1068 (LP: #1185019)
 
- -- Jamie Strandboge <jamie@ubuntu.com>  Mon, 09 Jun 2014 09:32:44 -0500
+ -- Chuck Short <zulcss@ubuntu.com>  Wed, 18 Jun 2014 11:17:52 -0400
+
+nova (1:2014.2~b1-0ubuntu1) utopic; urgency=medium
+
+  * New upstream release.
+  * debian/control: Open up juno.
+  * debian/patches/fix-requirements.patch: Refreshed.
+  * debian/nova-scheduler.install: Drop nova-clear-rabbit-queues.
+  * debian/control: Add python-oslotest as a build dependency.
+  * debian/rules: Temporarily disable tests since it doesnt build properly.
+
+ -- Chuck Short <zulcss@ubuntu.com>  Thu, 12 Jun 2014 12:56:12 -0400
 
 nova (1:2014.1-0ubuntu1) trusty; urgency=medium
 
   [ Chuck Short ]
-  * debian/control: Add genisoimage as a dependency for nova-compute-vmware.
+  * debian/control: Add genisoimage as a dependency for nova-comute-vmware.
     (LP: #1306484)
 
   [ Corey Bryant ]
   * New upstream release (LP: #1299055).
 
- -- James Page <james.page@ubuntu.com>  Thu, 17 Apr 2014 11:09:35 +0100
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 02 May 2014 14:08:31 -0400
 
 nova (1:2014.1~rc2-0ubuntu1) trusty; urgency=medium
 
@@ -509,6 +534,9 @@ nova (1:2013.2~rc1-0ubuntu1) saucy; urgency=low
 nova (1:2013.2~b3-0ubuntu2) saucy; urgency=low
 
   * debian/tests: Removed tests for nova-compute-xen and nova-compute-xcp.
+
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 13 Sep 2013 10:12:52 -0400
+
 nova (1:2013.2~b3-0ubuntu1) saucy; urgency=low
 
   * New usptream release. 
