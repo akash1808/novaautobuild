@@ -52,8 +52,8 @@ override_dh_install:
 override_dh_fixperms:
 	dh_fixperms -Xnova_sudoers -Xnova_tgt.conf
 
-ifeq (,$(findstring nocheck, $(DEB_BUILD_OPTIONS)))
-override_dh_auto_test:
-	./run_tests.sh -N -P nova.tests.unit
+#ifeq (,$(findstring nocheck, $(DEB_BUILD_OPTIONS)))
+#override_dh_auto_test:
+#	./run_tests.sh -N -P nova.tests.unit
 	#testr init && testr run 
-endif
+#endif
